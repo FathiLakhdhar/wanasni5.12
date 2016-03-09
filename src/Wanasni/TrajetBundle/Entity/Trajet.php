@@ -2,7 +2,12 @@
 
 namespace Wanasni\TrajetBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Wanasni\TrajetBundle\Entity\TrajetDate;
+use Wanasni\TrajetBundle\Entity\Preferences;
+use Symfony\Component\Validator\Constraints as Assert;
+use Wanasni\TrajetBundle\Entity\Point;
 
 /**
  * Trajet
@@ -12,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Trajet
 {
+
+
     /**
      * @var integer
      *
@@ -21,10 +28,32 @@ class Trajet
      */
     private $id;
 
+
+    /**
+     * @var Point
+     * @ORM\OneToOne(targetEntity="Point", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="origine_id", nullable=false)
+     */
+    private $Origine;
+
+    /**
+     * @var Point
+     *@ORM\OneToOne(targetEntity="Point", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="destination_id", nullable=false)
+     */
+    private $Destination;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="trajet")
+     */
+    private $waypoints;
+
+
     /**
      * @var string
      *
      * @ORM\Column(name="frequence", type="string", length=10)
+     * @Assert\Choice(choices = {"unique", "régulier"}, message = "Choose a valid frequence.")
      */
     private $frequence;
 
@@ -32,6 +61,7 @@ class Trajet
      * @var integer
      *
      * @ORM\Column(name="nbPlaces", type="integer")
+     *  @Assert\NotBlank()
      */
     private $nbPlaces;
 
@@ -43,32 +73,68 @@ class Trajet
     private $nbPlacesRestants;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="Informations_complementaires", type="string", length=500)
+     * @ORM\Column(name="Informations_complementaires", type="text", length=500, nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 500,
+     *      maxMessage = "Your informationsComplementaires cannot be longer than {{ limit }} characters"
+     * )
      */
     private $informationsComplementaires;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="heureAller", type="string", length=5)
+     * @ORM\Column(name="heureAller", type="string", length=5, nullable=false)
+     *  @Assert\NotBlank()
      */
     private $heureAller;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="heureRetour", type="string", length=5)
+     * @ORM\Column(name="heureRetour", type="string", length=5, nullable=true)
      */
     private $heureRetour;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Depart_prevu", type="string", length=20)
+     * @ORM\Column(name="Depart_prevu", type="string", length=20, nullable=false)
+     *  @Assert\NotBlank()
      */
     private $Depart_prevu;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="TrajetDate", mappedBy="trajet", cascade={"remove"})
+     * @Assert\Valid()
+     */
+    protected $dates;
+
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Choice(choices = {"Petit", "moyen", "Grand", "Aucun"}, message = "Choose a valid Bagages.")
+     */
+    private $Bagages;
+
+
+    /**
+     *@ORM\OneToOne(targetEntity="Preferences", cascade={"persist","remove"})
+     */
+    private $Preferences;
+
+
+    /**
+     * Trajet constructor.
+     */
+    public function __construct()
+    {
+        $this->dates = new ArrayCollection();
+        $this->waypoints=new ArrayCollection();
+    }
 
 
     /**
@@ -150,28 +216,7 @@ class Trajet
         return $this->nbPlacesRestants;
     }
 
-    /**
-     * Set informationsComplementaires
-     *
-     * @param string $informationsComplementaires
-     * @return Trajet
-     */
-    public function setInformationsComplementaires($informationsComplementaires)
-    {
-        $this->informationsComplementaires = $informationsComplementaires;
-    
-        return $this;
-    }
 
-    /**
-     * Get informationsComplementaires
-     *
-     * @return string 
-     */
-    public function getInformationsComplementaires()
-    {
-        return $this->informationsComplementaires;
-    }
 
     /**
      * Set heureAller
@@ -242,5 +287,186 @@ class Trajet
     public function getDepartPrevu()
     {
         return $this->Depart_prevu;
+    }
+
+    /**
+     * Set informationsComplementaires
+     *
+     * @param string $informationsComplementaires
+     * @return Trajet
+     */
+    public function setInformationsComplementaires($informationsComplementaires)
+    {
+        $this->informationsComplementaires = $informationsComplementaires;
+    
+        return $this;
+    }
+
+    /**
+     * Get informationsComplementaires
+     *
+     * @return string 
+     */
+    public function getInformationsComplementaires()
+    {
+        return $this->informationsComplementaires;
+    }
+
+    /**
+     * Set Bagages
+     *
+     * @param string $bagages
+     * @return Trajet
+     */
+    public function setBagages($bagages)
+    {
+        $this->Bagages = $bagages;
+    
+        return $this;
+    }
+
+    /**
+     * Get Bagages
+     *
+     * @return string 
+     */
+    public function getBagages()
+    {
+        return $this->Bagages;
+    }
+
+    /**
+     * Add dates
+     *
+     * @param \Wanasni\TrajetBundle\Entity\TrajetDate $dates
+     * @return Trajet
+     */
+    public function addDate(\Wanasni\TrajetBundle\Entity\TrajetDate $dates)
+    {
+        $this->dates[] = $dates;
+    
+        return $this;
+    }
+
+    /**
+     * Remove dates
+     *
+     * @param \Wanasni\TrajetBundle\Entity\TrajetDate $dates
+     */
+    public function removeDate(\Wanasni\TrajetBundle\Entity\TrajetDate $dates)
+    {
+        $this->dates->removeElement($dates);
+    }
+
+    /**
+     * Get dates
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDates()
+    {
+        return $this->dates;
+    }
+
+    /**
+     * Set Preferences
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Preferences $preferences
+     * @return Trajet
+     */
+    public function setPreferences(\Wanasni\TrajetBundle\Entity\Preferences $preferences = null)
+    {
+        $this->Preferences = $preferences;
+    
+        return $this;
+    }
+
+    /**
+     * Get Preferences
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Preferences 
+     */
+    public function getPreferences()
+    {
+        return $this->Preferences;
+    }
+
+    /**
+     * Set Origine
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $origine
+     * @return Trajet
+     */
+    public function setOrigine(\Wanasni\TrajetBundle\Entity\Point $origine = null)
+    {
+        $this->Origine = $origine;
+    
+        return $this;
+    }
+
+    /**
+     * Get Origine
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Point 
+     */
+    public function getOrigine()
+    {
+        return $this->Origine;
+    }
+
+    /**
+     * Set Destination
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $destination
+     * @return Trajet
+     */
+    public function setDestination(\Wanasni\TrajetBundle\Entity\Point $destination = null)
+    {
+        $this->Destination = $destination;
+    
+        return $this;
+    }
+
+    /**
+     * Get Destination
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Point 
+     */
+    public function getDestination()
+    {
+        return $this->Destination;
+    }
+
+    /**
+     * Add waypoints
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
+     * @return Trajet
+     */
+    public function addWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
+    {
+        $this->waypoints[] = $waypoints;
+    
+        return $this;
+    }
+
+    /**
+     * Remove waypoints
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
+     */
+    public function removeWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
+    {
+        $this->waypoints->removeElement($waypoints);
+    }
+
+    /**
+     * Get waypoints
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWaypoints()
+    {
+        return $this->waypoints;
     }
 }

@@ -3,6 +3,9 @@
 namespace Wanasni\TrajetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Wanasni\TrajetBundle\Entity\Trajet;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * TrajetDate
@@ -24,16 +27,29 @@ class TrajetDate
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateAller", type="date")
+     * @ORM\Column(name="dateAller", type="date", nullable=false)
+     *  @Assert\Date()
      */
     private $dateAller;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateRetour", type="date")
+     * @ORM\Column(name="dateRetour", type="date", nullable=true)
+     *  @Assert\Date()
      */
     private $dateRetour;
+
+
+    /**
+     * @var Trajet
+     *
+     * @ORM\ManyToOne(targetEntity="Trajet", inversedBy="dates")
+     * @ORM\JoinColumn(name="trajet_id", referencedColumnName="id", nullable=false)
+     */
+    protected $trajet;
+
+
 
 
     /**
@@ -90,5 +106,28 @@ class TrajetDate
     public function getDateRetour()
     {
         return $this->dateRetour;
+    }
+
+    /**
+     * Set trajet
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajet
+     * @return TrajetDate
+     */
+    public function setTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajet)
+    {
+        $this->trajet = $trajet;
+    
+        return $this;
+    }
+
+    /**
+     * Get trajet
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Trajet 
+     */
+    public function getTrajet()
+    {
+        return $this->trajet;
     }
 }

@@ -34,6 +34,12 @@ class User extends BaseUser
      *     maxMessage="The name is too long.",
      *     groups={"Registration", "Profile"}
      * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Your first name cannot contain a number"
+     * )
+     *
      */
     protected $firstname;
     /**
@@ -46,11 +52,18 @@ class User extends BaseUser
      *     maxMessage="The name is too long.",
      *     groups={"Registration", "Profile"}
      * )
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Your last name cannot contain a number"
+     * )
+     *
      */
     protected $lastname;
 
     /**
      * @ORM\Column(type="string", length=10)
+     *  @Assert\Choice(choices = {"homme", "femme"}, message = "Choose a valid gender.")
      */
     protected $gender;
 

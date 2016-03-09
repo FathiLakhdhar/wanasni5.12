@@ -18,7 +18,7 @@ class RegistrationType extends AbstractType
             ->add('lastname')
             ->add('minibio')
             ->add('gender', 'choice', array(
-                'choices' => array('h' => 'homme', 'f' => 'femme'),
+                'choices' => array('homme' => 'homme', 'femme' => 'femme'),
 
             ))
         ;
