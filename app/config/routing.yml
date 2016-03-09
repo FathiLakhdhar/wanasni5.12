@@ -1,0 +1,22 @@
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    'default/index.html.twig'
+
+
+wanasni_user:
+    resource: "@WanasniUserBundle/Controller"
+    type:     annotation
+
+wanasni_trajet:
+    resource: "@WanasniTrajetBundle/Controller"
+    type:     annotation
+
+
+# FosUserBundle Routing EN
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+
+

@@ -1,0 +1,92 @@
+<div class="row">
+    <!-- Trajet -->
+    <div class="col-lg-8">
+
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active">
+                <a data-toggle="tab"  href="#unique">
+                    Trajet unique
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#regulier">
+                    Trajet régulier
+                </a>
+            </li>
+        </ul>
+
+        <!-- tab-content -->
+
+        <div class="tab-content">
+
+
+            <div class="form-proposer">
+                <form>
+
+                    <!-- Itinéraire -->
+                    <section>
+                        <h3>
+                            Itinéraire
+                        </h3>
+                        <div class="form-group col-7">
+                            <div class="from">
+                                <span class="glyphicon glyphicon-map-marker green"></span>
+                                <input type="text" class="form-control place" placeholder="origine" id="depart"
+                                       onfocus="AutoComplete('depart')"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-7">
+                            <div class="to">
+                                <span class="glyphicon glyphicon-map-marker red"></span>
+                                <input type="text" class="form-control place" placeholder="destination" id="arrivee"
+                                       onfocus="AutoComplete('arrivee')"/>
+                            </div>
+                        </div>
+
+                        <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
+                        <div>
+                            <h3>Villes étapes</h3>
+                            <p>Augmentez vos chances d’avoir des passagers en ajoutant des
+                                villes étapes :</p>
+                        </div>
+                    </section>
+                    <!-- End Itinéraire -->
+
+                    <!-- Trajet unique -->
+                    <div id="unique" class="tab-pane fade in active">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore
+                            et dolore magna aliqua.</p>
+                    </div>
+                    <!-- End Trajet unique -->
+
+
+                    <!-- Trajet régulier -->
+                    <div id="regulier" class="tab-pane fade">
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo
+                            consequat.</p>
+                    </div>
+
+                    <!-- End Trajet régulier -->
+
+
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- Map -->
+    <div class="col-lg-4">
+        <div class="thumbnail">
+            <h3>Votre itinéraire</h3>
+            <div id="map"></div>
+        </div>
+
+        <div class="thumbnail">
+            <div id="directions-panel"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/style_Security.css') }}"/>
+{% endblock stylesheets %}
+
+
+{% block body %}
+
+
+<div class="container">
+
+
+        <div class="alert alert-info">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+            <div class="alert alert-{{ type }}">
+                {% for message in messages %}
+
+                        {{ message }}
+
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+
+
+</div>
+
+
+{% endblock body %}
+
+
+{% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="footer-border"></div>
+                    <p><a href="{{ path('homepage') }}"><strong>Wanasni 2016 ©</strong></a>
+                        having a lot of fun. <i class="fa fa-smile-o"></i></p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+{% endblock footer %}

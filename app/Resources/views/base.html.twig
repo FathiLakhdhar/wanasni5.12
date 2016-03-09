@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block stylesheets %}
+
+        {% stylesheets output="css/app.css"
+        "%kernel.root_dir%/Resources/assets/css/*" %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+        {# #}
+
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/xs-menu.css') }}">
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/form_elements.css') }}"/>
+        <!-- iCheck -->
+        <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/square/blue.css') }}"/>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+</head>
+<body>
+
+{% block header %}
+
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-10 ">
+                    <div class="logo-wrapper">
+                        <img src="{{ asset('img/logofin.png') }}" alt="wanasni"/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-sm-7 hidden-xs">
+
+                    <!-- Menu hidden lg -->
+                    <div class="menu-links">
+                        <a href="{{ path('homepage') }}" class="active" id="idAccueil">
+                            <i class="ion-ios-home-outline"></i> Accueil
+                        </a>
+                        <a href="#" id="idRechercher"> <i class="ion-ios-search"></i> Rechercher</a>
+                        <a href="{{ path('trajet_proposer') }}" id="idProposer"> <i class="ion-ios-compose-outline"></i> Proposer</a>
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-3 col-md-5 col-sm-5 hidden-xs">
+
+
+
+
+                        {% if app.user %}{# Connecte #}
+                            <div class="menu-client">
+                                {{ include(':default:menu_client_cnx.html.twig') }}
+                            </div>
+                        {% else %} {# ! Connecte #}
+                            <div class="links-anonymouse">
+                                <a href=" {{ path('fos_user_registration_register') }}" class=" btn btn-custom btn-Contour">S'inscrire</a>
+                                <a class=" btn btn-custom btn-vert" data-toggle="modal" data-target="#idModalLogin">Se connecter</a>
+                            </div>
+
+                        {% endif %}
+
+
+                </div>
+
+
+                <!-- Menu xs -->
+                <div class="col-xs-2 visible-xs menu-xs">
+                    <div class="menu-xs-bg">
+                        <a href="#" data-toggle="control-sidebar" id="menu-xs" >
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </header>
+
+
+    <!--Modal Dropdown login -->
+    {{ include(':default:Modal_log.html.twig') }}
+
+    <!-- control-sidebar -->
+    {{ include('default/sidebar.html.twig') }}
+
+
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+
+{% block footer %}
+    <!-- Footer -->
+
+    <footer class="text-center">
+
+
+        <div class="footer-body">
+            <div class="container">
+                <div class="col-lg-4">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                Wanasni 2016 ©
+            </p>
+        </div>
+
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+
+    {% javascripts  output="js/app.js"
+    "%kernel.root_dir%/Resources/assets/js/*" %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+    <script language="JavaScript" src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places"></script>
+    <script src="{{ asset('js/map.js') }}"></script>
+
+    <script language="JavaScript">
+        $(document).ready(function () {
+
+
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+
+            $(".slideToggle").click(function(){
+                $(".slideToggle-menu").slideToggle();
+                $(this).toggleClass('active');
+
+            });
+
+            $("#menu-xs").click(function(){
+                $("#control-sidebar").toggleClass('control-sidebar-open');
+            });
+
+
+
+        });
+    </script>
+
+
+
+{% endblock %}
+</body>
+</html>

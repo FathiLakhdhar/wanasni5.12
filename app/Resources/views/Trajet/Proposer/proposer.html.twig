@@ -1,0 +1,21 @@
+{% extends ':Trajet:layout.html.twig' %}
+
+{% block title %} Proposer-{{ parent() }} {% endblock %}
+
+{% block body %}
+    <div id="proposer" class="container">
+        {{ include(':Trajet/Proposer:proposer_content.html.twig') }}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $('.menu-links a').removeClass('active');
+            $('#idProposer').addClass('active');
+        });
+    </script>
+{% endblock %}

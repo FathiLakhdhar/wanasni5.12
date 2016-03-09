@@ -1,0 +1,977 @@
+﻿/*================================
+    GOOGLE FONT
+==================================*/
+/*@import url(http://fonts.googleapis.com/css?family=Lato);  FREE GOOGLE FONTS */
+
+/*================================
+  GENERAL STYLES
+==================================*/
+
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 30px;
+    font-size: 14px;
+    padding-top: 75px;
+}
+
+section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+p{
+    font-family: "Calibri Light",'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+video {
+    width: 80%;
+    height: auto;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+/*================================
+  HEADER STYLES
+==================================*/
+
+.social {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 20px 5px;
+    padding: 5px;
+    /*line-height: 50px;*/
+    font-size: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 50%;
+    background: #6d7a8b;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.social a{
+    color: #FFFFFF;
+}
+
+header {
+    background-color: rgba(64,72,82,1);
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 12px;
+    position: fixed;
+    z-index: 1024;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+
+}
+
+header .logo-wrapper img {
+    max-height: 40px;
+}
+
+header .menu-links {
+    padding-top: 5px;
+    white-space: nowrap;
+}
+
+header .menu-links a {
+    font-size: 20px;
+    color: #fff;
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 15px;
+
+}
+
+
+header .menu-links a:hover, header .menu-links a.active {
+    color: #78ab4e;
+}
+
+
+header a:hover, header .menu-links a:focus {
+    text-decoration: none;
+    /*
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    transform: scale(1.5);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;*/
+}
+
+/*==================
+Menu nav
+*/
+
+.menu{
+    max-height: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    height: 200px;
+    font-family: 'Source Sans Pro',sans-serif;
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+
+.dropdown-menu>li.header {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: #ffffff;
+    padding: 7px 10px;
+    border-bottom: 1px solid #f4f4f4;
+    color: #444444;
+    font-size: 14px;
+}
+.triangle-up:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #FFFFFF;
+    position: absolute;
+    right: 40px;
+    top: -9px;
+}
+.menu li a{
+    margin: 0;
+    padding: 10px 10px;
+    display: block;
+    white-space: nowrap;
+    border-bottom: 1px solid #cccccc;
+}
+
+.menu li a h4 {
+    padding: 0;
+    margin: 0 0 0 45px;
+    color: #444444;
+    font-size: 15px;
+    position: relative;
+}
+
+.menu-message{
+
+}
+
+
+.menu-message img{
+    margin: auto 10px auto auto;
+    width: 40px;
+    height: 40px;
+}
+
+.menu-message p {
+margin: 0 0 0 45px;
+font-size: 12px;
+color: #888888;
+}
+
+.menu-message small{
+color: #999999;
+font-size: 10px;
+position: absolute;
+top: 0;
+right: 0;
+}
+.menu-Notification li a:hover, .menu-Notification li a{
+    color: #000000;
+
+}
+.menu-Notification p{
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.menu-Notification li a span,.menu-Notification li a i {
+    font-size: 14px;
+    margin-top: 7px;
+}
+
+
+
+
+/*=========================
+        Menu xs
+==========================*/
+.menu-xs{
+
+}
+.menu-xs .menu-xs-bg{
+
+}
+.menu-xs a>i[class*="fa"]{
+    font-size: 45px;
+    color: #FFFFFF;
+}
+.menu-xs a>i[class*="fa"]:hover{
+    font-size: 47px;
+}
+
+/*================================
+  HOME SECTION STYLES
+==================================*/
+
+#home {
+    background-image: url(../img/home.jpg);
+    background-repeat:no-repeat ;
+    background-attachment: scroll;
+    background-position: center center;
+    padding: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;
+}
+
+#home .overlay {
+    padding-top: 100px;
+    background-color: rgba(36, 36, 36, 0.5);
+    min-height: 900px;
+    padding-bottom: 40px;
+}
+
+#home .overlay .overlay-text h1{
+    font-size: 60px;
+    line-height: 115%;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+
+
+
+#home .home-form{
+    margin: 80px 0px;
+}
+#home .home-form .btn{
+    margin-top: 50px;
+}
+
+#home .home-Membre-bg{
+    background-color: rgba(0,0,0, 0.5);
+}
+
+
+
+#home h1 {
+    font-family:'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-bottom: 20px;
+    line-height: 40px;
+    font-size: 35px;
+    color: #FFFFFF;
+    padding: 20px 40px;
+    /*text-transform: uppercase;*/
+}
+
+#home h4 {
+    margin-bottom: 30px;
+    line-height: 40px;
+    font-size: 20px;
+    color: #D0D0D0;
+}
+
+#home span[class*="glyphicon"]{
+    font-size: 20px;
+}
+.color-dep{
+    color: #00a65a;
+}
+.color-Arriv{
+    color: #b92c28;
+}
+
+/*================================
+Profitez des avantages du covoiturage WANASNI
+================================*/
+
+#avantage{
+    font-size: 30px !important;
+    background-color: #FFFFFF;
+
+}
+
+.heading-title{
+    font-family: "Calibri Light",'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    padding: 5px;
+}
+.heading-title h2 {
+    font-size: 40px;
+}
+
+#avantage h3 {
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.heading-title h2:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 20%;
+    height: 3px;
+    background: #00a7d0;
+    left: 40%;
+    bottom: 0;
+}
+
+
+#avantage p{
+    line-height: 20px;
+    font-size: 15px;
+}
+
+.icon-avantages-eco{
+    background: url(../img/economy.png) no-repeat ;
+    background-size: 100px;
+}
+
+.avantages-icon {
+    margin-bottom: 30px;
+    width: 145px;
+    height: 145px;
+    margin: auto;
+    border-radius: 50%;
+    border: 10px solid #ececec;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.avantages-icon-hover-1:hover {
+    border: 10px solid  #34D293;
+}
+
+.avantages-icon-hover-2:hover {
+    border: 10px solid #E96656 ;
+}
+
+.avantages-icon-hover-3:hover {
+    border: 10px solid #3AB0E2;
+}
+
+
+.avantages-icon img{
+    position: relative;
+    top: 5px;
+    width: 115px;
+    vertical-align: middle;
+}
+
+
+
+
+.margin-top-buttom{
+    margin-top: 40px;
+    margin-bottom: 100px;
+}
+
+
+/*==========================
+section-video
+===============*/
+
+
+.section-video{
+    background-color: #f8f8f8;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    vertical-align: middle;
+}
+.section-video p{
+    font-size: 30px;
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 50px;
+    color: #000000;
+    margin-bottom: 30px;
+
+
+}
+.section-video a{
+    font-size: 20px;
+    text-decoration: none;
+    color: #404852;
+    margin-left: 20px;
+}
+
+
+/*================================
+  BUTTON STYLES
+==================================*/
+.btn{
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    border-radius: 0px;
+}
+
+.red-btn {
+    background: #e96656;
+}
+
+.red-btn, .green-btn, .blue-btn, .yellow-btn {
+    color: #FFF;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn.btn-green {
+    background: #1ABB9C;
+    color: #FFFFFF;
+
+
+}
+
+.btn-vert{
+    border: 3px solid;
+    margin-right: 5px;
+}
+
+.blue-btn {
+    background: #3ab0e2;
+}
+.yellow-btn {
+    background: #E7AC44;
+}
+
+.green-btn {
+    background: #20AA73;
+}
+.red-btn,.green-btn,.blue-btn,.yellow-btn {
+    color: #FFF;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.blue-btn:hover {
+    color: #FFF;
+    background: #1288b9;
+}
+.red-btn:hover {
+    color: #FFF;
+    background: #cb4332;
+}
+.green-btn:hover {
+    color: #FFF;
+    background: #069059;
+}
+.yellow-btn:hover {
+    color: #FFF;
+    background: #d8951e;
+}
+
+
+
+
+.btn-custom {
+    min-height: 40px;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    padding: 10px 20px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    
+}
+
+.btn-Contour{
+    border: 3px solid;
+    margin-right: 5px;
+}
+
+
+
+.btn-link-1 {
+    display: inline-block;
+    height: 50px;
+    margin: 5px;
+    padding: 16px 20px 0 20px;
+    background: #19b9e7;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 16px;
+    color: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+.btn-link-1:hover, .btn-link-1:focus, .btn-link-1:active { outline: 0; opacity: 0.6; color: #fff; }
+
+.btn-link-1.btn-link-1-facebook { background: #4862a3; }
+.btn-link-1.btn-link-1-twitter { background: #55acee; }
+.btn-link-1.btn-link-1-google-plus { background: #dd4b39; }
+
+.btn-link-1 i {
+    padding-right: 5px;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.btn-link-2 {
+    display: inline-block;
+    height: 50px;
+    margin: 5px;
+    padding: 15px 20px 0 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #fff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 16px;
+    color: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+.btn-link-2:hover, .btn-link-2:focus,
+.btn-link-2:active, .btn-link-2:active:focus { outline: 0; opacity: 0.6; background: rgba(0, 0, 0, 0.3); color: #fff; }
+
+.btn-link-2 i {
+    padding-right: 5px;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+
+
+
+
+/*================================
+           ABOUT STYLES
+==================================*/
+
+/*================================
+       CLIENTS SECTION STYLES
+==================================*/
+
+
+.menu-client .menu li a:hover {
+    background-color: #D2D6DE;
+    text-decoration: none;
+}
+.menu-client ul li .footer a {
+
+    font-size: 12px;
+    background-color: #fff;
+    padding: 7px 10px;
+    border-bottom: 1px solid #eeeeee;
+    color: #444 !important;
+    text-align: center;
+}
+
+
+.menu-client .dropdown-menu {
+    position: absolute;
+    right: -15px;
+    left: auto;
+    width: 280px;
+    padding: 0 0 0 0;
+    margin: 5px 0px;
+    top: 100%;
+}
+
+
+header .menu-client{
+    white-space: nowrap;
+    margin: 10px;
+}
+
+
+header .menu-client .links-anonymouse{
+    white-space: nowrap;
+    margin: 10px;
+}
+
+
+header .menu-client li{
+
+}
+
+header .links-anonymouse a.btn-Contour:hover{
+    color: #FFFFFF;
+    background-color: #78ab4e;
+    border-color: #78ab4e;
+}
+header .links-anonymouse a.btn-Contour{
+    color: #6d7a8b;
+}
+
+
+
+
+
+header .links-anonymouse a.btn-vert:hover{
+    color: #6d7a8b;
+    border-color: #6d7a8b;
+    background-color: rgba(0,0,0,0);
+
+}
+header .links-anonymouse a.btn-vert{
+    color: #FFFFFF;
+    background-color: #78ab4e;
+    border-color: #78ab4e;
+
+}
+
+header .menu-client a:hover{
+    color: #FFFFFF;
+}
+
+header .menu-client ul a{
+    color: #6d7a8b;
+    font-size: 20px;
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+header .client{
+    overflow: hidden;
+}
+
+header .client:hover {
+    background-color: #122b40;
+    border-radius: 5px;
+
+}
+
+
+header .client a{
+    padding: 5px 15px;
+    text-decoration: none;
+    display: block;
+}
+header .menu-client li a span[class*='label'] {
+    position: relative;
+    top: -13px;
+    right:10px;
+    text-align: center;
+    font-size: 10px;
+    border-radius: 50%;
+}
+
+
+.menu-user{
+    position: absolute;
+    top: -3px;
+}
+
+.menu-user .client a span{
+
+}
+
+.menu-user .client li a{
+    text-decoration: none;
+    font-size: 17px;
+}
+.menu-user .client li a:hover{
+    color: #00a7d0;
+}
+
+
+#client-img{
+    max-width: 40px;
+    border-radius: 50%;
+}
+
+.header-cover{
+    margin: 2px;
+    padding: 15px 0px;
+    background-color: #00a7d0;
+    overflow: hidden;
+}
+.header-cover p{
+    white-space: nowrap;
+}
+
+#client-cover-img{
+    width: 70px;
+    border-radius: 50%;
+    border: 5px solid #ececec;
+}
+
+
+.client-cover {
+    background-color: #0094ff;
+    padding: 100px 50px 100px 50px;
+    color: #fff;
+}
+
+
+/*============================
+Label
+===========================*/
+
+.label-blue{
+ background-color: #00a7d0;
+}
+
+
+
+/****************
+Color
+**************/
+.red {
+    color: #FA6C65 !important;
+}
+.green {
+    color: #1ABB9C !important;
+}
+
+/*================================
+    CONATCT SECTION STYLES
+==================================*/
+
+#contact {
+padding: 100px;
+}
+
+#contact .heading-title h2{
+    white-space: nowrap;
+}
+
+
+.section-text h3 {
+    margin: 0 0 30px;
+    font-weight: 800;
+    color: #5D5D5D;
+}
+
+.section-text h4 {
+    margin: 0 0 20px;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+
+/*=====================
+        Suivez-Nous
+========================*/
+
+#social{
+    background-color: #f6f5f5;
+}
+
+/*================================
+    FOOTER SECTION STYLES
+ ============================  */
+footer {
+
+}
+
+footer .footer-body{
+    height: 400px;
+    background-color: #404852;
+    color: #fff;
+}
+
+footer  .footer{
+    padding: 1px;
+    background-color: #78ab4e;
+    color: #fff;
+}
+
+
+footer a, footer a:hover, footer a:focus {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/*============================
+        Modal
+==========================*/
+
+.modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+    width: 100%
+}
+
+.modal-body .form-horizontal .control-label {
+    text-align: left;
+
+}
+.modal {
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #000000;
+}
+.modal .modal-title{
+    font-size: 25px;
+}
+.form-horizontal  .input-group-addon{
+    background-color: #FFFFFF;
+    border-right: 0px transparent;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+    margin-left: 15px;
+}
+
+/*=====================
+       Login + Register
+====================*/
+.login-box, .register-box {
+    width: 360px;
+    margin: 7% auto;
+}
+.login-box-body, .register-box-body {
+    background: #F5F5F5;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+}
+.login-box-msg{
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}
+
+/*=====================
+    Proposer style
+=======================*/
+
+#proposer{
+
+}
+#proposer .nav-tabs > li > a {
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #000000;
+    border: 1px solid transparent;
+    border-radius: 20px 20px 0 0;
+    margin-right: 1px;
+    padding: 20px;
+    background: #E6E6E6;
+
+}
+
+
+#proposer .nav-tabs > li.active > a{
+    background: #FFFFFF;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+#proposer .tab-content{
+    background: #FFFFFF;
+    padding: 20px;
+}
+
+#proposer .form-proposer .form-group .from,
+#proposer .form-proposer .form-group .to{
+    position: relative;
+}
+
+#proposer .tab-content .form-proposer .form-group span{
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    z-index: 2;
+    font-size: 25px;
+}
+#proposer .tab-content .form-proposer .form-group input[type='text'].place{
+    text-indent: 26px;
+}
+
+#proposer .tab-content  .form-group{
+    margin-left:40px;
+}
+
+#proposer h3{
+    color: #337AB7;
+}
+
+/*================================
+    RESPONSIVE STYLES
+ ============================  */
+
+@media (min-width: 100px) and (max-width: 498px) {
+    #email-subscribe .form-control {
+        display: block;
+        width: 100%;
+    }
+
+    #email-subscribe .btn-subscribe {
+        margin-top: 20px;
+    }
+
+}
+
+
+@media only screen and (min-width: 768px) {
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+}
+
+/***************************
+Media home
+**********************/
+@media (max-width: 767px) {
+
+    #home .overlay {
+        padding-top: 0px;
+        min-height: 500px;
+    }
+
+    #home .overlay .overlay-text h1 {
+        font-size: 25px;
+        line-height: 115%;
+        letter-spacing: 0.031em;
+    }
+
+    #home .home-form{
+        margin: 5px 0px;
+    }
+
+    #home h1 {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+
+
+    .section-video p {
+        font-size: 25px;
+    }
+    .section-video a {
+        font-size: 15px;
+    }
+
+    .heading-title h2 {
+        font-size: 20px;
+    }
+    #contact {
+        padding: 5px;
+    }
+
+    #contact .heading-title p{
+        font-size: 14px;
+    }
+
+    #social{
+        padding: 10px 0px;
+    }
+
+    footer .footer-body {
+        height: 200px;
+    }
+
+}
