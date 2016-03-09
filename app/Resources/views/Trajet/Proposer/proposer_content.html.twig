@@ -4,7 +4,7 @@
 
         <ul class="nav nav-tabs nav-justified">
             <li class="active">
-                <a data-toggle="tab"  href="#unique">
+                <a data-toggle="tab" href="#unique">
                     Trajet unique
                 </a>
             </li>
@@ -21,54 +21,75 @@
 
 
             <div class="form-proposer">
-                <form>
+                {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer'), 'attr': {'class':''}}) }}
 
-                    <!-- Itinéraire -->
-                    <section>
-                        <h3>
-                            Itinéraire
-                        </h3>
-                        <div class="form-group col-7">
-                            <div class="from">
-                                <span class="glyphicon glyphicon-map-marker green"></span>
-                                <input type="text" class="form-control place" placeholder="origine" id="depart"
-                                       onfocus="AutoComplete('depart')"/>
-                            </div>
+                <!-- Itinéraire -->
+                <section>
+                    <h3>
+                        Itinéraire
+                    </h3>
+                    <div class="form-group col-7">
+                        <div class="from">
+                            {{ form_errors(form.Origine.lieu) }}
+                            <span class="glyphicon glyphicon-map-marker green"></span>
+                            {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
+                            {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control place',
+                                'placeholder':'Origine','onfocus':"AutoComplete('wanasni_trajetbundle_trajet_Origine_lieu')" } } ) }}
+
                         </div>
+                    </div>
+                    <div class="form-group col-7">
+                        <div class="to">
+                            {{ form_errors(form.Destination.lieu) }}
+                            <span class="glyphicon glyphicon-map-marker red"></span>
+                            {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
+                            {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control place',
+                                'placeholder':'Destination','onfocus':"AutoComplete('wanasni_trajetbundle_trajet_Destination_lieu')" } } ) }}
+                        </div>
+                    </div>
+
+                    <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
+                    <div>
+                        <h3>Villes étapes</h3>
+                        <p>Augmentez vos chances d’avoir des passagers en ajoutant des
+                            villes étapes :</p>
+
                         <div class="form-group col-7">
                             <div class="to">
-                                <span class="glyphicon glyphicon-map-marker red"></span>
-                                <input type="text" class="form-control place" placeholder="destination" id="arrivee"
-                                       onfocus="AutoComplete('arrivee')"/>
+                                {{ form_errors(form.waypoints) }}
+                                <span class="glyphicon glyphicon-map-marker text-warning"></span>
+                                {{ form_label(form.waypoints, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
+                                {{ form_widget(form.waypoints, {'attr': {'class': 'form-waypoints-lieu form-control place',
+                                    'placeholder':'Ville étape','onfocus':"AutoComplete('')" } } ) }}
                             </div>
                         </div>
 
-                        <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
-                        <div>
-                            <h3>Villes étapes</h3>
-                            <p>Augmentez vos chances d’avoir des passagers en ajoutant des
-                                villes étapes :</p>
-                        </div>
-                    </section>
-                    <!-- End Itinéraire -->
 
-                    <!-- Trajet unique -->
-                    <div id="unique" class="tab-pane fade in active">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore
-                            et dolore magna aliqua.</p>
                     </div>
-                    <!-- End Trajet unique -->
+                </section>
+                <!-- End Itinéraire -->
+
+                <!-- Trajet unique -->
+                <div id="unique" class="tab-pane fade in active">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore
+                        et dolore magna aliqua.</p>
+
+                    {{ form_widget(form) }}
 
 
-                    <!-- Trajet régulier -->
-                    <div id="regulier" class="tab-pane fade">
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo
-                            consequat.</p>
-                    </div>
+                </div>
+                <!-- End Trajet unique -->
 
-                    <!-- End Trajet régulier -->
+
+                <!-- Trajet régulier -->
+                <div id="regulier" class="tab-pane fade">
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo
+                        consequat.</p>
+                </div>
+
+                <!-- End Trajet régulier -->
 
 
                 </form>

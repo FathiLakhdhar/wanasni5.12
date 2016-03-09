@@ -53,7 +53,7 @@ class Trajet
      * @var string
      *
      * @ORM\Column(name="frequence", type="string", length=10)
-     * @Assert\Choice(choices = {"unique", "régulier"}, message = "Choose a valid frequence.")
+     * @Assert\Choice(choices = {"unique", "regulier"}, message = "Choose a valid frequence.")
      */
     private $frequence;
 
@@ -99,10 +99,10 @@ class Trajet
     private $heureRetour;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="Depart_prevu", type="string", length=20, nullable=false)
-     *  @Assert\NotBlank()
+     * @ORM\Column(name="Depart_prevu", type="integer", nullable=false)
+     *  @Assert\Choice(choices = {0, 10, 20, 30}, message = "Choose a valid Depart prévu")
      */
     private $Depart_prevu;
 
@@ -264,30 +264,6 @@ class Trajet
         return $this->heureRetour;
     }
 
-
-
-    /**
-     * Set Depart_prevu
-     *
-     * @param string $departPrevu
-     * @return Trajet
-     */
-    public function setDepartPrevu($departPrevu)
-    {
-        $this->Depart_prevu = $departPrevu;
-    
-        return $this;
-    }
-
-    /**
-     * Get Depart_prevu
-     *
-     * @return string 
-     */
-    public function getDepartPrevu()
-    {
-        return $this->Depart_prevu;
-    }
 
     /**
      * Set informationsComplementaires
@@ -468,5 +444,28 @@ class Trajet
     public function getWaypoints()
     {
         return $this->waypoints;
+    }
+
+    /**
+     * Set Depart_prevu
+     *
+     * @param integer $departPrevu
+     * @return Trajet
+     */
+    public function setDepartPrevu($departPrevu)
+    {
+        $this->Depart_prevu = $departPrevu;
+    
+        return $this;
+    }
+
+    /**
+     * Get Depart_prevu
+     *
+     * @return integer 
+     */
+    public function getDepartPrevu()
+    {
+        return $this->Depart_prevu;
     }
 }

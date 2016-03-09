@@ -89,8 +89,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 */
         directionsService.route({
-            origin: document.getElementById('depart').value,
-            destination: document.getElementById('arrivee').value,
+            origin: document.getElementById('wanasni_trajetbundle_trajet_Origine_lieu').value,
+            destination: document.getElementById('wanasni_trajetbundle_trajet_Destination_lieu').value,
           //  waypoints: waypts,
             optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING

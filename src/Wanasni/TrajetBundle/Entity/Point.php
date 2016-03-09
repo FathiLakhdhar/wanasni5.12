@@ -22,6 +22,15 @@ class Point
      */
     private $id;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $lieu;
+
+
     /**
      * @var string
      *
@@ -177,5 +186,28 @@ class Point
     public function getTrajet()
     {
         return $this->trajet;
+    }
+
+    /**
+     * Set lieu
+     *
+     * @param string $lieu
+     * @return Point
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+    
+        return $this;
+    }
+
+    /**
+     * Get lieu
+     *
+     * @return string 
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
     }
 }
