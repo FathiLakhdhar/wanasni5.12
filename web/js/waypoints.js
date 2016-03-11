@@ -20,7 +20,7 @@ $(document).ready(function() {
     });
 
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find(':input').length;
+    var index = $container.find('li').length;
 
     // On ajoute un premier champ directement s'il n'en existe pas déjà un (cas d'un nouvel Trajet par exemple).
     if (index == 0) {
@@ -34,15 +34,19 @@ $(document).ready(function() {
 
     // La fonction qui ajoute un formulaire Waypoints
     function ajouterWaypoint($container) {
+
+
+
             // Dans le contenu de l'attribut « data-prototype », on remplace :
             // - le texte "__name__label__" qu'il contient par le label du champ
             // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Villes étapes n°' + (index+1))
-                                                            .replace(/__name__/g, index));
+        var $prototype = $($container.attr('data-prototype')
+            .replace(/__name__label__/g, 'Villes étapes n°' + (index+1))
+            .replace(/__name__/g, index)
+        );
 
+        //
         $prototype.find('label').addClass('sr-only');
-
-        var $id= 'wanasni_trajetbundle_trajet_waypoints_'+index+'_lieu';
 
         $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark"></span>');
 
@@ -53,8 +57,11 @@ $(document).ready(function() {
             .before($marker)
             .addClass('form-waypoint-lieu form-control text-indent')
             .attr('placeholder','Ville étape')
-            .attr('onfocus',"AutoComplete('"+$id+"')")
         ;
+
+        var $item=$('<li></li>');
+        $item.append($prototype);
+        $prototype=$item;
 
         // On ajoute au prototype un lien pour pouvoir supprimer la Waypoint
         ajouterLienSuppression($prototype);
@@ -62,21 +69,28 @@ $(document).ready(function() {
         // On ajoute le prototype modifié à la fin de la balise <div>
         $container.append($prototype);
 
+
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
+
+        $('input[inputAutoComplete=on]').each(function() {
+            document.getElementById($(this).attr('id')).addEventListener('focusin',function() {
+                AutoComplete($(this).attr('id'));
+            });
+        });
 
     }
 
 
     // La fonction qui ajoute un lien de suppression d'une catégorie
     function ajouterLienSuppression($prototype) {
-        // Création du lien  <a class="close" href="#" title="Enlever l'étape">×</a>
         $lienSuppression = $('<a href="#" class="close" title="Enlever l\'étape"><i class="fa fa-close"></i></a>');
         // Ajout du lien
-        $prototype.children('div').append($lienSuppression);
+        $prototype.find('div.waypoint').append($lienSuppression);
         // Ajout du listener sur le clic du lien
         $lienSuppression.click(function(e) {
             $prototype.remove();
+
             e.preventDefault();// évite qu'un # apparaisse dans l'URL
             return false;
         });

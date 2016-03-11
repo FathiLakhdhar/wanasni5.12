@@ -15,11 +15,15 @@ class PointType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lieu')
-            ->add('latitude','hidden')
-            ->add('longitude','hidden')
-            /*->add('prix','money')*/
-            ->add('pOrder','hidden')
+            ->add('lieu', 'text',array(
+                'attr'=>array('inputAutoComplete'=>'on'),
+            ))
+            ->add('latitude','hidden',array(
+                'attr'=> array('class'=>'latitude'),
+            ))
+            ->add('longitude','hidden',array(
+                'attr'=> array('class'=>'longitude'),
+            ))
         ;
     }
     

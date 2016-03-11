@@ -23,6 +23,7 @@ class TrajetType extends AbstractType
                 'type'=> new PointType(),
                 'allow_add'=> true,
                 'allow_delete' => true,
+
             ))
             /*
                         ->add('frequence')
