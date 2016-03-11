@@ -24,31 +24,33 @@ class TrajetType extends AbstractType
                 'allow_add'=> true,
                 'allow_delete' => true,
             ))
+            /*
+                        ->add('frequence')
 
-            ->add('frequence')
+                        ->add('nbPlaces', 'number')
 
-            ->add('nbPlaces', 'number')
 
-            ->add('dates', 'collection',array(
-                'type'=> new TrajetDateType(),
-                'allow_add'=>true,
-                'allow_delete'=>true,
-            ))
 
-            ->add('heureAller')
+                        ->add('dates', 'collection',array(
+                            'type'=> new TrajetDateType(),
+                            'allow_add'=>true,
+                            'allow_delete'=>true,
+                        ))
 
-            ->add('heureRetour')
+                        ->add('heureAller')
 
-            ->add('Depart_prevu', 'choice',
-                array('choices' => array('0' => 'Heure exacte', '10' => '+/- 10 minutes', '20' => '+/- 20 minutes', '30' => '+/- 30 minutes')
-                ))
+                        ->add('heureRetour')
 
-            ->add('Bagages')
+                        ->add('Depart_prevu', 'choice',
+                            array('choices' => array('0' => 'Heure exacte', '10' => '+/- 10 minutes', '20' => '+/- 20 minutes', '30' => '+/- 30 minutes')
+                            ))
 
-            ->add('Preferences', new PreferencesType())
+                        ->add('Bagages')
 
-            ->add('informationsComplementaires')
+                        ->add('Preferences', new PreferencesType())
 
+                        ->add('informationsComplementaires')
+            */
         ;
     }
 

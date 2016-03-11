@@ -720,6 +720,10 @@ Label
 /****************
 Color
 **************/
+.yellow-dark {
+    color: #FFBE00;
+}
+
 .red {
     color: #FA6C65 !important;
 }
@@ -866,8 +870,10 @@ footer a, footer a:hover, footer a:focus {
     padding: 20px;
 }
 
-#proposer .form-proposer .form-group .from,
-#proposer .form-proposer .form-group .to{
+#proposer .form-proposer  .from,
+#proposer .form-proposer  .to,
+#proposer .form-proposer  .waypoint
+{
     position: relative;
 }
 
@@ -878,7 +884,7 @@ footer a, footer a:hover, footer a:focus {
     z-index: 2;
     font-size: 25px;
 }
-#proposer .tab-content .form-proposer .form-group input[type='text'].place{
+#proposer .tab-content .form-proposer input[type='text'].text-indent{
     text-indent: 26px;
 }
 
@@ -888,6 +894,34 @@ footer a, footer a:hover, footer a:focus {
 
 #proposer h3{
     color: #337AB7;
+}
+
+#proposer .waypoint:hover .close{
+    opacity: 0.4;
+}
+
+
+#proposer .waypoint .close {
+    position: absolute;
+    float: none;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    top: 15px;
+    right: 15px;
+    opacity: .1;
+}
+
+
+.close {
+    float: right;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    filter: alpha(opacity=20);
 }
 
 /*================================

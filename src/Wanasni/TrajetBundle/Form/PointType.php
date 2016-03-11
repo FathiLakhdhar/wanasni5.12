@@ -18,7 +18,7 @@ class PointType extends AbstractType
             ->add('lieu')
             ->add('latitude','hidden')
             ->add('longitude','hidden')
-            ->add('prix','money')
+            /*->add('prix','money')*/
             ->add('pOrder','hidden')
         ;
     }

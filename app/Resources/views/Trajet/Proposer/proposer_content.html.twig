@@ -33,7 +33,7 @@
                             {{ form_errors(form.Origine.lieu) }}
                             <span class="glyphicon glyphicon-map-marker green"></span>
                             {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
-                            {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control place',
+                            {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control text-indent',
                                 'placeholder':'Origine','onfocus':"AutoComplete('wanasni_trajetbundle_trajet_Origine_lieu')" } } ) }}
 
                         </div>
@@ -43,7 +43,8 @@
                             {{ form_errors(form.Destination.lieu) }}
                             <span class="glyphicon glyphicon-map-marker red"></span>
                             {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
-                            {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control place',
+
+                            {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control text-indent',
                                 'placeholder':'Destination','onfocus':"AutoComplete('wanasni_trajetbundle_trajet_Destination_lieu')" } } ) }}
                         </div>
                     </div>
@@ -54,13 +55,9 @@
                         <p>Augmentez vos chances d’avoir des passagers en ajoutant des
                             villes étapes :</p>
 
-                        <div class="form-group col-7">
-                            <div class="to">
-                                {{ form_errors(form.waypoints) }}
-                                <span class="glyphicon glyphicon-map-marker text-warning"></span>
-                                {{ form_label(form.waypoints, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
-                                {{ form_widget(form.waypoints, {'attr': {'class': 'form-waypoints-lieu form-control place',
-                                    'placeholder':'Ville étape','onfocus':"AutoComplete('')" } } ) }}
+                        <div class="col-7">
+                            <div>
+                                {{ form_widget(form.waypoints) }}
                             </div>
                         </div>
 
@@ -75,7 +72,6 @@
                         labore
                         et dolore magna aliqua.</p>
 
-                    {{ form_widget(form) }}
 
 
                 </div>
@@ -92,7 +88,7 @@
                 <!-- End Trajet régulier -->
 
 
-                </form>
+                {{ form_end(form) }}
             </div>
 
 
@@ -108,6 +104,7 @@
 
         <div class="thumbnail">
             <div id="directions-panel"></div>
+            <div id="panel"></div>
         </div>
     </div>
 </div>

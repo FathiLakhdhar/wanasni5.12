@@ -56,9 +56,8 @@ class TrajetController extends Controller
 
 
     /**
-     * @param $id
      *
-     * @Route("/voir-trajet", name="trajet_show")
+     * @Route("/voir-trajet/{id}", name="trajet_show")
      */
     public function ShowAction($id)
     {

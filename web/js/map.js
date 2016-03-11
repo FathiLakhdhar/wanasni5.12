@@ -74,24 +74,27 @@ function onPlaceChanged(autocomplete) {
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
-    /*
     var waypts = [];
-    var checkboxArray = document.getElementById('waypoints');
 
-        for (var i = 0; i < checkboxArray.length; i++) {
-            if (checkboxArray.options[i].selected) {
-                waypts.push({
-                    location: checkboxArray[i].value,
-                    stopover: true
-                });
-            }
-        }
+    var $Panel = document.getElementById('panel');
 
-*/
+
+    var $container = $('div#wanasni_trajetbundle_trajet_waypoints');
+
+    $container.find('input[type=text]').each(function() {
+        var $input =document.getElementById($(this).attr('id')) ;
+
+        waypts.push({
+            location: $input.value,
+            stopover: true
+        });
+    });
+
+
         directionsService.route({
             origin: document.getElementById('wanasni_trajetbundle_trajet_Origine_lieu').value,
             destination: document.getElementById('wanasni_trajetbundle_trajet_Destination_lieu').value,
-          //  waypoints: waypts,
+            waypoints: waypts,
             optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING
         }, function (response, status) {
