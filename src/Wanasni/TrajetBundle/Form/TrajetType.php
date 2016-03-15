@@ -23,10 +23,57 @@ class TrajetType extends AbstractType
                 'type'=> new PointType(),
                 'allow_add'=> true,
                 'allow_delete' => true,
+            ))
+
+            ->add('frequence','hidden',array(
+                'data'=>'UNIQUE'
+            ))
+
+            ->add('round_trip','checkbox')
+
+            ->add('date_allet_unique','text',array(
+                'attr'=> array('datepicker'=>'','class'=>'form-control','placeholder'=>'JJ/MM/AAAA')
+            ))
+
+
+            ->add('heureAller', 'time', array(
+                'input'  => 'timestamp',
+                'widget' => 'choice',
+            ))
+
+            ->add('Depart_prevu', 'choice',
+                array('choices' => array('0' => 'Heure exacte', '10' => '+/- 10 minutes', '20' => '+/- 20 minutes', '30' => '+/- 30 minutes')
+                ))
+
+            ->add('date_retour_unique','text',array(
+                'attr'=> array('datepicker'=>'','class'=>'form-control form-control-feedback','placeholder'=>'JJ/MM/AAAA')
+            ))
+
+            ->add('heureRetour', 'time', array(
+                'input'  => 'timestamp',
+                'widget' => 'choice',
+            ))
+
+
+            ->add('Bagages','choice',array(
+                'choices'=> array(
+                    'Petit'=>'Petit bagage',
+                    'Moyen'=>'Bagage moyen',
+                    'Grand'=>'Grand bagage',
+                    'Aucun'=>'Aucun',
+                    ),
+                'data'=>'Petit',
+                'multiple'=>false,
+                'expanded'=>true,
+            ))
+
+            ->add('Preferences', new PreferencesType())
+
+            ->add('informationsComplementaires','textarea',array(
+                'attr'=>array('class'=>'form-control','placeholder' => '0..500 caractères',),
 
             ))
             /*
-                        ->add('frequence')
 
                         ->add('nbPlaces', 'number')
 
@@ -37,20 +84,8 @@ class TrajetType extends AbstractType
                             'allow_add'=>true,
                             'allow_delete'=>true,
                         ))
-
-                        ->add('heureAller')
-
                         ->add('heureRetour')
 
-                        ->add('Depart_prevu', 'choice',
-                            array('choices' => array('0' => 'Heure exacte', '10' => '+/- 10 minutes', '20' => '+/- 20 minutes', '30' => '+/- 30 minutes')
-                            ))
-
-                        ->add('Bagages')
-
-                        ->add('Preferences', new PreferencesType())
-
-                        ->add('informationsComplementaires')
             */
         ;
     }

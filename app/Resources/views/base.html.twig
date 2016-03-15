@@ -20,11 +20,13 @@
         {# #}
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/xs-menu.css') }}">
         <link rel="stylesheet" type="text/css"  href="{{ asset('css/form_elements.css') }}"/>
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/flaticon.css') }}"/>
         <!-- iCheck -->
-        <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/square/blue.css') }}"/>
+        <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/flat/_all.css') }}"/>
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
@@ -137,32 +139,48 @@
 
 
     <script language="JavaScript" src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
 
     <script src="http://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places"></script>
-    <script src="{{ asset('js/map.js') }}"></script>
+    <script src="{{ asset('js/autoComplete.js') }}"></script>
 
     <script language="JavaScript">
-        $(document).ready(function () {
+
+        $(function () {
 
 
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
+            $('input[class=iCheck]').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green',
                 increaseArea: '20%'
             });
 
             $(".slideToggle").click(function(){
                 $(".slideToggle-menu").slideToggle();
                 $(this).toggleClass('active');
-
             });
 
             $("#menu-xs").click(function(){
                 $("#control-sidebar").toggleClass('control-sidebar-open');
             });
 
+            var $options_Date=
+            {
+                dateFormat: "dd/mm/yy",
+                minDate: new Date(),
+                maxDate: "+1y",
+                monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+                dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ]
+            };
 
+            $("[datepicker]").datepicker(
+                    $options_Date
+                    );
+
+            $("[data-toggle=tooltip]").tooltip();
         });
     </script>
 

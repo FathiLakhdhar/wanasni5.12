@@ -25,7 +25,7 @@ section {
 
 p{
     font-family: "Calibri Light",'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 video {
@@ -35,6 +35,13 @@ video {
 
 h1,h2,h3,h4,h5,h6{
     font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+label{
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+a,a:hover,a:active,a:focus{
+    text-decoration: none;
 }
 /*================================
   HEADER STYLES
@@ -145,13 +152,31 @@ Menu nav
     display: block;
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #FFFFFF;
     position: absolute;
     right: 40px;
     top: -9px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #FFFFFF !important;
 }
+
+
+
+
+.triangle-up-darkviolet:before{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 151px;
+    top: -24px;
+    border-left: 35px solid transparent;
+    border-right: 35px solid transparent;
+    border-bottom: 25px solid #9400D3 !important;
+}
+
+
 .menu li a{
     margin: 0;
     padding: 10px 10px;
@@ -724,6 +749,15 @@ Color
     color: #FFBE00;
 }
 
+.darkviolet{
+    color: #9400D3;
+}
+
+.bg-darkviolet{
+    background-color: #9400D3;
+    color: #FFFFFF;
+}
+
 .red {
     color: #FA6C65 !important;
 }
@@ -731,6 +765,21 @@ Color
     color: #1ABB9C !important;
 }
 
+.vert{
+    color: #78ab4e;;
+}
+
+.bg-vert{
+    background-color: #78ab4e;;
+}
+
+.bg-green {
+    background-color:  #1ABB9C !important;
+}
+
+.bg-white{
+    background-color: #FFFFFF;
+}
 /*================================
     CONATCT SECTION STYLES
 ==================================*/
@@ -846,7 +895,10 @@ footer a, footer a:hover, footer a:focus {
 #proposer{
 
 }
+
+
 #proposer .nav-tabs > li > a {
+    display: block;
     font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
     color: #000000;
@@ -856,8 +908,15 @@ footer a, footer a:hover, footer a:focus {
     padding: 20px;
     background: #E6E6E6;
 
+
+}
+#proposer label {
+    font-weight: 500;
 }
 
+#proposer section{
+    border-bottom: 2px solid #eeeeee;
+}
 
 #proposer .nav-tabs > li.active > a{
     background: #FFFFFF;
@@ -870,21 +929,27 @@ footer a, footer a:hover, footer a:focus {
     padding: 20px;
 }
 
-#proposer .form-proposer  .from,
-#proposer .form-proposer  .to,
-#proposer .form-proposer  .waypoint
+.pos-relative
 {
     position: relative;
 }
 
-#proposer .tab-content .form-proposer .form-group span{
+span.input-icon{
     position: absolute;
     top: 12px;
     left: 10px;
     z-index: 2;
     font-size: 25px;
 }
-#proposer .tab-content .form-proposer input[type='text'].text-indent{
+span.date-icon{
+    position: absolute;
+    opacity: 0.5;
+    top: 47px;
+    left: 14px;
+    z-index: 2;
+    font-size: 25px;
+}
+.text-indent{
     text-indent: 26px;
 }
 
@@ -912,6 +977,20 @@ footer a, footer a:hover, footer a:focus {
     opacity: .1;
 }
 
+.option-trajet{
+    white-space: nowrap;
+}
+
+.option-trajet i{
+    position: relative;
+    top: 5px;
+    left: 0px;
+}
+
+.option-trajet i:hover{
+    color: #00a7d0;
+}
+
 
 .close {
     float: right;
@@ -923,6 +1002,94 @@ footer a, footer a:hover, footer a:focus {
     opacity: .2;
     filter: alpha(opacity=20);
 }
+
+
+/*==================
+Jquery css
+========================*/
+
+.ui-datepicker-header {
+    background: #5e5e5e;
+    color: #e0e0e0;
+    font-weight: bold;
+    -webkit-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, 2);
+    -moz-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+    box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
+    text-shadow: 1px -1px 0px #000;
+    filter: dropshadow(color=#000, offx=1, offy=-1);
+    line-height: 30px;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: #111;
+}
+
+.ui-datepicker th {
+    text-transform: uppercase;
+    font-size: 8pt;
+    padding: 5px 0;
+    color: #666666;
+    text-shadow: 1px 0px 0px #fff;
+    filter: dropshadow(color=#fff, offx=1, offy=0);
+}
+
+
+
+/*****************************
+    Checkbox css
+**********************************/
+
+.material-switch > input[type="checkbox"] {
+    display: none;
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative;
+    width: auto;
+    white-space: nowrap;
+}
+
+
+
+.material-switch > label:before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+    top: 17px;
+    left: -55px;
+}
+.material-switch > label:after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    margin-top: -8px;
+    position: absolute;
+    left: -64px;
+    top: 12px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label:before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label:after {
+    background: inherit;
+    left: -30px;
+}
+
+
+
 
 /*================================
     RESPONSIVE STYLES

@@ -13,22 +13,19 @@
 
     {{ parent() }}
 
+
+    <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/waypoints.js') }}"></script>
+    <script src="{{ asset('js/proposer.js') }}"></script>
+
 
     <script>
+
 
         $(function() {
 
             $('.menu-links a').removeClass('active');
             $('#idProposer').addClass('active');
-
-
-            $('input[inputAutoComplete=on]').each(function() {
-                document.getElementById($(this).attr('id')).addEventListener('focusin',function() {
-                    AutoComplete($(this).attr('id'));
-                });
-            });
-
         });
 
     </script>

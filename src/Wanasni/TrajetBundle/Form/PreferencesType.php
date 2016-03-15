@@ -15,13 +15,27 @@ class PreferencesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fumeurs')
-            ->add('animaux')
-            ->add('animauxEnCage')
-            ->add('musique')
-            ->add('detours')
-            ->add('pauseCafe')
-            ->add('nourriture')
+            ->add('fumeurs','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('animaux','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('animauxEnCage','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('musique','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('detours','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('pauseCafe','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
+            ->add('nourriture','checkbox',array(
+                'attr'=>array('class'=>'iCheck')
+            ))
         ;
     }
     

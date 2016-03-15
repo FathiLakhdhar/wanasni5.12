@@ -48,11 +48,11 @@ $(document).ready(function() {
         //
         $prototype.find('label').addClass('sr-only');
 
-        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark"></span>');
+        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
 
         $prototype.first('div').addClass('form-group');
 
-        $prototype.children('div').addClass('waypoint');
+        $prototype.children('div').addClass('waypoint pos-relative');
         $prototype.find('input[type=text]')
             .before($marker)
             .addClass('form-waypoint-lieu form-control text-indent')

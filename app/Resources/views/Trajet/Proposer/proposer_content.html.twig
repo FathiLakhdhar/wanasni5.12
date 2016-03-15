@@ -1,112 +1,322 @@
 <div class="row">
     <!-- Trajet -->
     <div class="col-lg-8">
-
+        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer'), 'attr': {'class':''}}) }}
         <ul class="nav nav-tabs nav-justified">
             <li class="active">
-                <a data-toggle="tab" href="#unique">
+                <a data-toggle="tab" href=#trajet-unique>
                     Trajet unique
                 </a>
             </li>
             <li>
-                <a data-toggle="tab" href="#regulier">
+                <a data-toggle="tab" href="#trajet-regular">
                     Trajet régulier
                 </a>
             </li>
         </ul>
 
+
         <!-- tab-content -->
 
         <div class="tab-content">
+            <div class="row">
+                <div id="trajet-unique" class="tab-pane fade active in ">
+                    <div class="col-md-6 bg-darkviolet  triangle-up-darkviolet">
+                        <p>Un week-end épique à Pornic, un savoureux pique-nique chez Annick,
+                            un festival de beatnik, c'est la même logique, déposez un TRAJET UNIQUE !
+                        </p>
+                    </div>
+                </div>
+                <div id="trajet-regular" class="tab-pane fade">
+                    <div class="col-md-6 bg-darkviolet  triangle-up-darkviolet">
+                        <p>
+                            Pour aller travailler, que vous soyez cadre dans un musée,
+                            vendeuse d'eau déshydratée ou étudiant en prospérité, déposez un TRAJET RÉGULIER !
+                        </p>
+                    </div>
+
+                </div>
+            </div>
 
 
             <div class="form-proposer">
-                {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer'), 'attr': {'class':''}}) }}
 
+                {{ form_widget(form.frequence) }}
                 <!-- Itinéraire -->
                 <section>
-                    <h3>
-                        Itinéraire
-                    </h3>
+                    <div class="page-header">
+                        <h3>
+                            Itinéraire
+                        </h3>
+                    </div>
                     <ul>
 
 
+                        <div class="form-group col-7">
+                            <li>
+                                <div class="from pos-relative">
+                                    {{ form_errors(form.Origine) }}
+                                    <span class="glyphicon glyphicon-map-marker green input-icon"></span>
+                                    {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
+                                    {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control text-indent',
+                                        'placeholder':'Origine'} } ) }}
+                                    {{ form_widget(form.Origine.latitude) }}
+                                    {{ form_widget(form.Origine.longitude) }}
 
-
-
-                    <div class="form-group col-7">
-                        <li>
-                        <div class="from">
-                            {{ form_errors(form.Origine) }}
-                            <span class="glyphicon glyphicon-map-marker green"></span>
-                            {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
-                            {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control text-indent',
-                                'placeholder':'Origine'} } ) }}
-                            {{ form_widget(form.Origine.latitude) }}
-                            {{ form_widget(form.Origine.longitude) }}
-
+                                </div>
+                            </li>
                         </div>
-                        </li>
-                    </div>
-                    <div class="form-group col-7">
-                        <li>
-                        <div class="to">
-                            {{ form_errors(form.Destination) }}
-                            <span class="glyphicon glyphicon-map-marker red"></span>
-                            {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
+                        <div class="form-group col-7">
+                            <li>
+                                <div class="to pos-relative">
+                                    {{ form_errors(form.Destination) }}
 
-                            {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control text-indent',
-                                'placeholder':'Destination'} } ) }}
-                            {{ form_widget(form.Destination.latitude) }}
-                            {{ form_widget(form.Destination.longitude) }}
+                                    {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
+
+                                    {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control text-indent',
+                                        'placeholder':'Destination'} } ) }}
+                                    <span class="glyphicon glyphicon-map-marker red input-icon"></span>
+                                    {{ form_widget(form.Destination.latitude) }}
+                                    {{ form_widget(form.Destination.longitude) }}
+                                </div>
+                            </li>
                         </div>
-                        </li>
-                    </div>
 
-                    <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
-                    <div>
-                        <h3>Villes étapes</h3>
-                        <p>Augmentez vos chances d’avoir des passagers en ajoutant des
-                            villes étapes :</p>
+                        <a id="btn-route" class="btn btn-green pull-right"> <i class="fa fa-map-o fa-2x"></i> </a>
+                        <div>
+                            <h3>Villes étapes</h3>
+                            <p>Augmentez vos chances d’avoir des passagers en ajoutant des
+                                villes étapes :</p>
 
-                        <div class="col-7">
-                            <div>
-                                {{ form_widget(form.waypoints) }}
+                            <div class="col-7">
+                                <div>
+                                    {{ form_widget(form.waypoints) }}
+                                </div>
                             </div>
+
+
                         </div>
-
-
-                    </div>
                     </ul>
                 </section>
                 <!-- End Itinéraire -->
 
-                <!-- Trajet unique -->
-                <div id="unique" class="tab-pane fade in active">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua.</p>
+                <section><!-- Date et heure -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>
+                                Date et heure
+                            </h3>
+                        </div>
+                        <div class="col-md-8 ">
+
+                            <div class="material-switch pull-right">
+                                {{ form_widget(form.round_trip) }}
+                                {{ form_label(form.round_trip,'Trajet aller-retour',{'label_attr': {'class': 'bg-green'}}) }}
+                            </div>
+                        </div>
+
+                    </div>
 
 
+                    <div class="Aller row">
+                        <div class="col-md-4">
+                            <div class="pos-relative">
+                                {{ form_label(form.date_allet_unique,'Date Aller') }}
+                                <span class="fa fa-calendar  date-icon"></span>
+                                {{ form_widget(form.date_allet_unique,{'attr':{'class':'text-indent'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_label(form.heureAller,'Heure Aller') }}
+                            {{ form_widget(form.heureAller) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_label(form.Depart_prevu,'Depart Prévu') }}
+                            {{ form_widget(form.Depart_prevu) }}
+                        </div>
 
-                </div>
-                <!-- End Trajet unique -->
+                    </div>
 
 
-                <!-- Trajet régulier -->
-                <div id="regulier" class="tab-pane fade">
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo
-                        consequat.</p>
-                </div>
+                    <div class="Retour row return-container">
+                        <div class="col-md-4">
+                            <div class="pos-relative">
+                                {{ form_label(form.date_retour_unique,'Date Retour') }}
+                                <span class="fa fa-calendar  date-icon"></span>
+                                {{ form_widget(form.date_retour_unique,{'attr':{'class':'text-indent'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_label(form.heureRetour,'Heure Aller') }}
+                            {{ form_widget(form.heureRetour) }}
+                        </div>
+                    </div>
 
-                <!-- End Trajet régulier -->
+                </section><!-- End Date et heure -->
 
+                <section><!-- Options du trajet -->
+                    <h3>
+                        Options du trajet
+                    </h3>
+                    <p>Choisissez les options disponibles en fonction de votre voiture et vos préférences</p>
+                    <div class="row">
+                        <div class="bagages col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {{ form_label(form.Bagages,'Bagages autorisés :',{'label_attr': {'class': 'darkviolet'}} ) }}
+                                </div>
+
+                                <div class="col-md-9"><!-- [] -->
+
+                                    <div class="option-trajet col-md-2">
+                                        <label for="wanasni_trajetbundle_trajet_Bagages_0">
+                                            {{ form_widget(form.Bagages[0],{'attr':{'class':'iCheck'}}) }}
+                                            <a data-toggle="tooltip" href="javascript:void(0);"
+                                               title="Petit bagage">
+                                                <i class="flat flaticon-icon-72242 flat-2x darkviolet"></i>
+                                            </a>
+                                        </label>
+                                    </div>
+
+                                    <div class="option-trajet col-md-2">
+                                        <label for="wanasni_trajetbundle_trajet_Bagages_1">
+                                            {{ form_widget(form.Bagages[1],{'attr':{'class':'iCheck'}}) }}
+                                            <a data-toggle="tooltip" href="javascript:void(0);"
+                                               title="Bagage moyen">
+                                                <i class="flat flaticon-travelling-654654 flat-2x darkviolet"></i>
+                                            </a>
+                                        </label>
+                                    </div>
+
+                                    <div class="option-trajet col-md-2">
+                                        <label for="wanasni_trajetbundle_trajet_Bagages_2">
+                                            {{ form_widget(form.Bagages[2],{'attr':{'class':'iCheck'}}) }}
+                                            <a data-toggle="tooltip" href="javascript:void(0);"
+                                               title="Grand bagage">
+                                                <i class="flat flaticon-icon-81465 flat-2x darkviolet"></i>
+                                            </a>
+                                        </label>
+                                    </div>
+
+                                    <div class="option-trajet col-md-2">
+                                        <label for="wanasni_trajetbundle_trajet_Bagages_3">
+                                            {{ form_widget(form.Bagages[3],{'attr':{'class':'iCheck'}}) }}
+                                            <a data-toggle="tooltip" href="javascript:void(0);"
+                                               title="Aucun">
+                                                <i class="flat flaticon-cross6546 flat-2x darkviolet"></i>
+                                            </a>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="Preferences col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    {{ form_label(form.Preferences,'Préférences :',{'label_attr': {'class': 'darkviolet'}}) }}
+                                </div>
+                                <div class="col-md-9">
+
+                                    <div class="row">
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.fumeurs) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="Fumeur">
+                                                    <i class="flat flaticon-cigar flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+
+
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.animaux) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="animaux">
+                                                    <i class="flat flaticon-icon-107409 flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.animauxEnCage) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="animaux en cage">
+                                                    <i class="flat flaticon-icon-105685 flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.musique) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="musique">
+                                                    <i class="flat flaticon-music-l5156 flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.detours) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="Détours">
+                                                    <i class="flat flaticon-detour flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.pauseCafe) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="Pause cafe">
+                                                    <i class="flat flaticon-icon-112407 flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+
+                                        <div class="option-trajet col-md-2">
+                                            <label>
+                                                {{ form_widget(form.Preferences.nourriture) }}
+                                                <a data-toggle="tooltip" href="javascript:void(0);"
+                                                   title="Nourriture">
+                                                    <i class="flat flaticon-food-1545 flat-2x darkviolet"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section><!-- End Options du trajet -->
+
+
+                <section><!-- Informations complémentaires  -->
+                    <h3>
+                        {{ form_label(form.informationsComplementaires) }}
+                    </h3>
+                    <div>
+                        {{ form_widget(form.informationsComplementaires) }}
+                    </div>
+                </section><!-- End Informations complémentaires -->
 
                 {{ form_end(form) }}
             </div>
-
-
         </div>
 
     </div>

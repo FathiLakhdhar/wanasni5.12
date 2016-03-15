@@ -15,8 +15,7 @@ class TrajetDateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateAller','date')
-            ->add('dateRetour','date')
+            ->add('date','date')
         ;
     }
     

@@ -116,7 +116,7 @@ class Trajet
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\Choice(choices = {"Petit", "moyen", "Grand", "Aucun"}, message = "Choose a valid Bagages.")
+     * @Assert\Choice(choices = {"Petit", "Moyen", "Grand", "Aucun"}, message = "Choose a valid Bagages.")
      */
     private $Bagages;
 
@@ -125,6 +125,72 @@ class Trajet
      *@ORM\OneToOne(targetEntity="Preferences", cascade={"persist","remove"})
      */
     private $Preferences;
+
+
+    /**
+     * @var \DateTime
+     */
+    private $Date_Allet_unique;
+
+    /**
+     * @var boolean
+     */
+    private $roundTrip;
+
+    /**
+     * @return boolean
+     */
+    public function isRoundTrip()
+    {
+        return $this->roundTrip;
+    }
+
+    /**
+     * @param boolean $roundTrip
+     */
+    public function setRoundTrip($roundTrip)
+    {
+        $this->roundTrip = $roundTrip;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateAlletUnique()
+    {
+        return $this->Date_Allet_unique;
+    }
+
+    /**
+     * @param \DateTime $Date_Allet_unique
+     */
+    public function setDateAlletUnique($Date_Allet_unique)
+    {
+        $this->Date_Allet_unique = $Date_Allet_unique;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateRetourUnique()
+    {
+        return $this->Date_Retour_unique;
+    }
+
+    /**
+     * @param \DateTime $Date_Retour_unique
+     */
+    public function setDateRetourUnique($Date_Retour_unique)
+    {
+        $this->Date_Retour_unique = $Date_Retour_unique;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $Date_Retour_unique;
+
+
 
 
     /**

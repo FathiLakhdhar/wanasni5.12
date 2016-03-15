@@ -3,9 +3,7 @@
  */
 
 var map, infowindow;
-var markers = [];
 var places= [];
-
 
 
 
@@ -32,6 +30,8 @@ function initialize() {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     });
 
+
+
 }
 
 
@@ -39,64 +39,16 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
-function AutoComplete($id){
-    // Create the autocomplete object and associate it with the UI input control.
-    // Restrict the search to the default country, and to place type "address".
-    var $elem=document.getElementById($id);
-
-    var autocomplete = new google.maps.places.Autocomplete(
-        /** @type {!HTMLInputElement} */
-        ($elem), {
-            types: ['geocode'],
-            componentRestrictions: {'country': 'TN'}
-        });
-    autocomplete.bindTo('bounds', map);
-
-    autocomplete.addListener('place_changed', function(){
-        var place = autocomplete.getPlace();
-
-        if (place.geometry) {
-            map.panTo(place.geometry.location);
-            map.setZoom(7);
-
-            //alert(place.geometry.location.lat());
-            //alert(place.geometry.location.lng());
-
-            var $parent =$($elem).parent();
-            $parent.find('input[class=latitude]').val(place.geometry.location.lat());
-            $parent.find('input[class=longitude]').val(place.geometry.location.lng());
-
-            var $db_parent=$parent.parent();
-
-            $db_parent.find('input[class=latitude]').val(place.geometry.location.lat());
-            $db_parent.find('input[class=longitude]').val(place.geometry.location.lng());
-
-
-        } else {
-            window.alert("Autocomplete's returned place contains no geometry");
-            return;
-        }
-
-    });
-
-
-}
 
 
 // When the user selects a city, get the place details for the city and
 // zoom the map in on the city.
-
-function onPlaceChanged(autocomplete,$id) {
-
-}
 
 
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
     var waypts = [];
-
-    var $Panel = document.getElementById('panel');
 
 
     var $container = $('div#wanasni_trajetbundle_trajet_waypoints');
@@ -132,6 +84,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                  '</b><br>';
                  summaryPanel.innerHTML += route.legs[i].start_address + '<b> to </b>';
                  summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                 summaryPanel.innerHTML += route.legs[i].duration.text + '<br>';
                  summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
                  }
 
