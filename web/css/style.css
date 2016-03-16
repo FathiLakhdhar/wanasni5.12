@@ -36,10 +36,13 @@ video {
 h1,h2,h3,h4,h5,h6{
     font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
 label{
     font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
+    font-weight: 500;
 }
+
 a,a:hover,a:active,a:focus{
     text-decoration: none;
 }

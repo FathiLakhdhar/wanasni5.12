@@ -3,3 +3,11 @@ services:
         class: Wanasni\UserBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: wanasni_user_registration }
+
+
+
+    wanasni_user_form_edit_profile:
+        class: Wanasni\UserBundle\Form\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: wanasni_user_edit_profile }

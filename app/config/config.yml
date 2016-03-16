@@ -79,6 +79,10 @@ fos_user:
         confirmation:
             enabled:    true
 
+    profile:
+        form:
+            type: wanasni_user_edit_profile
+
 
 services:
     fos_user.doctrine_registry:

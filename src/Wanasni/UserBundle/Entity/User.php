@@ -73,6 +73,21 @@ class User extends BaseUser
      */
     protected $minibio;
 
+
+    /**
+     * @ORM\Column(type="string", length=8, nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="date", nullable=true)
+     *  @Assert\Date()
+     */
+    protected $date_naissance;
+
+
+
     /**
      * @return mixed
      */
@@ -149,4 +164,60 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set date_naissance
+     *
+     * @param \DateTime $dateNaissance
+     * @return User
+     */
+    public function setDateNaissance($dateNaissance)
+    {
+        $this->date_naissance = $dateNaissance;
+    
+        return $this;
+    }
+
+    /**
+     * Get date_naissance
+     *
+     * @return \DateTime 
+     */
+    public function getDateNaissance()
+    {
+        return $this->date_naissance;
+    }
 }
