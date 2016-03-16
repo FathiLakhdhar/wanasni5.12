@@ -1,0 +1,160 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="container">
+
+    <ul id="nav-pills-h-profil-e" class="nav nav-pills nav-justified">
+        <li class="triangle-down">
+            <a data-toggle="pill" href="#Covoiturages">
+                <i class="fa fa-car"></i>
+                <p>Covoiturages</p>
+            </a>
+        </li>
+        <li class="triangle-down">
+            <a data-toggle="pill" href="#Avis">
+                <i class="fa fa-star"></i>
+                <p>Avis</p>
+            </a>
+        </li>
+        <li class="triangle-down">
+            <a data-toggle="pill" href="#Alerts">
+                <i class="fa fa-bullhorn"></i>
+                <p>Alerts</p>
+            </a>
+        </li>
+        <li class="triangle-down">
+            <a data-toggle="pill" href="#Messages">
+                <i class="fa fa-envelope-o"></i>
+                <p>Messages</p>
+            </a>
+        </li>
+        <li class="triangle-down">
+            <a data-toggle="pill" href="#Notifications">
+                <i class="fa fa-bell-o"></i>
+                <p>Notifications</p>
+            </a>
+        </li>
+        <li class="triangle-down active">
+            <a data-toggle="pill" href="#Profil">
+                <i class="flaticon-man flat-2x"></i>
+                <p>Profil</p>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content thumbnail">
+
+        <!--  Tab pane Covoiturages -->
+        <div id="Covoiturages" class="tab-pane fade ">
+            <div class="page-header">
+                <h2 class="violet-red">Covoiturages</h2>
+            </div>
+        </div>
+        <!-- end Tab pane Covoiturages -->
+
+        <!--  Tab pane Avis -->
+        <div id="Avis" class="tab-pane fade">
+            <div class="page-header">
+                <h2 class="violet-red">Avis</h2>
+            </div>
+        </div>
+        <!-- end Tab pane Avis -->
+        <!--  Tab pane Alerts -->
+        <div id="Alerts" class="tab-pane fade">
+            <div class="page-header">
+                <h2 class="violet-red">Alerts</h2>
+            </div>
+        </div>
+        <!-- end Tab pane Alerts -->
+        <!-- Tab pane Messages -->
+        <div id="Messages" class="tab-pane fade">
+            <div class="page-header">
+                <h2 class="violet-red">Messages</h2>
+            </div>
+        </div>
+        <!-- end Tab pane Messages -->
+        <!-- Tab pane Notifications -->
+        <div id="Notifications" class="tab-pane fade">
+            <div class="page-header">
+                <h2 class="violet-red">Notifications</h2>
+            </div>
+        </div>
+        <!-- end Tab pane Notifications -->
+
+        <!-- Tab pane Profile -->
+
+        <div id="Profil" class="tab-pane fade in active">
+            <div class="page-header">
+                <h2 class="violet-red">Profil</h2>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a data-toggle="pill" href="#info_personnel">Informations personnelles</a></li>
+                        <li><a data-toggle="pill" href="#photo">Photo</a></li>
+                        <li><a data-toggle="pill" href="#vehicule">Véhicule</a></li>
+                        <li><a data-toggle="pill" href="#mot-de-passe">Mot de passe</a></li>
+                        <li><a data-toggle="pill" href="#fermeture-de-compte">Fermeture de compte</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+
+                    <div class="tab-content thumbnail">
+
+                        <div id="info_personnel" class="tab-pane fade in active">
+                            <div class="page-header">
+                                <h2 class="violet-red">info_personnel</h2>
+                            </div>
+
+                            {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+                            {{ form_widget(form) }}
+                            <div>
+                                <input type="submit" value="{{ 'profile.edit.submit'|trans }}"/>
+                            </div>
+                            {{ form_end(form) }}
+
+                        </div>
+
+
+                        <div id="photo" class="tab-pane fade">
+                            <div class="page-header">
+                                <h2 class="violet-red">photo</h2>
+                            </div>
+                        </div>
+
+
+                        <div id="vehicule" class="tab-pane fade">
+                            <div class="page-header">
+                                <h2 class="violet-red">Véhicule</h2>
+                            </div>
+                        </div>
+
+                        <div id="mot-de-passe" class="tab-pane fade">
+                            <div class="page-header">
+                                <h2 class="violet-red">Mot de Passe</h2>
+                            </div>
+                        </div>
+
+                        <div id="fermeture-de-compte" class="tab-pane fade">
+                            <div class="page-header">
+                                <h2 class="violet-red">Fermeture de compte</h2>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div><!-- end Tab pane Profile -->
+    </div>
+</div>
+
+
+

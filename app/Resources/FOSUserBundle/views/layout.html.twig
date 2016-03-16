@@ -2,10 +2,7 @@
 
 
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" type="text/css"  href="{{ asset('css/style_Security.css') }}"/>
-{% endblock stylesheets %}
+
 
 
 {% block body %}
@@ -50,19 +47,3 @@
 
 {% endblock body %}
 
-
-{% block footer %}
-    <footer>
-        <div class="container">
-            <div class="row">
-
-                <div class="col-sm-8 col-sm-offset-2">
-                    <div class="footer-border"></div>
-                    <p><a href="{{ path('homepage') }}"><strong>Wanasni 2016 ©</strong></a>
-                        having a lot of fun. <i class="fa fa-smile-o"></i></p>
-                </div>
-
-            </div>
-        </div>
-    </footer>
-{% endblock footer %}
