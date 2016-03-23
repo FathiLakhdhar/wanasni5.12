@@ -748,6 +748,15 @@ Label
 /****************
 Color
 **************/
+
+.blue{
+    color: #5bc0de;
+}
+
+.bg-blue{
+    background-color: #5bc0de;
+}
+
 .yellow-dark {
     color: #FFBE00;
 }
@@ -955,7 +964,7 @@ span.input-icon{
 span.date-icon{
     position: absolute;
     opacity: 0.5;
-    top: 47px;
+    top: 12px;
     left: 14px;
     z-index: 2;
     font-size: 25px;
@@ -1015,34 +1024,20 @@ span.date-icon{
 }
 
 
-/*==================
-Jquery css
-========================*/
+/*============================
+    Calendar simple | round day
+============================*/
 
-.ui-datepicker-header {
-    background: #5e5e5e;
-    color: #e0e0e0;
-    font-weight: bold;
-    -webkit-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, 2);
-    -moz-box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
-    box-shadow: inset 0px 1px 1px 0px rgba(250, 250, 250, .2);
-    text-shadow: 1px -1px 0px #000;
-    filter: dropshadow(color=#000, offx=1, offy=-1);
-    line-height: 30px;
-    border-width: 1px 0 0 0;
-    border-style: solid;
-    border-color: #111;
+ .ui-datepicker td.simple-date-selected a,
+ .ui-datepicker td.simple-date-selected a {
+    background-color: #5CB85C;
+     color: #FFFFFF;
 }
-
-.ui-datepicker th {
-    text-transform: uppercase;
-    font-size: 8pt;
-    padding: 5px 0;
-    color: #666666;
-    text-shadow: 1px 0px 0px #fff;
-    filter: dropshadow(color=#fff, offx=1, offy=0);
+ .ui-datepicker td.round-date-selected a,
+ .ui-datepicker td.round-date-selected a {
+    background-color:   #5BC0DE;
+     color: #FFFFFF;
 }
-
 
 
 /*****************************
@@ -1101,6 +1096,7 @@ Jquery css
 
 
 
+
 /***********************
     Profil CSS
 **************************/
@@ -1137,6 +1133,254 @@ Jquery css
 }
 
 
+.update-photo{
+    width: 150px;
+    height: 150px;
+    background-image: url("../img/UpdatePhoto-icon.png");
+    background-repeat: no-repeat;
+    background-size: 150px;
+    margin-left: 100px;
+    border: 2px dashed #5e5e5e;
+}
+.update-photo>img{
+    max-width:146px ;
+    max-height: 146px;
+}
+
+
+/**************************
+Messages style
+********************************/
+
+.messages{
+    height: 700px;
+    border: 1px solid #03A9F4;
+}
+
+.content-message{
+    border: 1px solid #03A9F4;
+}
+
+
+
+.heading-messages{
+    padding: 10px;
+}
+
+.message>a{
+    position: relative;
+    margin: 0;
+    padding: 10px;
+    display: block;
+    white-space: nowrap;
+    border-bottom: 1px solid #cccccc;
+}
+
+.message>a:hover{
+    background-color: #eeeeee;
+}
+
+.message h4{
+    color: #000000;
+}
+.message p {
+    margin: 0 0 0 45px;
+    font-size: 14px;
+    color: #000000;
+}
+
+.message small {
+    position: absolute;
+    top: 60px;
+    right: 6px;
+}
+
+.body-messages{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+
+.message-user-img {
+    margin: auto 10px auto auto;
+    max-width: 60px;
+}
+
+/*
+ * Component: Box
+ * --------------
+ */
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.box.box-success {
+    border-top-color: #00a65a;
+}
+.box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+}
+
+.box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0;
+    line-height: 1;
+}
+.box-header>.box-tools {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+
+.box-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top: 1px solid #f4f4f4;
+    padding: 10px;
+    background-color: #fff;
+}
+
+/*
+ * Component: Direct Chat
+ * ----------------------
+ */
+.direct-chat .box-body {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    position: relative;
+    overflow-x: hidden;
+    padding: 0;
+    height: 500px;
+}
+
+.direct-chat-messages {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    padding: 10px;
+    height: 250px;
+    overflow: auto;
+}
+
+.direct-chat-success .right > .direct-chat-text {
+    background: #00a65a;
+    border-color: #00a65a;
+    color: #ffffff;
+}
+.direct-chat-success .right > .direct-chat-text:after,
+.direct-chat-success .right > .direct-chat-text:before {
+    border-left-color: #00a65a;
+}
+
+.direct-chat-info {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+}
+
+.direct-chat-name {
+    font-weight: 600;
+}
+.direct-chat-timestamp {
+    color: #999;
+}
+.direct-chat-img {
+    border-radius: 50%;
+    float: left;
+    width: 40px;
+    height: 40px;
+}
+
+.direct-chat-text {
+    border-radius: 5px;
+    position: relative;
+    padding: 5px 10px;
+    background: #d2d6de;
+    border: 1px solid #d2d6de;
+    margin: 5px 0 0 50px;
+    color: #444;
+}
+.direct-chat-text:before {
+    border-width: 6px;
+    margin-top: -6px;
+}
+
+.direct-chat-text:after, .direct-chat-text:before {
+    position: absolute;
+    right: 100%;
+    top: 15px;
+    border: solid transparent;
+    border-right-color: #d2d6de;
+    content: ' ';
+    height: 0;
+    width: 0;
+    pointer-events: none;
+}
+
+.direct-chat-text:after {
+    border-width: 5px;
+    margin-top: -5px;
+}
+
+.direct-chat-text:after, .direct-chat-text:before {
+    position: absolute;
+    right: 100%;
+    top: 15px;
+    border: solid transparent;
+    border-right-color: #d2d6de;
+    content: ' ';
+    height: 0;
+    width: 0;
+    pointer-events: none;
+}
+
+.direct-chat-msg {
+    margin-bottom: 10px;
+}
+.direct-chat-success .right>.direct-chat-text:after, .direct-chat-success .right>.direct-chat-text:before {
+    border-left-color: #00a65a;
+}
+.right .direct-chat-text:after, .right .direct-chat-text:before {
+    right: auto;
+    left: 100%;
+    border-right-color: transparent;
+    border-left-color: #d2d6de;
+}
+
+.right .direct-chat-img {
+    float: right;
+}
+.right .direct-chat-text {
+    margin-right: 50px;
+    margin-left: 0;
+}
 /*================================
     RESPONSIVE STYLES
  ============================  */

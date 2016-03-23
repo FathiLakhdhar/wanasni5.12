@@ -107,12 +107,6 @@ class Trajet
     private $Depart_prevu;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="TrajetDate", mappedBy="trajet", cascade={"remove"})
-     * @Assert\Valid()
-     */
-    protected $dates;
-
 
     /**
      * @ORM\Column(type="string")
@@ -133,9 +127,85 @@ class Trajet
     private $Date_Allet_unique;
 
     /**
+     * @var \DateTime
+     */
+    private $Date_Retour_unique;
+
+    /**
      * @var boolean
      */
     private $roundTrip;
+
+
+    /**
+     * @ORM\Column(type="array")
+     * @var array
+     */
+    private $datesAller;
+
+    /**
+     * @ORM\Column(type="array")
+     * @var array
+     */
+    private $datesRetour;
+
+
+    /**
+     * @var \DateTime
+     */
+    private $regularBeginDate;
+
+
+    /**
+     * @var \DateTime
+     */
+    private $regularEndDate;
+
+    /**
+     * @return \DateTime
+     */
+    public function getRegularBeginDate()
+    {
+        return $this->regularBeginDate;
+    }
+
+    /**
+     * @param \DateTime $regularBeginDate
+     */
+    public function setRegularBeginDate($regularBeginDate)
+    {
+        $this->regularBeginDate = $regularBeginDate;
+    }
+
+
+    /**
+     * @return \DateTime
+     */
+    public function getRegularEndDate()
+    {
+        return $this->regularEndDate;
+    }
+
+    /**
+     * @param \DateTime $regularEndDate
+     */
+    public function setRegularEndDate($regularEndDate)
+    {
+        $this->regularEndDate = $regularEndDate;
+    }
+
+
+    /**
+     * Trajet constructor.
+     */
+    public function __construct()
+    {
+        $this->datesAller = new ArrayCollection();
+        $this->datesRetour = new ArrayCollection();
+        $this->waypoints=new ArrayCollection();
+    }
+
+
 
     /**
      * @return boolean
@@ -185,22 +255,7 @@ class Trajet
         $this->Date_Retour_unique = $Date_Retour_unique;
     }
 
-    /**
-     * @var \DateTime
-     */
-    private $Date_Retour_unique;
 
-
-
-
-    /**
-     * Trajet constructor.
-     */
-    public function __construct()
-    {
-        $this->dates = new ArrayCollection();
-        $this->waypoints=new ArrayCollection();
-    }
 
 
     /**
@@ -378,39 +433,6 @@ class Trajet
     }
 
     /**
-     * Add dates
-     *
-     * @param \Wanasni\TrajetBundle\Entity\TrajetDate $dates
-     * @return Trajet
-     */
-    public function addDate(\Wanasni\TrajetBundle\Entity\TrajetDate $dates)
-    {
-        $this->dates[] = $dates;
-    
-        return $this;
-    }
-
-    /**
-     * Remove dates
-     *
-     * @param \Wanasni\TrajetBundle\Entity\TrajetDate $dates
-     */
-    public function removeDate(\Wanasni\TrajetBundle\Entity\TrajetDate $dates)
-    {
-        $this->dates->removeElement($dates);
-    }
-
-    /**
-     * Get dates
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDates()
-    {
-        return $this->dates;
-    }
-
-    /**
      * Set Preferences
      *
      * @param \Wanasni\TrajetBundle\Entity\Preferences $preferences
@@ -533,5 +555,51 @@ class Trajet
     public function getDepartPrevu()
     {
         return $this->Depart_prevu;
+    }
+
+    /**
+     * Set datesAller
+     *
+     * @param array $datesAller
+     * @return Trajet
+     */
+    public function setDatesAller($datesAller)
+    {
+        $this->datesAller = $datesAller;
+    
+        return $this;
+    }
+
+    /**
+     * Get datesAller
+     *
+     * @return array 
+     */
+    public function getDatesAller()
+    {
+        return $this->datesAller;
+    }
+
+    /**
+     * Set datesRetour
+     *
+     * @param array $datesRetour
+     * @return Trajet
+     */
+    public function setDatesRetour($datesRetour)
+    {
+        $this->datesRetour = $datesRetour;
+    
+        return $this;
+    }
+
+    /**
+     * Get datesRetour
+     *
+     * @return array 
+     */
+    public function getDatesRetour()
+    {
+        return $this->datesRetour;
     }
 }

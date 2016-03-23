@@ -118,38 +118,78 @@
                     </div>
 
 
-                    <div class="Aller row">
-                        <div class="col-md-4">
-                            <div class="pos-relative">
+                    <div id="publication-unique">
+
+                        <div class="Aller row">
+                            <div class="col-md-4">
                                 {{ form_label(form.date_allet_unique,'Date Aller') }}
-                                <span class="fa fa-calendar  date-icon"></span>
-                                {{ form_widget(form.date_allet_unique,{'attr':{'class':'text-indent'}}) }}
+                                <div class="pos-relative">
+                                    <span class="fa fa-calendar  date-icon"></span>
+                                    {{ form_widget(form.date_allet_unique,{'attr':{'class':'text-indent form-control'}}) }}
+                                </div>
                             </div>
+                            <div class="col-md-4">
+                                {{ form_label(form.heureAller,'Heure Aller') }}
+                                {{ form_widget(form.heureAller) }}
+                            </div>
+                            <div class="col-md-3">
+                                {{ form_label(form.Depart_prevu,'Depart Prévu') }}
+                                {{ form_widget(form.Depart_prevu) }}
+                            </div>
+
                         </div>
-                        <div class="col-md-4">
-                            {{ form_label(form.heureAller,'Heure Aller') }}
-                            {{ form_widget(form.heureAller) }}
-                        </div>
-                        <div class="col-md-3">
-                            {{ form_label(form.Depart_prevu,'Depart Prévu') }}
-                            {{ form_widget(form.Depart_prevu) }}
+
+
+                        <div class="Retour row return-container" style="display: none;">
+                            <div class="col-md-4">
+                                {{ form_label(form.date_retour_unique,'Date Retour') }}
+                                <div class="pos-relative">
+                                    <span class="fa fa-calendar  date-icon"></span>
+                                    {{ form_widget(form.date_retour_unique,{'attr':{'class':'text-indent form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_label(form.heureRetour,'Heure Aller') }}
+                                {{ form_widget(form.heureRetour) }}
+                            </div>
                         </div>
 
                     </div>
 
 
-                    <div class="Retour row return-container">
-                        <div class="col-md-4">
-                            <div class="pos-relative">
-                                {{ form_label(form.date_retour_unique,'Date Retour') }}
-                                <span class="fa fa-calendar  date-icon"></span>
-                                {{ form_widget(form.date_retour_unique,{'attr':{'class':'text-indent'}}) }}
+                    <div id="publication-regular"><!-- REGULAR BLOCK -->
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12"><!-- A partir du : -->
+                                        {{ form_label(form.regular_begin_date,'A partir du :') }}
+                                        <div class="pos-relative">
+                                            <span class="fa fa-calendar  date-icon"></span>
+                                            {{ form_widget(form.regular_begin_date,{'attr':{'class':'text-indent form-control'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12"><!-- Jusqu'au : -->
+                                        {{ form_label(form.regular_end_date,'Jusqu\'au :') }}
+                                        <div class="pos-relative">
+                                            <span class="fa fa-calendar  date-icon"></span>
+                                            {{ form_widget(form.regular_end_date,{'attr':{'class':'text-indent form-control'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div id="multiDatesPicker" data-date-format="yy-mm-dd" class="ll-skin-melon"></div>
+                            </div>
+
                         </div>
-                        <div class="col-md-4">
-                            {{ form_label(form.heureRetour,'Heure Aller') }}
-                            {{ form_widget(form.heureRetour) }}
-                        </div>
+
+
+                        {{ form_widget(form.datesAller) }}
+                        {{ form_widget(form.datesRetour) }}
+
+
                     </div>
 
                 </section><!-- End Date et heure -->
@@ -320,6 +360,7 @@
         </div>
 
     </div>
+
     <!-- Map -->
     <div class="col-lg-4">
         <div class="thumbnail">
@@ -330,6 +371,52 @@
         <div class="thumbnail">
             <div id="directions-panel"></div>
             <div id="panel"></div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            ...
+        </div>
+    </div>
+</div>
+
+
+<!-- Dialog choose day -->
+<div id="chooseDate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Ajouter une date</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Voulez vous faire un trajet aller et/ou retour à cette date ?</p>
+                <form action="">
+                    <label for="simple-choice" class="checkbox">
+                        <input id="simple-choice" type="checkbox" name="simple-choice" value="" class="choose-modal">
+                        <span class="simple-choice-label">Trajet aller</span>
+                    </label>
+                    <label for="round-choice" class="checkbox">
+                        <input id="round-choice" type="checkbox" name="round-choice" value="" class="choose-modal">
+                        <span class="round-choice-label">Trajet retour</span>
+                    </label>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-validation cho" type="button" data-dismiss="modal">
+                    Ok
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

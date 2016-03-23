@@ -27,16 +27,230 @@ function updateFrequencesChanged(){
 
     if (index==0){
         $('#wanasni_trajetbundle_trajet_frequence').val("UNIQUE");
+        $("#publication-regular").hide();
+        $("#publication-unique").show();
     }else{
         $('#wanasni_trajetbundle_trajet_frequence').val("REGULAR");
+        $("#publication-unique").hide();
+        $("#publication-regular").show();
     }
+
+    /*
+    Listeners
+     */
 
     $('.nav-tabs li').eq(0).on('click', function(){
         $('#wanasni_trajetbundle_trajet_frequence').val("UNIQUE");
+        $("#publication-regular").hide();
+        $("#publication-unique").show();
     });
+
     $('.nav-tabs li').eq(1).on('click', function(){
         $('#wanasni_trajetbundle_trajet_frequence').val("REGULAR");
+        $("#publication-unique").hide();
+        $("#publication-regular").show();
     });
+
+}
+
+
+var regularTrip = function () {
+
+    var self = {dates: {simple: {}, round: {}}}, that = {};
+
+
+
+    self.load = function () {
+        self.widgetCalendar = $("#multiDatesPicker");
+        self.widgetChooseDate = $("#chooseDate");
+        self.widgetDateStart = $("#wanasni_trajetbundle_trajet_regular_begin_date");
+        self.widgetDateStop = $("#wanasni_trajetbundle_trajet_regular_end_date");
+        self.widgetRoundTrip = $("#wanasni_trajetbundle_trajet_round_trip");
+
+        /*
+        self.widgetCalendarAll = $("#all-calendars");
+        self.widgetAllModal = $("#seeAll");
+        self.isEdition = $("#is_edition").val() == 1;
+        self.isBackFromNextStep = $("#is_back").val() == 1;
+        self.hasErrors = $("#has_errors").val() == 1;
+*/
+    };
+
+    self.hasDate = function (typeDate, dateKey) {
+        var dates = typeDate === "simple" ? self.dates.simple : self.dates.round;
+        return dates[dateKey] ? true : false
+    };
+
+    self.getDateKey = function (date) {
+        return $.datepicker.formatDate("yymmdd", date)
+    };
+
+    self.getReverseDateKey = function (dateKey) {
+        return new Date(dateKey.substr(0, 4), parseInt(dateKey.substr(4, 2), 10) - 1, dateKey.substr(6, 2))
+    };
+
+    self.addDateToForm = function (collectionId, dateKey) {
+        if ($(collectionId + " input[value=" + dateKey + "]").length > 0) {
+            return
+        }
+        var prototype = $(collectionId).data("prototype");
+        var newItem = prototype.replace(/__name__/g, dateKey);
+        $(collectionId).append(newItem);
+        $(collectionId + "_" + dateKey).attr("value", dateKey)
+    };
+
+    self.addRemoveDate = function (action, typeTrip, dateTrip) {
+        var dateKey = self.getDateKey(dateTrip);
+        var regularId = {simple:"#wanasni_trajetbundle_trajet_datesAller", round:"#wanasni_trajetbundle_trajet_datesRetour"};
+        if (action === "add") {
+            self.dates[typeTrip][dateKey] = dateTrip;
+            self.addDateToForm(regularId[typeTrip], dateKey)
+        } else {
+            delete self.dates[typeTrip][dateKey];
+            $(regularId[typeTrip] + " input[value=" + dateKey + "]").parent().remove()
+        }
+    };
+
+
+    self.updateDateStart = function () {
+        var dateStart = self.widgetDateStart.datepicker("getDate");
+        self.widgetCalendar.datepicker("option", "minDate", dateStart);
+        self.widgetCalendar.datepicker("option", "setDate", dateStart);
+
+        self.widgetDateStop.datepicker("option", "minDate", dateStart);
+        self.widgetDateStop.datepicker("option", "setDate", dateStart);
+
+        //self.widgetCalendarAll.datepicker("option", "minDate", dateStart);
+        if (self.dateStartPrevious < dateStart) {
+            while (self.dateStartPrevious < dateStart) {
+                self.addRemoveDate("remove", "simple", self.dateStartPrevious);
+                self.addRemoveDate("remove", "round", self.dateStartPrevious);
+                self.dateStartPrevious.setDate(self.dateStartPrevious.getDate() + 1)
+            }
+        } else {
+            self.dateStartPrevious = new Date(dateStart.getTime())
+        }
+        //self.updateDays();
+        self.widgetCalendar.datepicker("refresh")
+    };
+
+    self.updateDateStop = function () {
+        var dateStop = self.widgetDateStop.datepicker("getDate");
+        self.widgetCalendar.datepicker("option", "maxDate", dateStop);
+        self.widgetDateStart.datepicker("option", "maxDate", dateStop);
+        //self.widgetCalendarAll.datepicker("option", "maxDate", dateStop);
+        if (self.dateStopPrevious > dateStop) {
+            while (self.dateStopPrevious > dateStop) {
+                self.addRemoveDate("remove", "simple", self.dateStopPrevious);
+                self.addRemoveDate("remove", "round", self.dateStopPrevious);
+                self.dateStopPrevious.setDate(self.dateStopPrevious.getDate() - 1)
+            }
+        } else {
+            self.dateStopPrevious = new Date(dateStop.getTime())
+        }
+        //self.updateDays();
+        self.widgetCalendar.datepicker("refresh")
+    };
+
+
+    self.beforeShowDay = function (date) {
+        var dateCalendarKey = self.getDateKey(date), dateCalendarClass = "";
+        if (self.hasDate("simple", dateCalendarKey)) {
+            dateCalendarClass += "simple-date-selected"
+        }
+        if (self.hasDate("round", dateCalendarKey)) {
+            dateCalendarClass += " round-date-selected"
+        }
+        return [true, dateCalendarClass]
+    };
+
+
+    that.init = function () {
+
+        self.load();
+        self.initialEndDate = self.widgetDateStop.datepicker("getDate");
+        var optionsCalendar = {
+            selectOtherMonths: true,
+            showAnim: "",
+            dateFormat: self.widgetCalendar.attr("data-date-format"),
+            firstDay: "1"
+        };
+        self.widgetDateStart.datepicker(optionsCalendar);
+        self.widgetDateStart.datepicker("setDate", new Date());
+        self.widgetDateStart.datepicker("option", "onSelect", self.updateDateStart);
+        self.widgetDateStart.on("change", self.updateDateStart);
+        self.widgetDateStop.datepicker(optionsCalendar);
+        self.widgetDateStop.datepicker("setDate", "3m" );
+        self.widgetDateStop.datepicker("option", "onSelect", self.updateDateStop);
+        self.widgetDateStop.on("change", self.updateDateStop);
+
+        if (self.widgetDateStart.length) {
+            self.dateStartPrevious = new Date(self.widgetDateStart.datepicker("getDate").getTime());
+            self.dateStopPrevious = new Date(self.widgetDateStop.datepicker("getDate").getTime())
+        }
+
+
+        self.widgetCalendar.datepicker(jQuery.extend({}, optionsCalendar, {
+            defaultDate: self.widgetDateStart.datepicker("getDate"),
+            minDate: self.widgetDateStart.datepicker("getDate"),
+            maxDate: self.widgetDateStop.datepicker("getDate"),
+            beforeShowDay: self.beforeShowDay,
+            onSelect: function () {
+                var dayCalendar = self.getDateKey(self.widgetCalendar.datepicker("getDate"));
+                if ( self.widgetRoundTrip.is(":checked") ) {
+                    self.widgetChooseDate.attr("data-day", dayCalendar);
+                    $('#chooseDate').modal('show');
+                    if (self.hasDate("simple", dayCalendar)) {
+                        $("input[name=simple-choice]").attr("checked", "checked");
+                        $(".simple-choice-label").addClass("green-label")
+                    }
+                    if (self.hasDate("round", dayCalendar)) {
+                        $("input[name=round-choice]").attr("checked", "checked");
+                        $(".round-choice-label").addClass("blue-label")
+                    }
+                } else {
+                    var dayCalendarSimple = self.getReverseDateKey(dayCalendar);
+                    if (self.hasDate("simple", dayCalendar)) {
+                        self.addRemoveDate("remove", "simple", dayCalendarSimple)
+                    } else {
+                        self.addRemoveDate("add", "simple", dayCalendarSimple)
+                    }
+                }
+            }
+        }));
+
+
+    };
+
+    return that;
+
+}();//Regular function
+
+var options_Date=
+{
+    dateFormat: "yy-mm-dd",
+    minDate: new Date(),
+    maxDate: "+3m",
+    monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+    dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+    dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+    dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ]
+};
+
+function UniqueTrip() {
+
+        $("[datepicker=date_allet_unique]").datepicker(jQuery.extend({}, options_Date,{
+            onClose: function( selectedDate ) {
+                $( "[datepicker=date_retour_unique]" ).datepicker( "option", "minDate", selectedDate );
+            }
+        }));
+
+        $("[datepicker=date_retour_unique]").datepicker(jQuery.extend({}, options_Date,{
+            onClose: function( selectedDate ) {
+                $( "[datepicker=date_allet_unique]" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        }));
+
 
 
 
@@ -44,14 +258,27 @@ function updateFrequencesChanged(){
 }
 
 
+
+
+
 $( document ).ready(function() {
-
     updateFrequencesChanged();
-
 
     $("#wanasni_trajetbundle_trajet_round_trip").on("change", updateRoundTripChanged);
 
     updateRoundTripChanged();
 
+    UniqueTrip();
 
+    regularTrip.init();
+
+
+
+
+/*
+ $('#multiDatesPicker').multiDatesPicker($options_Date);
+ */
 });
+
+
+

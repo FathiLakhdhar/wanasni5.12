@@ -21,6 +21,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/melon.datepicker.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/xs-menu.css') }}">
         <link rel="stylesheet" type="text/css"  href="{{ asset('css/form_elements.css') }}"/>
@@ -139,10 +140,13 @@
 
 
     <script language="JavaScript" src="{{ asset('js/app.js') }}"></script>
+
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+
     <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
 
     <script src="http://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places"></script>
+
     <script src="{{ asset('js/autoComplete.js') }}"></script>
 
     <script language="JavaScript">
@@ -165,9 +169,11 @@
                 $("#control-sidebar").toggleClass('control-sidebar-open');
             });
 
+
+
             var $options_Date=
             {
-                dateFormat: "dd/mm/yy",
+                dateFormat: "yy-mm-dd",
                 minDate: new Date(),
                 maxDate: "+1y",
                 monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
@@ -176,9 +182,9 @@
                 dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ]
             };
 
-            $("[datepicker]").datepicker(
-                    $options_Date
-                    );
+            $("[datepicker]").datepicker($options_Date)
+                    .datepicker('widget').wrap('<div class="ll-skin-melon"/>');
+
 
             $("[data-toggle=tooltip]").tooltip();
         });

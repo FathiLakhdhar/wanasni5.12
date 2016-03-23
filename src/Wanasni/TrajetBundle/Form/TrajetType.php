@@ -5,6 +5,7 @@ namespace Wanasni\TrajetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 class TrajetType extends AbstractType
 {
@@ -32,7 +33,7 @@ class TrajetType extends AbstractType
             ->add('round_trip','checkbox')
 
             ->add('date_allet_unique','text',array(
-                'attr'=> array('datepicker'=>'','class'=>'form-control','placeholder'=>'JJ/MM/AAAA')
+                'attr'=> array('datepicker'=>'date_allet_unique','placeholder'=>'JJ/MM/AAAA')
             ))
 
 
@@ -46,7 +47,7 @@ class TrajetType extends AbstractType
                 ))
 
             ->add('date_retour_unique','text',array(
-                'attr'=> array('datepicker'=>'','class'=>'form-control form-control-feedback','placeholder'=>'JJ/MM/AAAA')
+                'attr'=> array('datepicker'=>'date_retour_unique','placeholder'=>'JJ/MM/AAAA')
             ))
 
             ->add('heureRetour', 'time', array(
@@ -54,6 +55,26 @@ class TrajetType extends AbstractType
                 'widget' => 'choice',
             ))
 
+
+            ->add('datesAller','collection', array(
+                'type'=> 'text',
+                'allow_add'=> true,
+                'allow_delete' => true,
+            ))
+            ->add('datesRetour','collection', array(
+                'type'=> 'text',
+                'allow_add'=> true,
+                'allow_delete' => true,
+            ))
+
+
+            ->add('regular_begin_date','text',array(
+                'attr'=> array('datepicker'=>'','placeholder'=>'JJ/MM/AAAA'),
+            ))
+
+            ->add('regular_end_date','text',array(
+                'attr'=> array('datepicker'=>'','placeholder'=>'JJ/MM/AAAA')
+            ))
 
             ->add('Bagages','choice',array(
                 'choices'=> array(

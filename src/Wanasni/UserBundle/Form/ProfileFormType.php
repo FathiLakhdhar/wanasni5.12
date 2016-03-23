@@ -26,8 +26,9 @@ class ProfileFormType extends BaseType
         ->add('phone','text',array(
             'attr'=>array('class'=>'form-control','placeholder'=>'XX XXX XXX')
         ))
-        ->add('date_naissance','text',array(
-            'attr'=> array('datepicker'=>'','class'=>'form-control','placeholder'=>'JJ/MM/AAAA')
+        ->add('date_naissance', 'date', array(
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd',
         ))
 
         ->add('minibio','textarea',array(

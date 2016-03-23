@@ -70,6 +70,130 @@
             <div class="page-header">
                 <h2 class="violet-red">Messages</h2>
             </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="messages thumbnail">
+                        <div class="heading-messages">
+                            <h2>Tous les messages</h2>
+                            <div class="pos-relative">
+                                <span class="glyphicon glyphicon-search input-icon"></span>
+                                <input type="text" class="form-control text-indent">
+                            </div>
+                        </div>
+
+                        <ul class="body-messages">
+
+
+                            <li class="message"><!-- start message -->
+                                <a href="#" class="bg-info">
+                                    <div class="pull-left">
+                                        <img src="{{ asset('img/user.jpg') }}" class="img-circle message-user-img"
+                                             alt="User Image">
+                                    </div>
+                                    <h4>
+                                        Sender Name
+                                    </h4>
+                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                    <p>bla bla bla :p hhhh</p>
+                                </a>
+                            </li><!--  end message -->
+
+
+                            <li class="message"><!-- start message -->
+                                <a href="#" class="">
+                                    <div class="pull-left">
+                                        <img src="{{ asset('img/user.jpg') }}" class="img-circle message-user-img"
+                                             alt="User Image">
+                                    </div>
+                                    <h4>
+                                        Sender Name
+                                    </h4>
+                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                    <p>bla bla bla :p hhhh</p>
+                                </a>
+                            </li><!--  end message -->
+
+
+                        </ul>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="content-message">
+
+                        <div class="box box-success direct-chat direct-chat-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Sarah Bullock</h3>
+                                <div class="box-tools pull-right">
+                                        <span data-toggle="tooltip" title="3 New Messages"
+                                              class="badge bg-green">3</span>
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i
+                                                class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                                            data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i
+                                                class="fa fa-times"></i></button>
+                                </div>
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+                                <!-- Conversations are loaded here -->
+                                <div class="direct-chat-messages">
+
+
+                                    <!-- Message. Default to the left -->
+                                    <div class="direct-chat-msg">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                                            <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                                        </div><!-- /.direct-chat-info -->
+                                        <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
+                                             alt="message user image"><!-- /.direct-chat-img -->
+                                        <div class="direct-chat-text">
+                                            Is this template really for free? That's unbelievable!
+                                        </div><!-- /.direct-chat-text -->
+                                    </div><!-- /.direct-chat-msg -->
+
+                                    <!-- Message to the right -->
+                                    <div class="direct-chat-msg right">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                                            <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                                        </div><!-- /.direct-chat-info -->
+                                        <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
+                                             alt="message user image"><!-- /.direct-chat-img -->
+                                        <div class="direct-chat-text">
+                                            You better believe it!
+                                        </div><!-- /.direct-chat-text -->
+                                    </div><!-- /.direct-chat-msg -->
+                                </div><!--/.direct-chat-messages-->
+
+                            </div><!-- /.box-body -->
+
+
+                            <div class="box-footer">
+                                <form action="#" method="post">
+                                    <div class="">
+                                        <textarea class="form-control" placeholder="Votre réponse..."></textarea>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-success btn-flat">Send</button>
+                      </span>
+                                    </div>
+                                </form>
+                            </div><!-- /.box-footer-->
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
         </div>
         <!-- end Tab pane Messages -->
         <!-- Tab pane Notifications -->
@@ -119,6 +243,7 @@
                                         {{ form_label(form.firstname) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.firstname,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.firstname) }}
                                     </div>
                                 </div>
@@ -131,6 +256,7 @@
                                         {{ form_label(form.lastname) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.lastname,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.lastname) }}
                                     </div>
                                 </div>
@@ -142,6 +268,7 @@
                                         {{ form_label(form.username) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.username,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.username,{'attr':{'class':'form-control'}}) }}
                                     </div>
                                 </div>
@@ -154,6 +281,7 @@
                                         {{ form_label(form.email) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.email,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
                                     </div>
                                 </div>
@@ -165,6 +293,7 @@
                                         {{ form_label(form.date_naissance) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.date_naissance,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.date_naissance) }}
                                     </div>
                                 </div>
@@ -176,6 +305,7 @@
                                         {{ form_label(form.phone) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.phone,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.phone) }}
                                     </div>
                                 </div>
@@ -187,6 +317,7 @@
                                         {{ form_label(form.minibio) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.minibio,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.minibio) }}
                                     </div>
                                 </div>
@@ -194,11 +325,12 @@
 
 
                             <div class="form-group">
-                                <div class="row">
+                                <div class="row ">
                                     <div class="col-md-3">
                                         {{ form_label(form.current_password) }}
                                     </div>
                                     <div class="col-md-6">
+                                        {{ form_errors(form.current_password,{'attr':{'class':'text-danger'}}) }}
                                         {{ form_widget(form.current_password,{'attr':{'class':'form-control'}}) }}
                                     </div>
                                 </div>
@@ -217,6 +349,36 @@
                             <div class="page-header">
                                 <h2 class="violet-red">photo</h2>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <div class="update-photo">
+                                            <img src="{{ asset('img/user.jpg') }}">
+                                        </div>
+                                        <p>Ajoutez une photo</p>
+                                        <button class="btn btn-primary"><i class="fa fa-save"></i> Choisir une photo
+                                        </button>
+                                        <p>
+                                            <small>2Mo maximum, PNG ou JPG.</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-success"><i class="fa fa-check"></i>
+                                            Comment choisir la bonne photo
+                                        </li>
+                                        <li class="list-group-item">Pas de lunettes de soleil</li>
+                                        <li class="list-group-item">Face à l'objectif</li>
+                                        <li class="list-group-item">Un seul visage</li>
+                                        <li class="list-group-item">Claire et lumineuse</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
                         </div>
 
 
@@ -248,6 +410,7 @@
         </div><!-- end Tab pane Profile -->
     </div>
 </div>
+
 
 
 
