@@ -18,7 +18,7 @@
 
         <!-- tab-content -->
 
-        <div class="tab-content">
+        <div class="tab-content thumbnail">
             <div class="row">
                 <div id="trajet-unique" class="tab-pane fade active in ">
                     <div class="col-md-6 bg-darkviolet  triangle-up-darkviolet">
@@ -103,13 +103,12 @@
                 <section><!-- Date et heure -->
                     <div class="row">
                         <div class="col-md-4">
-                            <h3>
+                            <h3 class="page-header">
                                 Date et heure
                             </h3>
                         </div>
-                        <div class="col-md-8 ">
-
-                            <div class="material-switch pull-right">
+                        <div class="col-md-8">
+                            <div class="material-switch pull-right page-header">
                                 {{ form_widget(form.round_trip) }}
                                 {{ form_label(form.round_trip,'Trajet aller-retour',{'label_attr': {'class': 'bg-green'}}) }}
                             </div>
@@ -159,7 +158,8 @@
 
                     <div id="publication-regular"><!-- REGULAR BLOCK -->
 
-                        <div class="row">
+
+                        <section class="row">
                             <div class="col-md-4">
                                 <div class="row">
                                     <div class="col-md-12"><!-- A partir du : -->
@@ -176,14 +176,24 @@
                                             {{ form_widget(form.regular_end_date,{'attr':{'class':'text-indent form-control'}}) }}
                                         </div>
                                     </div>
+
+                                    <div class="col-md-12">
+                                        <div class="legend-container">
+                                            <i class="legend green" aria-hidden="true"></i>
+                                            <span class="legend-green-label">Mes allers</span>
+                                        </div>
+                                        <div class="legend-container">
+                                            <i class="legend blue" aria-hidden="true"></i>
+                                            <span class="legend-blue-label">Mes retours</span>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div id="multiDatesPicker" data-date-format="yy-mm-dd" class="ll-skin-melon"></div>
+                            <div class="col-md-8">
+                                <div id="regular-calendar" data-date-format="yy-mm-dd" class="ll-skin-melon"></div>
                             </div>
-
-                        </div>
+                        </section>
 
 
                         {{ form_widget(form.datesAller) }}
@@ -195,7 +205,7 @@
                 </section><!-- End Date et heure -->
 
                 <section><!-- Options du trajet -->
-                    <h3>
+                    <h3 class="page-header">
                         Options du trajet
                     </h3>
                     <p>Choisissez les options disponibles en fonction de votre voiture et vos préférences</p>
@@ -347,7 +357,7 @@
 
 
                 <section><!-- Informations complémentaires  -->
-                    <h3>
+                    <h3 class="page-header">
                         {{ form_label(form.informationsComplementaires) }}
                     </h3>
                     <div>
@@ -381,8 +391,9 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Ajouter une date</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title">Ajouter une date</h5>
             </div>
 
             <div class="modal-body">
@@ -390,15 +401,15 @@
                 <form action="">
 
                     <div class="form-group">
-                        <label for="simple-choice" class="checkbox">
-                            <input id="simple-choice" type="checkbox" name="simple-choice" value="" class="choose-modal">
+                        <input id="simple-choice" type="checkbox" name="simple-choice" value="" class="choose-modal">
+                        <label for="simple-choice">
                             <span class="simple-choice-label">Trajet aller</span>
                         </label>
                     </div>
 
                     <div class="form-group">
-                        <label for="round-choice" class="checkbox">
-                            <input id="round-choice" type="checkbox" name="round-choice" value="" class="choose-modal">
+                        <input id="round-choice" type="checkbox" name="round-choice" value="" class="choose-modal">
+                        <label for="round-choice">
                             <span class="round-choice-label">Trajet retour</span>
                         </label>
                     </div>
@@ -407,7 +418,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn-validation cho" type="button" data-dismiss="modal">
+                <button class="btn-validation" type="button" data-dismiss="modal">
                     Ok
                 </button>
             </div>

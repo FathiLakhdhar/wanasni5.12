@@ -61,7 +61,7 @@ var regularTrip = function () {
 
 
     self.load = function () {
-        self.widgetCalendar = $("#multiDatesPicker");
+        self.widgetCalendar = $("#regular-calendar");
         self.widgetChooseDate = $("#chooseDate");
         self.widgetDateStart = $("#wanasni_trajetbundle_trajet_regular_begin_date");
         self.widgetDateStop = $("#wanasni_trajetbundle_trajet_regular_end_date");
@@ -164,6 +164,17 @@ var regularTrip = function () {
         return [true, dateCalendarClass]
     };
 
+    self.uncheckDays = function (type) {
+        $.each(self.dates[type], function (k, v) {
+            self.addRemoveDate("remove", type, self.getReverseDateKey(k))
+        });
+
+        self.widgetCalendar.datepicker("refresh")
+    };
+
+
+
+
 
     that.init = function () {
 
@@ -219,6 +230,8 @@ var regularTrip = function () {
             }
         }));
 
+
+
         self.widgetChooseDate.find("button.btn-validation").click(function () {
             var dayModal = self.getReverseDateKey(self.widgetChooseDate.attr("data-day")), checkBoxSimple = self.widgetChooseDate.find("input#simple-choice"), checkBoxRound = self.widgetChooseDate.find("input#round-choice");
             var simpleAction = checkBoxSimple.is(":checked") ? "add" : "remove";
@@ -231,7 +244,15 @@ var regularTrip = function () {
             $(".simple-choice-label").removeClass("label-success");
             checkBoxRound.attr("checked", false);
             $(".round-choice-label").removeClass("label-info")
-        })
+        });
+
+        self.widgetRoundTrip.on("change", function () {
+            if (false == self.widgetRoundTrip.is(":checked")) {
+                self.uncheckDays("round")
+            }
+        });
+
+
     };
 
     return that;
@@ -270,10 +291,8 @@ function UniqueTrip() {
 }
 
 
-
-
-
 $( document ).ready(function() {
+
     updateFrequencesChanged();
 
     $("#wanasni_trajetbundle_trajet_round_trip").on("change", updateRoundTripChanged);
@@ -285,11 +304,6 @@ $( document ).ready(function() {
     regularTrip.init();
 
 
-
-
-/*
- $('#multiDatesPicker').multiDatesPicker($options_Date);
- */
 });
 
 

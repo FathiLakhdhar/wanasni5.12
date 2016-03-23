@@ -15,6 +15,10 @@ body {
 }
 
 section {
+    padding: 20px 0px;
+}
+
+.section-padding-top-bottom-80{
     padding-top: 80px;
     padding-bottom: 80px;
 }
@@ -930,6 +934,22 @@ footer a, footer a:hover, footer a:focus {
     Proposer style
 =======================*/
 
+.legend {
+    display: inline-block;
+    height: 10px;
+    margin: -2px 5px 0 0;
+    vertical-align: middle;
+    width: 10px;
+}
+.legend.green {
+    background-color: #5CB85C;
+    border: 1px solid #009688;
+}
+.legend.blue {
+    background-color: #5BC0DE;
+    border: 1px solid #2196F3;
+}
+
 #proposer{
 
 }
@@ -952,7 +972,7 @@ footer a, footer a:hover, footer a:focus {
     font-weight: 500;
 }
 
-#proposer section{
+.border-bottom{
     border-bottom: 2px solid #eeeeee;
 }
 
@@ -1046,6 +1066,11 @@ span.date-icon{
     Calendar simple | round day
 ============================*/
 
+#regular-calendar.ll-skin-melon .ui-datepicker {
+    padding: 0;
+    width: 100%;
+}
+
  .ui-datepicker td.simple-date-selected a,
  .ui-datepicker td.simple-date-selected a {
     background-color: #5CB85C;
@@ -1058,6 +1083,7 @@ span.date-icon{
 
 .ui-datepicker td.simple-date-selected.round-date-selected a{
     background: url(../img/simple-round-date.png) no-repeat center center;
+    background-size: cover;
     color: #FFFFFF;
 }
 /*****************************
