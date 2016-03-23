@@ -199,14 +199,14 @@ var regularTrip = function () {
                 var dayCalendar = self.getDateKey(self.widgetCalendar.datepicker("getDate"));
                 if ( self.widgetRoundTrip.is(":checked") ) {
                     self.widgetChooseDate.attr("data-day", dayCalendar);
-                    $('#chooseDate').modal('show');
+                    self.widgetChooseDate.modal('show');
                     if (self.hasDate("simple", dayCalendar)) {
-                        $("input[name=simple-choice]").attr("checked", "checked");
-                        $(".simple-choice-label").addClass("green-label")
+                        $("input#simple-choice").attr("checked", "checked");
+                        $(".simple-choice-label").addClass("label-success")
                     }
                     if (self.hasDate("round", dayCalendar)) {
-                        $("input[name=round-choice]").attr("checked", "checked");
-                        $(".round-choice-label").addClass("blue-label")
+                        $("input#round-choice").attr("checked", "checked");
+                        $(".round-choice-label").addClass("label-info")
                     }
                 } else {
                     var dayCalendarSimple = self.getReverseDateKey(dayCalendar);
@@ -219,7 +219,19 @@ var regularTrip = function () {
             }
         }));
 
-
+        self.widgetChooseDate.find("button.btn-validation").click(function () {
+            var dayModal = self.getReverseDateKey(self.widgetChooseDate.attr("data-day")), checkBoxSimple = self.widgetChooseDate.find("input#simple-choice"), checkBoxRound = self.widgetChooseDate.find("input#round-choice");
+            var simpleAction = checkBoxSimple.is(":checked") ? "add" : "remove";
+            self.addRemoveDate(simpleAction, "simple", dayModal);
+            var roundAction = checkBoxRound.is(":checked") ? "add" : "remove";
+            self.addRemoveDate(roundAction, "round", dayModal);
+            self.beforeShowDay(dayModal);
+            self.widgetCalendar.datepicker("refresh");
+            checkBoxSimple.attr("checked", false);
+            $(".simple-choice-label").removeClass("label-success");
+            checkBoxRound.attr("checked", false);
+            $(".round-choice-label").removeClass("label-info")
+        })
     };
 
     return that;

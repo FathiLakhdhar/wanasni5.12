@@ -12,25 +12,16 @@
 {% block javascripts %}
 
     {{ parent() }}
-
-
-    <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/proposer.js') }}"></script>
+    <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/waypoints.js') }}"></script>
 
-
-
-
-
     <script>
-
-
         $(function() {
 
             $('.menu-links a').removeClass('active');
             $('#idProposer').addClass('active');
         });
-
     </script>
 
 

@@ -13,7 +13,7 @@ $( document ).ready(function() {
     $('input[inputAutoComplete=on]').each(function() {
         document.getElementById($(this).attr('id')).addEventListener('focusin',function() {
             AutoComplete($(this).attr('id'));
-            console.log($(this).attr('id') );
+            //console.log($(this).attr('id') );
         });
     });
 

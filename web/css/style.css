@@ -460,14 +460,32 @@ section-video
 .btn.btn-green {
     background: #1ABB9C;
     color: #FFFFFF;
-
-
 }
 
 .btn-vert{
     border: 3px solid;
     margin-right: 5px;
 }
+
+.btn-validation {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 4px 10px 4px;
+    line-height: 18px;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background: #0FAAF0;
+    border: 1px solid #0FAAF0;
+    border-bottom: 2px solid #0d96d3;
+    font-weight: normal;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
 
 .blue-btn {
     background: #3ab0e2;
@@ -1033,13 +1051,15 @@ span.date-icon{
     background-color: #5CB85C;
      color: #FFFFFF;
 }
- .ui-datepicker td.round-date-selected a,
- .ui-datepicker td.round-date-selected a {
+ .ui-datepicker td.round-date-selected a{
     background-color:   #5BC0DE;
      color: #FFFFFF;
 }
 
-
+.ui-datepicker td.simple-date-selected.round-date-selected a{
+    background: url(../img/simple-round-date.png) no-repeat center center;
+    color: #FFFFFF;
+}
 /*****************************
     Checkbox css
 **********************************/

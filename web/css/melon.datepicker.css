@@ -88,7 +88,7 @@
 
 .ll-skin-melon td .ui-state-default {
 	background: transparent;
-	border: none;
+	border: 1px solid #eee;
 	text-align: center;
 	padding: .5em;
 	margin: 0;
