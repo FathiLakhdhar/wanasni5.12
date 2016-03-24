@@ -8,6 +8,8 @@ var places= [];
 
 
 
+
+
 function initialize() {
 
     var directionsService = new google.maps.DirectionsService;
@@ -48,10 +50,20 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
+    var $Origine=$('#wanasni_trajetbundle_trajetunique_Origine_lieu');
+    var $distination=$('#wanasni_trajetbundle_trajetunique_Destination_lieu');
     var waypts = [];
+    var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
 
 
-    var $container = $('div#wanasni_trajetbundle_trajet_waypoints');
+    if(!$Origine.length){
+        $Origine=$('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
+        $distination=$('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
+        $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+    }
+
+
+
 
     $container.find('input[type=text]').each(function() {
         var $input =document.getElementById($(this).attr('id')) ;
@@ -64,8 +76,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 
         directionsService.route({
-            origin: document.getElementById('wanasni_trajetbundle_trajet_Origine_lieu').value,
-            destination: document.getElementById('wanasni_trajetbundle_trajet_Destination_lieu').value,
+            origin: $Origine.val(),
+            destination: $distination.val(),
             waypoints: waypts,
             optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING

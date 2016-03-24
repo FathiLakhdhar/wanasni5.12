@@ -21,14 +21,14 @@
         <div class="tab-content thumbnail">
             <div class="row">
                 <div id="trajet-unique" class="tab-pane fade active in ">
-                    <div class="col-md-6 bg-darkviolet  triangle-up-darkviolet">
+                    <div class="col-md-6 bg-light-blue  triangle-up triangle-up-light-blue">
                         <p>Un week-end épique à Pornic, un savoureux pique-nique chez Annick,
                             un festival de beatnik, c'est la même logique, déposez un TRAJET UNIQUE !
                         </p>
                     </div>
                 </div>
                 <div id="trajet-regular" class="tab-pane fade">
-                    <div class="col-md-6 bg-darkviolet  triangle-up-darkviolet">
+                    <div class="col-md-6 bg-light-blue  triangle-up triangle-up-light-blue">
                         <p>
                             Pour aller travailler, que vous soyez cadre dans un musée,
                             vendeuse d'eau déshydratée ou étudiant en prospérité, déposez un TRAJET RÉGULIER !
@@ -358,13 +358,28 @@
 
                 <section><!-- Informations complémentaires  -->
                     <h3 class="page-header">
-                        {{ form_label(form.informationsComplementaires) }}
+                        Informations complémentaires
                     </h3>
+
+                    <p class="col-sm-12">Vous pouvez préciser : le lieu de rendez-vous, votre style de conduite, …
+                        <span class="mini-text pull-right">
+                            <span id="description-chars">0</span> / 500 caractères
+                        </span>
+                    </p>
+
                     <div>
                         {{ form_widget(form.informationsComplementaires) }}
                     </div>
                 </section><!-- End Informations complémentaires -->
 
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-8">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-bg btn-block">Publier votre trajet</button>
+                        </div>
+                    </div>
+                </div>
                 {{ form_end(form) }}
             </div>
         </div>

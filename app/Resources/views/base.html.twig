@@ -53,7 +53,7 @@
                             <i class="ion-ios-home-outline"></i> Accueil
                         </a>
                         <a href="#" id="idRechercher"> <i class="ion-ios-search"></i> Rechercher</a>
-                        <a href="{{ path('trajet_proposer') }}" id="idProposer"> <i class="ion-ios-compose-outline"></i> Proposer</a>
+                        <a href="{{ path('trajet_proposer_unique') }}" id="idProposer"> <i class="ion-ios-compose-outline"></i> Proposer</a>
                     </div>
 
 
@@ -153,9 +153,6 @@
     <script src="{{ asset('js/autoComplete.js') }}"></script>
 
 
-
-
-
     <script language="JavaScript">
 
         $(function () {
@@ -189,8 +186,9 @@
                 dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ]
             };
 
-            $("[datepicker='']").datepicker($options_Date)
-                    .datepicker('widget').wrap('<div class="ll-skin-melon"/>');
+            $("[datepicker='']").datepicker($options_Date);
+
+            $("[datepicker]").datepicker('widget').wrap('<div class="ll-skin-melon"/>');
 
 
             $("[data-toggle=tooltip]").tooltip();

@@ -2,11 +2,19 @@
 ADD+Remove Ville Etape
  */
 
+
+
 $(document).ready(function() {
     // On récupère la balise <div> en question qui contient
     // l'attribut « data-prototype » qui nous intéresse.
 
-    var $container = $('div#wanasni_trajetbundle_trajet_waypoints');
+
+
+    var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+
+    if (!$container.length){
+        var $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+    }
 
     // On ajoute un lien pour ajouter une nouvelle Waypoint
     var $lienAjout = $('<a href="#" id="ajout_waypoint" class="btn btn-green">Ajouter un Lieu</a>');

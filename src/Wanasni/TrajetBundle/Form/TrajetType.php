@@ -26,11 +26,9 @@ class TrajetType extends AbstractType
                 'allow_delete' => true,
             ))
 
-            ->add('frequence','hidden',array(
-                'data'=>'UNIQUE'
+            ->add('round_trip','checkbox',array(
+                'attr'=>array('class'=>'round_trip')
             ))
-
-            ->add('round_trip','checkbox')
 
             ->add('date_allet_unique','text',array(
                 'attr'=> array('datepicker'=>'date_allet_unique','placeholder'=>'JJ/MM/AAAA')
@@ -91,7 +89,13 @@ class TrajetType extends AbstractType
             ->add('Preferences', new PreferencesType())
 
             ->add('informationsComplementaires','textarea',array(
-                'attr'=>array('class'=>'form-control','placeholder' => '0..500 caractères',),
+                'attr'=>array(
+                    'class'=>'form-control',
+                    'placeholder' => '0..500 caractères',
+                    'maxlength'=>"500",
+                    "rows"=>"5"
+                    ),
+
 
             ))
             /*

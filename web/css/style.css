@@ -170,7 +170,7 @@ Menu nav
 
 
 
-.triangle-up-darkviolet:before{
+.triangle-up:before{
     content: "";
     display: block;
     width: 0;
@@ -178,10 +178,20 @@ Menu nav
     position: absolute;
     right: 151px;
     top: -24px;
+}
+.triangle-up-darkviolet:before{
     border-left: 35px solid transparent;
     border-right: 35px solid transparent;
     border-bottom: 25px solid #9400D3 !important;
 }
+
+.triangle-up-light-blue:before{
+    border-left: 35px solid transparent;
+    border-right: 35px solid transparent;
+    border-bottom: 25px solid #03A9F4 !important;
+}
+
+
 
 
 .menu li a{
@@ -778,7 +788,10 @@ Color
 .bg-blue{
     background-color: #5bc0de;
 }
-
+.bg-light-blue{
+    background-color: #03A9F4;
+    color: #FFFFFF;
+}
 .yellow-dark {
     color: #FFBE00;
 }

@@ -2,18 +2,16 @@
  * Created by Toshiba on 15-03-2016.
  */
 
+var $round_trip_CheckBox=$("#wanasni_trajetbundle_trajetunique_round_trip");
 
-
-
-function toggleDateAndTimeBlock(regular) {
-    $("#trajet-unique").toggle(!regular);
-    $("#trajet-regular").toggle(regular);
+if(!$round_trip_CheckBox.length){
+    $round_trip_CheckBox=$("#wanasni_trajetbundle_trajetregulier_round_trip");
 }
 
 
 
 function updateRoundTripChanged() {
-    if (true === $("#wanasni_trajetbundle_trajet_round_trip").is(":checked")) {
+    if (true === $round_trip_CheckBox.is(":checked")) {
         $(".return-container").show()
     } else {
         $(".return-container").hide()
@@ -21,37 +19,6 @@ function updateRoundTripChanged() {
 }
 
 
-function updateFrequencesChanged(){
-
-    var index=$('.nav-tabs li.active').index();
-
-    if (index==0){
-        $('#wanasni_trajetbundle_trajet_frequence').val("UNIQUE");
-        $("#publication-regular").hide();
-        $("#publication-unique").show();
-    }else{
-        $('#wanasni_trajetbundle_trajet_frequence').val("REGULAR");
-        $("#publication-unique").hide();
-        $("#publication-regular").show();
-    }
-
-    /*
-    Listeners
-     */
-
-    $('.nav-tabs li').eq(0).on('click', function(){
-        $('#wanasni_trajetbundle_trajet_frequence').val("UNIQUE");
-        $("#publication-regular").hide();
-        $("#publication-unique").show();
-    });
-
-    $('.nav-tabs li').eq(1).on('click', function(){
-        $('#wanasni_trajetbundle_trajet_frequence').val("REGULAR");
-        $("#publication-unique").hide();
-        $("#publication-regular").show();
-    });
-
-}
 
 
 var regularTrip = function () {
@@ -63,9 +30,9 @@ var regularTrip = function () {
     self.load = function () {
         self.widgetCalendar = $("#regular-calendar");
         self.widgetChooseDate = $("#chooseDate");
-        self.widgetDateStart = $("#wanasni_trajetbundle_trajet_regular_begin_date");
-        self.widgetDateStop = $("#wanasni_trajetbundle_trajet_regular_end_date");
-        self.widgetRoundTrip = $("#wanasni_trajetbundle_trajet_round_trip");
+        self.widgetDateStart = $("#wanasni_trajetbundle_trajetregulier_regular_begin_date");
+        self.widgetDateStop = $("#wanasni_trajetbundle_trajetregulier_regular_end_date");
+        self.widgetRoundTrip = $("#wanasni_trajetbundle_trajetregulier_round_trip");
 
         /*
         self.widgetCalendarAll = $("#all-calendars");
@@ -101,7 +68,7 @@ var regularTrip = function () {
 
     self.addRemoveDate = function (action, typeTrip, dateTrip) {
         var dateKey = self.getDateKey(dateTrip);
-        var regularId = {simple:"#wanasni_trajetbundle_trajet_datesAller", round:"#wanasni_trajetbundle_trajet_datesRetour"};
+        var regularId = {simple:"#wanasni_trajetbundle_trajetregulier_datesAller", round:"#wanasni_trajetbundle_trajetregulier_datesRetour"};
         if (action === "add") {
             self.dates[typeTrip][dateKey] = dateTrip;
             self.addDateToForm(regularId[typeTrip], dateKey)
@@ -285,17 +252,13 @@ function UniqueTrip() {
         }));
 
 
-
-
-
 }
 
 
 $( document ).ready(function() {
 
-    updateFrequencesChanged();
 
-    $("#wanasni_trajetbundle_trajet_round_trip").on("change", updateRoundTripChanged);
+    $round_trip_CheckBox.on("change",updateRoundTripChanged);
 
     updateRoundTripChanged();
 
@@ -303,6 +266,19 @@ $( document ).ready(function() {
 
     regularTrip.init();
 
+
+    var description=$("#wanasni_trajetbundle_trajetunique_informationsComplementaires");
+    if(!description.length){
+        description=$("#wanasni_trajetbundle_trajetregulier_informationsComplementaires");
+    }
+
+
+    description.on("keyup keydown blur",function(){
+        if($(this).val().length > 500){
+            $(this).val($(this).val().substr(0, 500))
+        }
+        $("#description-chars").html($(this).val().length);
+    });
 
 });
 
