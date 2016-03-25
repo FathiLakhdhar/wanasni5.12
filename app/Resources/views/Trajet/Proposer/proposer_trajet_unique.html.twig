@@ -6,10 +6,12 @@
 
 {% block body %}
     <div id="proposer" class="container">
+
+        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
+
         <div class="row">
             <!-- Trajet -->
             <div class="col-lg-8">
-                {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
                 <ul class="nav nav-tabs nav-justified">
                     <li class="active">
                         <a>
@@ -113,54 +115,6 @@
 
                             </div>
 
-                            {#
-                            <div id="publication-regular"><!-- REGULAR BLOCK -->
-
-
-                                <section class="row">
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-12"><!-- A partir du : -->
-                                                {{ form_label(form.regular_begin_date,'A partir du :') }}
-                                                <div class="pos-relative">
-                                                    <span class="fa fa-calendar  date-icon"></span>
-                                                    {{ form_widget(form.regular_begin_date,{'attr':{'class':'text-indent form-control'}}) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12"><!-- Jusqu'au : -->
-                                                {{ form_label(form.regular_end_date,'Jusqu\'au :') }}
-                                                <div class="pos-relative">
-                                                    <span class="fa fa-calendar  date-icon"></span>
-                                                    {{ form_widget(form.regular_end_date,{'attr':{'class':'text-indent form-control'}}) }}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="legend-container">
-                                                    <i class="legend green" aria-hidden="true"></i>
-                                                    <span class="legend-green-label">Mes allers</span>
-                                                </div>
-                                                <div class="legend-container">
-                                                    <i class="legend blue" aria-hidden="true"></i>
-                                                    <span class="legend-blue-label">Mes retours</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div id="regular-calendar" data-date-format="yy-mm-dd" class="ll-skin-melon"></div>
-                                    </div>
-                                </section>
-
-
-                                {{ form_widget(form.datesAller) }}
-                                {{ form_widget(form.datesRetour) }}
-
-
-                            </div>
-                       #}
-
                         </section><!-- End Date et heure -->
 
                         <section><!-- Options du trajet -->
@@ -195,7 +149,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ form_end(form) }}
+
                     </div>
                 </div>
 
@@ -210,11 +164,17 @@
 
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
-                    <div id="panel"></div>
+                    <div id="panel">
+                        {{ form_widget(form.totalDistance) }}
+                        {{ form_widget(form.totalDuration) }}
+
+                    </div>
                 </div>
             </div>
         </div>
 
+
+        {{ form_end(form) }}
     </div>
 {% endblock body %}
 

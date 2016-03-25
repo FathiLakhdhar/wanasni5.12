@@ -81,10 +81,10 @@ $(document).ready(function() {
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
 
-        $('input[inputAutoComplete=on]').each(function() {
-            document.getElementById($(this).attr('id')).addEventListener('focusin',function() {
-                AutoComplete($(this).attr('id'));
-            });
+
+        var elemID =$prototype.find('input[inputAutoComplete=on]').attr('id');
+        document.getElementById(elemID).addEventListener('focusin',function() {
+            AutoComplete($(this).attr('id'));
         });
 
     }

@@ -16,6 +16,9 @@ function updateRoundTripChanged() {
     } else {
         $(".return-container").hide()
     }
+
+    $round_trip_CheckBox.on("change",updateRoundTripChanged);
+
 }
 
 
@@ -254,24 +257,12 @@ function UniqueTrip() {
 
 }
 
-
-$( document ).ready(function() {
-
-
-    $round_trip_CheckBox.on("change",updateRoundTripChanged);
-
-    updateRoundTripChanged();
-
-    UniqueTrip();
-
-    regularTrip.init();
-
+function info_Complementaire(){
 
     var description=$("#wanasni_trajetbundle_trajetunique_informationsComplementaires");
     if(!description.length){
         description=$("#wanasni_trajetbundle_trajetregulier_informationsComplementaires");
     }
-
 
     description.on("keyup keydown blur",function(){
         if($(this).val().length > 500){
@@ -279,6 +270,22 @@ $( document ).ready(function() {
         }
         $("#description-chars").html($(this).val().length);
     });
+}
+
+
+$( document ).ready(function() {
+
+
+
+
+    updateRoundTripChanged();
+
+    UniqueTrip();
+
+    regularTrip.init();
+
+    info_Complementaire()
+
 
 });
 

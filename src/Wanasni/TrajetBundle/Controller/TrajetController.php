@@ -19,7 +19,7 @@ class TrajetController extends Controller
     {
 
         $trajet = new Trajet();
-        // On crée le formulaire grâce à la TrajetType
+        // On crée le formulaire grâce à la TrajetUniqueType
         $form = $this->createForm(new TrajetUniqueType(), $trajet);
 
         // On récupère la requête

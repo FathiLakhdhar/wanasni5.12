@@ -98,20 +98,16 @@ class TrajetType extends AbstractType
 
 
             ))
-            /*
 
-                        ->add('nbPlaces', 'number')
+            ->add('totalDistance','text',array(
+                'attr'=>array('class'=>'totalDistance'),
+                'data'=>0,
+            ))
 
-
-
-                        ->add('dates', 'collection',array(
-                            'type'=> new TrajetDateType(),
-                            'allow_add'=>true,
-                            'allow_delete'=>true,
-                        ))
-                        ->add('heureRetour')
-
-            */
+            ->add('totalDuration','text',array(
+                'attr'=>array('class'=>'totalDuration'),
+                'data'=>0,
+            ))
         ;
     }
 

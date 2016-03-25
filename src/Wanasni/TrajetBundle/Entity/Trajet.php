@@ -72,6 +72,24 @@ class Trajet
      */
     private $nbPlacesRestants;
 
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $totalDuration;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $totalDistance;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $totalPrix;
+
+
+
     /**
      *
      * @ORM\Column(name="Informations_complementaires", type="text", length=500, nullable=true)
@@ -601,5 +619,74 @@ class Trajet
     public function getDatesRetour()
     {
         return $this->datesRetour;
+    }
+
+    /**
+     * Set totalDuration
+     *
+     * @param string $totalDuration
+     * @return Trajet
+     */
+    public function setTotalDuration($totalDuration)
+    {
+        $this->totalDuration = $totalDuration;
+    
+        return $this;
+    }
+
+    /**
+     * Get totalDuration
+     *
+     * @return string 
+     */
+    public function getTotalDuration()
+    {
+        return $this->totalDuration;
+    }
+
+    /**
+     * Set totalDistance
+     *
+     * @param string $totalDistance
+     * @return Trajet
+     */
+    public function setTotalDistance($totalDistance)
+    {
+        $this->totalDistance = $totalDistance;
+    
+        return $this;
+    }
+
+    /**
+     * Get totalDistance
+     *
+     * @return string 
+     */
+    public function getTotalDistance()
+    {
+        return $this->totalDistance;
+    }
+
+    /**
+     * Set totalPrix
+     *
+     * @param string $totalPrix
+     * @return Trajet
+     */
+    public function setTotalPrix($totalPrix)
+    {
+        $this->totalPrix = $totalPrix;
+    
+        return $this;
+    }
+
+    /**
+     * Get totalPrix
+     *
+     * @return string 
+     */
+    public function getTotalPrix()
+    {
+        return $this->totalPrix;
     }
 }

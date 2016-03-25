@@ -44,19 +44,7 @@ class Point
      */
     private $longitude;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prix", type="decimal", scale=2)
-     */
-    private $prix;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="P_Order", type="integer")
-     */
-    private $pOrder;
 
 
     /**
@@ -74,50 +62,6 @@ class Point
         return $this->id;
     }
 
-    /**
-     * Set prix
-     *
-     * @param string $prix
-     * @return Point
-     */
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-        return $this;
-    }
-
-    /**
-     * Get prix
-     *
-     * @return string 
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-
-    /**
-     * Set pOrder
-     *
-     * @param integer $pOrder
-     * @return Point
-     */
-    public function setPOrder($pOrder)
-    {
-        $this->pOrder = $pOrder;
-    
-        return $this;
-    }
-
-    /**
-     * Get pOrder
-     *
-     * @return integer 
-     */
-    public function getPOrder()
-    {
-        return $this->pOrder;
-    }
 
     /**
      * Set latitude

@@ -5,15 +5,26 @@
 var map, infowindow;
 var places= [];
 
+var directionsService = new google.maps.DirectionsService;
+var directionsDisplay = new google.maps.DirectionsRenderer;
 
 
+var $Origine=$('#wanasni_trajetbundle_trajetunique_Origine_lieu');
+var $distination=$('#wanasni_trajetbundle_trajetunique_Destination_lieu');
+var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+
+
+if(!$Origine.length){
+    $Origine=$('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
+    $distination=$('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
+    $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+}
 
 
 
 function initialize() {
 
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
+
 
     var mapProp = {
         center: new google.maps.LatLng(33.7774359, 9.4269145),
@@ -33,7 +44,6 @@ function initialize() {
     });
 
 
-
 }
 
 
@@ -46,39 +56,63 @@ google.maps.event.addDomListener(window, 'load', initialize);
 // When the user selects a city, get the place details for the city and
 // zoom the map in on the city.
 
+function getLocation(value) {
+    var name = $(value + "_lieu").val();
+    var latitude = $(value + "_latitude").val();
+    var longitude = $(value + "_longitude").val();
+    if (latitude && longitude) {
+        latitude = parseFloat(latitude);
+        longitude = parseFloat(longitude);
+        return new google.maps.LatLng(latitude, longitude)
+    }
+    return name
+}
 
+function getStopoversLocation($container) {
+    var stopoversLocation = [];
+
+    $container.find('input[type=text]').each(function () {
+        var name = $(this).attr("id").replace(new RegExp("_lieu$", "gm"), "");
+        if ($("#" + name + "_lieu").length > 0) {
+            var location = getLocation("#" + name);
+            if (location) {
+                stopoversLocation.push({location: location})
+            }
+        }
+    });
+    return stopoversLocation
+}
+
+
+function getDurationText(secs){
+
+    var sec_num = parseInt(secs, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    //if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    var time    = hours+' heure '+minutes+' min';
+    return time;
+}
+
+function getDistanceText(metre){
+    return metre/1000+' km';
+}
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
-    var $Origine=$('#wanasni_trajetbundle_trajetunique_Origine_lieu');
-    var $distination=$('#wanasni_trajetbundle_trajetunique_Destination_lieu');
-    var waypts = [];
-    var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
-
-
-    if(!$Origine.length){
-        $Origine=$('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
-        $distination=$('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
-        $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
-    }
 
 
 
-
-    $container.find('input[type=text]').each(function() {
-        var $input =document.getElementById($(this).attr('id')) ;
-
-        waypts.push({
-            location: $input.value,
-            stopover: true
-        });
-    });
-
+    if($Origine.val().length>0 && $distination.val().length>0 ){
 
         directionsService.route({
             origin: $Origine.val(),
             destination: $distination.val(),
-            waypoints: waypts,
+            waypoints: getStopoversLocation($container),
             optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING
         }, function (response, status) {
@@ -87,8 +121,16 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                 var route = response.routes[0];
 
 
+                var totalDistance=0;
+                var input_totalDistance=$('.totalDistance');
+
+
+                var totalDuration=0;
+                var input_totalDuration=$('.totalDuration');
+
                  var summaryPanel = document.getElementById('directions-panel');
                  summaryPanel.innerHTML = '';
+
                  // For each route, display summary information.
                  for (var i = 0; i < route.legs.length; i++) {
                  var routeSegment = i + 1;
@@ -96,15 +138,28 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                  '</b><br>';
                  summaryPanel.innerHTML += route.legs[i].start_address + '<b> to </b>';
                  summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                 summaryPanel.innerHTML += route.legs[i].duration.text + '<br>';
+                 summaryPanel.innerHTML += route.legs[i].duration.text +' '+route.legs[i].duration.value+ '<br>';
                  summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+
+                     totalDuration+=route.legs[i].duration.value;
+                     totalDistance+=route.legs[i].distance.value;
+
                  }
 
+                input_totalDuration.val(getDurationText(totalDuration));
+                input_totalDistance.val(getDistanceText(totalDistance));
+
             } else {
-                window.alert('Directions request failed due to ' + status);
+                //window.alert('Directions request failed due to ' + status);
+                console.log('Directions request failed due to ' + status);
             }
         });
 
-
+    }
 
 }
+
+
+
+
+

@@ -5,18 +5,18 @@
 
 var $autoCompelt;
 // A $( document ).ready() block.
-$( document ).ready(function() {
 
 
+
+
+$(document).ready(function() {
 
 
     $('input[inputAutoComplete=on]').each(function() {
         document.getElementById($(this).attr('id')).addEventListener('focusin',function() {
             AutoComplete($(this).attr('id'));
-            //console.log($(this).attr('id') );
         });
     });
-
 
 });
 
@@ -40,10 +40,7 @@ function AutoComplete($id){
         if (place.geometry) {
             map.panTo(place.geometry.location);
             map.setZoom(7);
-
-            //alert(place.geometry.location.lat());
-            //alert(place.geometry.location.lng());
-
+            calculateAndDisplayRoute(directionsService,directionsDisplay);
             var $parent =$($elem).parent();
             $parent.find('input[class=latitude]').val(place.geometry.location.lat());
             $parent.find('input[class=longitude]').val(place.geometry.location.lng());
@@ -55,7 +52,8 @@ function AutoComplete($id){
 
 
         } else {
-            window.alert("Autocomplete's returned place contains no geometry");
+            //window.alert("Autocomplete's returned place contains no geometry");
+            console.log("Autocomplete's returned place contains no geometry");
             return;
         }
 
