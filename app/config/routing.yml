@@ -1,6 +1,6 @@
 wanasni_vehicule:
-    resource: "@WanasniVehiculeBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@WanasniVehiculeBundle/Controller"
+    type:     annotation
 
 homepage:
     path: /

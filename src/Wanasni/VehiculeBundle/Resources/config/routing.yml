@@ -1,3 +1,1 @@
-wanasni_vehicule_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: WanasniVehiculeBundle:Default:index }
+

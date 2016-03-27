@@ -2,6 +2,7 @@
 
 namespace Wanasni\VehiculeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -68,6 +69,7 @@ class Marque
     {
         return $this->carBrand;
     }
+
     /**
      * Constructor
      */
