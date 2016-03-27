@@ -44,7 +44,11 @@ class Point
      */
     private $longitude;
 
-
+    /**
+     * @var integer
+     * @ORM\Column(name="Order", type="integer")
+     */
+    private $order;
 
 
     /**
@@ -153,5 +157,28 @@ class Point
     public function getLieu()
     {
         return $this->lieu;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Point
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

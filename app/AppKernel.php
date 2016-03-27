@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Wanasni\UserBundle\WanasniUserBundle(),
             new Wanasni\TrajetBundle\WanasniTrajetBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Wanasni\VehiculeBundle\WanasniVehiculeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -5,6 +5,8 @@ namespace Wanasni\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * User
@@ -87,6 +89,10 @@ class User extends BaseUser
     protected $date_naissance;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", mappedBy="user",cascade={"remove"})
+     */
+    protected $vehicules;
 
     /**
      * @return mixed
@@ -161,6 +167,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->addRole('ROLE_PASSAGER');
+        $this->vehicules= new ArrayCollection();
     }
 
 

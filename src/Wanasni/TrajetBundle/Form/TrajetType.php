@@ -16,14 +16,19 @@ class TrajetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Origine', new PointType())
+            ->add('Origine', new PointType(),array(
+                'label' => false,
+            ))
 
-            ->add('Destination', new PointType())
+            ->add('Destination', new PointType(),array(
+                'label' => false,
+            ))
 
             ->add('waypoints','collection', array(
                 'type'=> new PointType(),
                 'allow_add'=> true,
                 'allow_delete' => true,
+                'label' => false,
             ))
 
             ->add('round_trip','checkbox',array(
@@ -99,15 +104,22 @@ class TrajetType extends AbstractType
 
             ))
 
-            ->add('totalDistance','text',array(
+            ->add('totalDistance','hidden',array(
                 'attr'=>array('class'=>'totalDistance'),
-                'data'=>0,
+                'data'=>'0 km',
             ))
 
-            ->add('totalDuration','text',array(
+            ->add('totalDuration','hidden',array(
                 'attr'=>array('class'=>'totalDuration'),
-                'data'=>0,
+                'data'=>'0 heurs 0 min',
             ))
+
+            ->add('Segments','collection', array(
+                'type'=> new SegmentType(),
+                'allow_add'=> true,
+                'allow_delete' => true,
+            ))
+
         ;
     }
 

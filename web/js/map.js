@@ -9,15 +9,22 @@ var directionsService = new google.maps.DirectionsService;
 var directionsDisplay = new google.maps.DirectionsRenderer;
 
 
-var $Origine=$('#wanasni_trajetbundle_trajetunique_Origine_lieu');
-var $distination=$('#wanasni_trajetbundle_trajetunique_Destination_lieu');
-var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+if($('#wanasni_trajetbundle_trajetunique_frequence').val()==='UNIQUE'){
 
+    console.log('UNIQUE');
 
-if(!$Origine.length){
+    var $Origine=$('#wanasni_trajetbundle_trajetunique_Origine_lieu');
+    var $distination=$('#wanasni_trajetbundle_trajetunique_Destination_lieu');
+    var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+    var $Segments = $('div#wanasni_trajetbundle_trajetunique_Segments');
+
+}else {
+    console.log('REGULAR');
+
     $Origine=$('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
     $distination=$('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
     $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+    $Segments = $('div#wanasni_trajetbundle_trajetregulier_Segments');
 }
 
 
@@ -102,6 +109,26 @@ function getDistanceText(metre){
     return metre/1000+' km';
 }
 
+function NewSegment(route,index){
+
+
+
+    var $prototype = $($Segments.attr('data-prototype')
+        .replace(/__name__label__/g, 'Segment n°' + (index+1))
+        .replace(/__name__/g, index)
+    );
+
+
+    $prototype.find('.distance').val(getDistanceText(route.legs[index].distance.value));
+    $prototype.find('.duration').val(getDurationText(route.legs[index].duration.value));
+    $prototype.find('.order').val(index);
+
+    var $segment=$('<li class="segment"></li>');
+    $segment.append($prototype);
+
+    $Segments.append($segment);
+}
+
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 
@@ -123,27 +150,35 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
                 var totalDistance=0;
                 var input_totalDistance=$('.totalDistance');
-
-
                 var totalDuration=0;
                 var input_totalDuration=$('.totalDuration');
 
                  var summaryPanel = document.getElementById('directions-panel');
                  summaryPanel.innerHTML = '';
 
+
+
+                $('ul.Segments li.segment').each(function(){
+                    $(this).remove();
+                });
+
+
                  // For each route, display summary information.
                  for (var i = 0; i < route.legs.length; i++) {
-                 var routeSegment = i + 1;
-                 summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                 '</b><br>';
-                 summaryPanel.innerHTML += route.legs[i].start_address + '<b> to </b>';
-                 summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                 summaryPanel.innerHTML += route.legs[i].duration.text +' '+route.legs[i].duration.value+ '<br>';
-                 summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+
+                    var routeSegment = i + 1;
+                    summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    '</b><br>';
+
+                    summaryPanel.innerHTML += route.legs[i].start_address + '<b> to </b>';
+                    summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                    summaryPanel.innerHTML += route.legs[i].duration.text +'<br>';
+                    summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
 
                      totalDuration+=route.legs[i].duration.value;
                      totalDistance+=route.legs[i].distance.value;
 
+                     NewSegment(route,i);
                  }
 
                 input_totalDuration.val(getDurationText(totalDuration));

@@ -6,10 +6,11 @@
 
 {% block body %}
     <div id="proposer" class="container">
+        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
+
         <div class="row">
             <!-- Trajet -->
             <div class="col-lg-8">
-                {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
                 <ul class="nav nav-tabs nav-justified">
                     <li>
                         <a href="{{ path('trajet_proposer_unique') }}">
@@ -179,7 +180,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ form_end(form) }}
+
                     </div>
                 </div>
 
@@ -194,10 +195,14 @@
 
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
+                    <ul class="Segments">
+                        {{ form_row(form.Segments) }}
+                    </ul>
                     <div id="panel"></div>
                 </div>
             </div>
         </div>
+        {{ form_end(form) }}
     </div>
 
     <!-- Dialog choose day -->

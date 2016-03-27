@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PointType extends AbstractType
+class SegmentType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,20 +15,18 @@ class PointType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lieu', 'text',array(
-                'label' => false,
-                'attr'=>array('inputAutoComplete'=>'on'),
+            ->add('distance','text',array(
+                'attr'=>array('class'=>'distance'),
+                'data'=>'0 km',
             ))
-            ->add('latitude','hidden',array(
-                'attr'=> array('class'=>'latitude'),
-            ))
-            ->add('longitude','hidden',array(
-                'attr'=> array('class'=>'longitude'),
+            ->add('duration','text',array(
+                'attr'=>array('class'=>'duration'),
+                'data'=>'0 heurs 0 min',
             ))
 
-            ->add('order','hidden',array(
-                'attr'=> array('class'=>'order'),
-                'data'=>0
+            //->add('prix')
+            ->add('order','text',array(
+                'attr'=>array('class'=>'order'),
             ))
         ;
     }
@@ -39,7 +37,7 @@ class PointType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wanasni\TrajetBundle\Entity\Point'
+            'data_class' => 'Wanasni\TrajetBundle\Entity\Segment'
         ));
     }
 
@@ -48,6 +46,6 @@ class PointType extends AbstractType
      */
     public function getName()
     {
-        return 'wanasni_trajetbundle_point';
+        return 'wanasni_trajetbundle_segment';
     }
 }

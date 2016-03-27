@@ -167,6 +167,10 @@ class Trajet
      */
     private $datesRetour;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Segment", mappedBy="trajet")
+     */
+    private $Segments;
 
     /**
      * @var \DateTime
@@ -178,6 +182,7 @@ class Trajet
      * @var \DateTime
      */
     private $regularEndDate;
+
 
     /**
      * @return \DateTime
@@ -221,6 +226,7 @@ class Trajet
         $this->datesAller = new ArrayCollection();
         $this->datesRetour = new ArrayCollection();
         $this->waypoints=new ArrayCollection();
+        $this->Segments=new ArrayCollection();
     }
 
 
@@ -688,5 +694,38 @@ class Trajet
     public function getTotalPrix()
     {
         return $this->totalPrix;
+    }
+
+    /**
+     * Add Segments
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Segment $segments
+     * @return Trajet
+     */
+    public function addSegment(\Wanasni\TrajetBundle\Entity\Segment $segments)
+    {
+        $this->Segments[] = $segments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Segments
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Segment $segments
+     */
+    public function removeSegment(\Wanasni\TrajetBundle\Entity\Segment $segments)
+    {
+        $this->Segments->removeElement($segments);
+    }
+
+    /**
+     * Get Segments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSegments()
+    {
+        return $this->Segments;
     }
 }
