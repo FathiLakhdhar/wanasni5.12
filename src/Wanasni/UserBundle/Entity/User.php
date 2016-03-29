@@ -167,7 +167,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->addRole('ROLE_PASSAGER');
-        $this->vehicules= new ArrayCollection();
+        $this->vehicules=new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -226,5 +226,40 @@ class User extends BaseUser
     public function getDateNaissance()
     {
         return $this->date_naissance;
+    }
+
+
+
+    /**
+     * Add vehicules
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicules
+     * @return User
+     */
+    public function addVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
+    {
+        $this->vehicules[] = $vehicules;
+    
+        return $this;
+    }
+
+    /**
+     * Remove vehicules
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicules
+     */
+    public function removeVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
+    {
+        $this->vehicules->removeElement($vehicules);
+    }
+
+    /**
+     * Get vehicules
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVehicules()
+    {
+        return $this->vehicules;
     }
 }

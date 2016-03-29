@@ -8,6 +8,7 @@ use Wanasni\TrajetBundle\Entity\TrajetDate;
 use Wanasni\TrajetBundle\Entity\Preferences;
 use Symfony\Component\Validator\Constraints as Assert;
 use Wanasni\TrajetBundle\Entity\Point;
+use Wanasni\VehiculeBundle\Entity\Vehicule;
 
 /**
  * Trajet
@@ -84,7 +85,8 @@ class Trajet
     private $totalDistance;
 
     /**
-     * @ORM\Column(type="string")
+     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $totalPrix;
 
@@ -182,6 +184,36 @@ class Trajet
      * @var \DateTime
      */
     private $regularEndDate;
+
+
+    /**
+     * @var Vehicule
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets")
+     */
+    private $vehicule;
+
+
+    /**
+     * @var boolean
+     *@Assert\IsTrue(message = "Vous devez certifier être en possession d'un permis de conduire et d'une assurance en cours de validité pour publier votre annonce")
+     */
+    private $cgu;
+
+    /**
+     * @return boolean
+     */
+    public function isCgu()
+    {
+        return $this->cgu;
+    }
+
+    /**
+     * @param boolean $cgu
+     */
+    public function setCgu($cgu)
+    {
+        $this->cgu = $cgu;
+    }
 
 
     /**
@@ -674,29 +706,6 @@ class Trajet
     }
 
     /**
-     * Set totalPrix
-     *
-     * @param string $totalPrix
-     * @return Trajet
-     */
-    public function setTotalPrix($totalPrix)
-    {
-        $this->totalPrix = $totalPrix;
-    
-        return $this;
-    }
-
-    /**
-     * Get totalPrix
-     *
-     * @return string 
-     */
-    public function getTotalPrix()
-    {
-        return $this->totalPrix;
-    }
-
-    /**
      * Add Segments
      *
      * @param \Wanasni\TrajetBundle\Entity\Segment $segments
@@ -727,5 +736,51 @@ class Trajet
     public function getSegments()
     {
         return $this->Segments;
+    }
+
+    /**
+     * Set vehicule
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicule
+     * @return Trajet
+     */
+    public function setVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicule = null)
+    {
+        $this->vehicule = $vehicule;
+    
+        return $this;
+    }
+
+    /**
+     * Get vehicule
+     *
+     * @return \Wanasni\VehiculeBundle\Entity\Vehicule 
+     */
+    public function getVehicule()
+    {
+        return $this->vehicule;
+    }
+
+    /**
+     * Set totalPrix
+     *
+     * @param integer $totalPrix
+     * @return Trajet
+     */
+    public function setTotalPrix($totalPrix)
+    {
+        $this->totalPrix = $totalPrix;
+    
+        return $this;
+    }
+
+    /**
+     * Get totalPrix
+     *
+     * @return integer 
+     */
+    public function getTotalPrix()
+    {
+        return $this->totalPrix;
     }
 }

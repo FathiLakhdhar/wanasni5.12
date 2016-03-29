@@ -18,9 +18,14 @@ class TrajetController extends Controller
     public function ProposerAction()
     {
 
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
         $trajet = new Trajet();
         // On crée le formulaire grâce à la TrajetUniqueType
-        $form = $this->createForm(new TrajetUniqueType(), $trajet);
+        $form = $this->createForm(new TrajetUniqueType($this->getUser()), $trajet);
 
         // On récupère la requête
         $request = $this->getRequest();
@@ -51,7 +56,6 @@ class TrajetController extends Controller
             array(
                 'form'=>$form->createView(),
             ));
-
 
     }
 

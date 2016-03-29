@@ -16,17 +16,21 @@ class SegmentType extends AbstractType
     {
         $builder
             ->add('distance','text',array(
-                'attr'=>array('class'=>'distance'),
+                'attr'=>array('class'=>'distance form-control'),
                 'data'=>'0 km',
+                'disabled'=>true,
             ))
             ->add('duration','text',array(
-                'attr'=>array('class'=>'duration'),
+                'attr'=>array('class'=>'duration form-control'),
                 'data'=>'0 heurs 0 min',
+                'disabled'=>true,
             ))
 
-            //->add('prix')
-            ->add('order','text',array(
-                'attr'=>array('class'=>'order'),
+            ->add('prix','number',array(
+                'attr'=>array('class'=>'prix form-control')
+            ))
+            ->add('order','hidden',array(
+                'attr'=>array('class'=>'order form-control'),
             ))
         ;
     }

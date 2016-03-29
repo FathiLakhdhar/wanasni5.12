@@ -37,9 +37,9 @@ class Segment
     private $duration;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="Prix", type="decimal")
+     * @ORM\Column(name="Prix", type="integer")
      */
     private $prix;
 
@@ -126,28 +126,9 @@ class Segment
         return $this->duration;
     }
 
-    /**
-     * Set prix
-     *
-     * @param string $prix
-     * @return Segment
-     */
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-    
-        return $this;
-    }
 
-    /**
-     * Get prix
-     *
-     * @return string 
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
+
+
 
     /**
      * Set order
@@ -239,5 +220,28 @@ class Segment
     public function getTrajet()
     {
         return $this->trajet;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     * @return Segment
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+    
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer 
+     */
+    public function getPrix()
+    {
+        return $this->prix;
     }
 }

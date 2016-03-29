@@ -190,8 +190,12 @@
 
             $("[datepicker]").datepicker('widget').wrap('<div class="ll-skin-melon"/>');
 
-
             $("[data-toggle=tooltip]").tooltip();
+
+            $( ".car-place-spinner" ).spinner({
+                min:1,
+                max:9
+            });
         });
     </script>
 

@@ -84,7 +84,7 @@
                                         {{ form_label(form.date_allet_unique,'Date Aller') }}
                                         <div class="pos-relative">
                                             <span class="fa fa-calendar  date-icon"></span>
-                                            {{ form_widget(form.date_allet_unique,{'attr':{'class':'text-indent form-control'}}) }}
+                                            {{ form_widget(form.date_allet_unique) }}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -140,6 +140,19 @@
                         </section><!-- End Informations complémentaires -->
 
 
+
+                        <section class="alert alert-warning">
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    {{ form_widget(form.cgu) }}
+                                </div>
+                                <div class="col-xs-11">
+                                    {{ form_label(form.cgu) }}
+                                </div>
+                            </div>
+                        </section>
+
+
                         <div class="row">
                             <div class="col-md-4 col-md-offset-8">
                                 <div class="form-group">
@@ -164,12 +177,13 @@
 
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
-                    <ul class="Segments">
+                    <ul class="Segments list-unstyled">
                         {{ form_row(form.Segments) }}
                     </ul>
                     <div id="panel">
                         {{ form_widget(form.totalDistance) }}
                         {{ form_widget(form.totalDuration) }}
+                        {{ form_widget(form.totalPrix) }}
                     </div>
                 </div>
             </div>

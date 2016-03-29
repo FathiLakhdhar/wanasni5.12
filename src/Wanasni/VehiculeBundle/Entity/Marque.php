@@ -14,21 +14,20 @@ use Doctrine\ORM\Mapping as ORM;
 class Marque
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="string", length=30)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CarBrand", type="string", length=255)
+     * @ORM\Column(name="CarBrand", type="string", length=30)
      */
     private $carBrand;
-
 
     /**
      * @var Modele
@@ -38,9 +37,27 @@ class Marque
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", mappedBy="marque")
+     */
+    private $vehicules;
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Marque
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return string
      */
     public function getId()
     {
@@ -109,5 +126,40 @@ class Marque
     public function getModeles()
     {
         return $this->modeles;
+    }
+
+
+
+    /**
+     * Add vehicules
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicules
+     * @return Marque
+     */
+    public function addVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
+    {
+        $this->vehicules[] = $vehicules;
+    
+        return $this;
+    }
+
+    /**
+     * Remove vehicules
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicules
+     */
+    public function removeVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
+    {
+        $this->vehicules->removeElement($vehicules);
+    }
+
+    /**
+     * Get vehicules
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVehicules()
+    {
+        return $this->vehicules;
     }
 }

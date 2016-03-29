@@ -2,6 +2,7 @@
 
 namespace Wanasni\VehiculeBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Wanasni\UserBundle\Entity\User;
@@ -46,9 +47,9 @@ class Vehicule
     private $nbrPlaces;
 
     /**
-     * @var string
+     * @var Couleur
      *
-     * @ORM\Column(name="Couleur", type="string", length=20)
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Couleur",inversedBy="vehicules" )
      */
     private $couleur;
 
@@ -63,23 +64,39 @@ class Vehicule
     /**
      * @var Marque
      *
-     * @ORM\OneToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Marque")
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Marque", inversedBy="vehicules")
      */
     private $marque;
 
     /**
      * @var Modele
      *
-     * @ORM\OneToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Modele")
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Modele", inversedBy="vehicules")
      */
     private $modele;
 
+
+
+    /**
+     * @return string
+     */
+    public function getFullNameCar()
+    {
+        return $this->marque->getCarBrand() . "  " . $this->modele->getCarModel() ;
+    }
 
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User",inversedBy="vehicules")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Trajet", mappedBy="vehicule")
+     */
+    private $trajets;
+
+
 
     /**
      * Get id
@@ -137,28 +154,6 @@ class Vehicule
         return $this->nbrPlaces;
     }
 
-    /**
-     * Set couleur
-     *
-     * @param string $couleur
-     * @return Vehicule
-     */
-    public function setCouleur($couleur)
-    {
-        $this->couleur = $couleur;
-    
-        return $this;
-    }
-
-    /**
-     * Get couleur
-     *
-     * @return string 
-     */
-    public function getCouleur()
-    {
-        return $this->couleur;
-    }
 
     /**
      * Set immatriculation
@@ -182,6 +177,54 @@ class Vehicule
     {
         return $this->immatriculation;
     }
+
+
+    /**
+     * Set user
+     *
+     * @param \Wanasni\UserBundle\Entity\User $user
+     * @return Vehicule
+     */
+    public function setUser(\Wanasni\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Wanasni\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set couleur
+     *
+     * @param \Wanasni\VehiculeBundle\Entity\Couleur $couleur
+     * @return Vehicule
+     */
+    public function setCouleur(\Wanasni\VehiculeBundle\Entity\Couleur $couleur = null)
+    {
+        $this->couleur = $couleur;
+    
+        return $this;
+    }
+
+    /**
+     * Get couleur
+     *
+     * @return \Wanasni\VehiculeBundle\Entity\Couleur 
+     */
+    public function getCouleur()
+    {
+        return $this->couleur;
+    }
+
 
     /**
      * Set marque
@@ -228,27 +271,44 @@ class Vehicule
     {
         return $this->modele;
     }
-
     /**
-     * Set user
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trajets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add trajets
      *
-     * @param \Wanasni\UserBundle\Entity\User $user
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajets
      * @return Vehicule
      */
-    public function setUser(\Wanasni\UserBundle\Entity\User $user = null)
+    public function addTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajets)
     {
-        $this->user = $user;
+        $this->trajets[] = $trajets;
     
         return $this;
     }
 
     /**
-     * Get user
+     * Remove trajets
      *
-     * @return \Wanasni\UserBundle\Entity\User 
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajets
      */
-    public function getUser()
+    public function removeTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajets)
     {
-        return $this->user;
+        $this->trajets->removeElement($trajets);
+    }
+
+    /**
+     * Get trajets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrajets()
+    {
+        return $this->trajets;
     }
 }

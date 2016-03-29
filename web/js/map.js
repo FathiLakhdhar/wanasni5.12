@@ -98,10 +98,14 @@ function getDurationText(secs){
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
-    //if (hours   < 10) {hours   = "0"+hours;}
+    //if (hours   > 1) {hours   = "0"+hours;}
     if (minutes < 10) {minutes = "0"+minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
-    var time    = hours+' heure '+minutes+' min';
+    var time    = hours+' heure '+minutes+' minutes';
+    if(hours   > 1){
+        time    = hours+' heures '+minutes+' minutes';
+    }
+
     return time;
 }
 
@@ -114,7 +118,7 @@ function NewSegment(route,index){
 
 
     var $prototype = $($Segments.attr('data-prototype')
-        .replace(/__name__label__/g, 'Segment n°' + (index+1))
+        .replace(/__name__label__/g, route.legs[index].start_address + '<b> to </b>'+ route.legs[index].end_address )
         .replace(/__name__/g, index)
     );
 
@@ -123,7 +127,7 @@ function NewSegment(route,index){
     $prototype.find('.duration').val(getDurationText(route.legs[index].duration.value));
     $prototype.find('.order').val(index);
 
-    var $segment=$('<li class="segment"></li>');
+    var $segment=$('<li class="segment alert alert-info"></li>');
     $segment.append($prototype);
 
     $Segments.append($segment);

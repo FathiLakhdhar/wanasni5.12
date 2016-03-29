@@ -4,7 +4,7 @@
         Itinéraire
     </h3>
 </div>
-<ul class="points_trajet">
+<ul class="points_trajet list-unstyled">
 
 
     <div class="form-group col-7">
@@ -13,7 +13,7 @@
                 {{ form_errors(form.Origine) }}
                 <span class="glyphicon glyphicon-map-marker green input-icon"></span>
                 {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
-                {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control text-indent',
+                {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control input-lg text-indent',
                     'placeholder':'Origine'} } ) }}
                 {{ form_widget(form.Origine.latitude) }}
                 {{ form_widget(form.Origine.longitude) }}
@@ -29,7 +29,7 @@
 
                 {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
 
-                {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control text-indent',
+                {{ form_widget(form.Destination.lieu, {'attr': {'class': 'form-Destination-lieu form-control input-lg text-indent',
                     'placeholder':'Destination'} } ) }}
                 <span class="glyphicon glyphicon-map-marker red input-icon"></span>
                 {{ form_widget(form.Destination.latitude) }}

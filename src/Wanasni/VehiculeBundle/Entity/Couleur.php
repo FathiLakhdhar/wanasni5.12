@@ -5,47 +5,54 @@ namespace Wanasni\VehiculeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Modele
+ * Couleur
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Wanasni\VehiculeBundle\Entity\ModeleRepository")
+ * @ORM\Entity(repositoryClass="Wanasni\VehiculeBundle\Entity\CouleurRepository")
  */
-class Modele
+class Couleur
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="string", length=7)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CarModel", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=20)
      */
-    private $carModel;
+    private $nom;
 
 
     /**
-     * @var Marque
-     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Marque", inversedBy="modeles")
-     */
-    private $marque;
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", mappedBy="modele")
+     * @ORM\OneToMany(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", mappedBy="couleur")
      */
     private $vehicules;
 
 
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Couleur
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return string
      */
     public function getId()
     {
@@ -53,52 +60,31 @@ class Modele
     }
 
     /**
-     * Set carModel
+     * Set nom
      *
-     * @param string $carModel
-     * @return Modele
+     * @param string $nom
+     * @return Couleur
      */
-    public function setCarModel($carModel)
+    public function setNom($nom)
     {
-        $this->carModel = $carModel;
+        $this->nom = $nom;
     
         return $this;
     }
 
+
+
     /**
-     * Get carModel
+     * Get nom
      *
      * @return string 
      */
-    public function getCarModel()
+    public function getNom()
     {
-        return $this->carModel;
+        return $this->nom;
     }
 
 
-
-    /**
-     * Set marque
-     *
-     * @param \Wanasni\VehiculeBundle\Entity\Marque $marque
-     * @return Modele
-     */
-    public function setMarque(\Wanasni\VehiculeBundle\Entity\Marque $marque = null)
-    {
-        $this->marque = $marque;
-    
-        return $this;
-    }
-
-    /**
-     * Get marque
-     *
-     * @return \Wanasni\VehiculeBundle\Entity\Marque 
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
     /**
      * Constructor
      */
@@ -107,11 +93,13 @@ class Modele
         $this->vehicules = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+
+
     /**
      * Add vehicules
      *
      * @param \Wanasni\VehiculeBundle\Entity\Vehicule $vehicules
-     * @return Modele
+     * @return Couleur
      */
     public function addVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
     {

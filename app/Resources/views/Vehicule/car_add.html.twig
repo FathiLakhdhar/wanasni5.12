@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {{ form_start(form, {'method': 'post', 'action': path('car-add'), 'attr': {'class':''}} ) }}
+
+                <div class="form-group">
+                    {{ form_label(form.marque) }}
+                    {% set models_url = path('car-models', {'brand':'__MARQUE__'}) %}
+                    {{ form_widget(form.marque,{'attr':{'data-car-models-url': models_url  }} ) }}
+                    {{ form_errors(form.marque) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.modele) }}
+                    {{ form_widget(form.modele) }}
+                    {{ form_errors(form.modele) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.confort) }}
+                    {{ form_widget(form.confort) }}
+                    {{ form_errors(form.confort) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.nbrPlaces) }}
+                    {{ form_widget(form.nbrPlaces) }}
+                    {{ form_errors(form.nbrPlaces) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.couleur) }}
+                    {{ form_widget(form.couleur) }}
+                    {{ form_errors(form.couleur) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.immatriculation) }}
+                    {{ form_widget(form.immatriculation) }}
+                    {{ form_errors(form.immatriculation) }}
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-bg">Ajouter</button>
+                </div>
+
+                {{ form_end(form) }}
+
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock body %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script language="JavaScript">
+        function fillChoiceList() {
+
+            var selectMarque=$("#wanasni_vehiculebundle_vehicule_marque");
+
+            var selectModele=$("#wanasni_vehiculebundle_vehicule_modele");
+
+            var marque = selectMarque.val();
+            var url = selectMarque.data("car-models-url");
+            if (marque.length > 0) {
+                url = url.replace("__MARQUE__", marque);
+                $.getJSON(url, {ajax: "true"}, function (data) {
+                    var options = "";
+                    for (var i = 0; i < data.length; i++) {
+                        $.each( data[i], function( key, val ) {
+                            options += '<option value="' + key + '">' + val + "</option>"
+                        });
+                    }
+
+                    selectModele.html(options)
+                })
+            } else {
+                selectModele.html("")
+            }
+        }
+
+        $(document).ready(function(){
+            $("#wanasni_vehiculebundle_vehicule_marque").on("change click", fillChoiceList)
+
+
+
+        });
+
+
+    </script>
+
+{% endblock javascripts %}

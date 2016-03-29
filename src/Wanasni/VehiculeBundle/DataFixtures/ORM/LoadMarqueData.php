@@ -8,30 +8,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Wanasni\VehiculeBundle\Entity\Marque;
 use Wanasni\VehiculeBundle\Entity\Modele;
 
-class LoadUserData implements FixtureInterface
+class LoadMarqueData implements FixtureInterface
 {
 
     public function load(ObjectManager $manager)
     {
-/*
-        $AUDI = new Marque();
-        $BMW = new Marque();
-        $FIAT = new Marque();
-        $NISSAN = new Marque();
-        $MERCEDES = new Marque();
-        $MITSUBISHI = new Marque();
-        $RENAULT = new Marque();
-        $TOYOTA = new Marque();
-
-
-        $AUDI->setCarBrand("AUDI");
-        $BMW->setCarBrand("BMW");
-        $FIAT->setCarBrand("FIAT");
-        $NISSAN->setCarBrand("NISSAN");
-        $MERCEDES->setCarBrand("MERCEDES");
-        $MITSUBISHI->setCarBrand("MITSUBISHI");
-        $RENAULT->setCarBrand("RENAULT");
-        $TOYOTA->setCarBrand("TOYOTA");
 
         $Modeles_AUDI_String = ["100", "200", "50", "5000", "60", "70", "75", "80", "90", "A1", "A2", "A3", "A3 Sedan", "A3 SPORTBACK", "A4", "A4 ALLROAD", "A4 III", "A5", "A5 SPORTBACK", "A6", "A6 allroad quattro", "A6 III", "A6 IV", "A6 Quattro S Line", "A6 QUATTRO SLINE", "A6 S Line", "A7", "A8", "ALLROAD", "CABRIOLET", "COUPE", "GT", "III", "Q3", "Q5", "Q7", "QUATTRO", "R8", "RO", "RO 80", "RS3", "RS4", "RS5", "RS6", "S1", "S2", "S3", "S3 SPORTBACK", "S4", "S5", "S6", "S8", "SPORTBACK", "SQ5", "TT", "V8"];
         $Modeles_BMW_String = ["1", "1 series", "116", "118", "120", "123", "130", "135", "1502", "1600", "1602", "1800", "1802", "2 Series", "2000", "2002", "2500", "3", "3 GT", "3 series", "3,0", "3,3", "315", "316", "318", "320", "323", "324", "325", "328", "330", "335", "4 Series", "420d", "420i", "425d", "428i", "430d", "435d", "435i", "5", "5 series", "518", "520", "523", "524", "525", "528", "530", "535", "540", "545", "550", "6 series", "628", "630", "633", "635", "640D", "645", "650", "7", "7 series", "725", "728", "730", "732", "733", "735", "740", "745", "750", "760", "8 series", "840", "850", "coupe", "F800GS", "i3", "i8", "k100lt", "L7", "M135i", "M3", "M4", "M5", "M535", "M6", "M635", "MINI", "MINI COUNTRYMAN", "R 1200 GS", "R 1200RT", "R1200ST", "SERIE", "SéRIE 1", "SERIE 1 II", "Série 2 Tourer", "SéRIE 3", "SERIE 3 VI", "Serie 4", "SERIE 5", "SERIE 6", "SERIE 7", "SERIE 8", "X1", "X3", "X4", "X5", "X6", "Z1", "Z3", "Z4", "Z4 M", "Z8"];
@@ -42,54 +23,37 @@ class LoadUserData implements FixtureInterface
         $Modeles_RENAULT_String = ["10", "11", "14", "18", "19", "21", "25", "30", "4", "4 CV", "406 COUPE", "4CV", "5", "8", "9", "AVANTIME", "B110", "B120", "B70", "B80", "B90", "CAPTUR", "CARAVELLE", "CHEROKEE", "CJ7", "CLEO", "CLIO", "Clio Campus", "CLIO ESTATE", "Clio GRANDTOUR", "CLIO II", "CLIO III", "CLIO III ESTATE", "CLIO IV", "CLIO IV ESTATE", "Clio Sport", "CLIO SPORTOUR", "Clio V6", "DAUPHINE", "DAUPHINOIS", "DOKKER", "DUSTER", "ESPACE", "ESPACE IV", "ESPACE V", "ESTAFETTE", "ESTATE", "EXPRESS", "FLORIDE", "FLUENCE", "FREGATE", "FUEGO", "G", "GRAND", "GRAND ESPACE", "GRAND ESPACE IV", "GRAND KANGOO", "GRAND MODUS", "GRAND SCENIC", "GRANDTOUR", "II", "III", "IV", "JEEP", "JEEP CJ7", "JUVAQUATRE", "Kadjar", "KANGOO", "KANGOO EXPRESS", "KANGOO EXPRESS II", "KANGOO II", "KOLEOS", "KWID", "LAGUNA", "LAGUNA COUPE", "Laguna Grand Tour", "LAGUNA II", "LAGUNA II ESTATE", "LAGUNA III", "LAGUNA III ESTATE", "LAGUNA NEVADA", "LATITUDE", "LODGY", "LOGAN", "LOGAN II", "Magnum", "MASCOTT", "MASTER", "MASTER III", "MAXITY", "MEGANE", "MEGANE COUPE", "Megane Coupe-Cabriolet", "MEGANE II", "MEGANE II ESTATE", "MEGANE III", "MEGANE III ESTATE", "Megane III RS", "MÉGANE IV GT", "MESSENGER", "MIDLINER M160", "Midlum", "MODUS", "NEVADA", "ONDINE", "PRAIRIE", "Premium", "Pulse", "QASHQAI", "R10", "R11", "R12", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R21 NEVADA", "R25", "R30", "R4", "R5", "R6", "R8", "R9", "Rapid", "RODEO", "SAFRANE", "SANDERO", "Sandero Stepway", "SATIS", "SAVANE", "SAVIEM", "SCALA", "SCENIC", "SCENIC II", "SCENIC III", "SCENIC RX4", "SPIDER", "Sport Spyder", "SUPERCINQ", "Symbol", "Talisman", "THALIA", "TRAFIC", "TWINGO", "TWINGO II", "Twingo III", "TWIZY", "VEL", "VEL SATIS", "WIND", "WRANGLER", "XBA", "ZOE"];
         $Modeles_TOYOTA_String = ["4", "4 Runner", "4-RUNNER", "ACE", "Allex", "Allion", "Alphard", "Altezza", "Aristo", "Aurion", "AURIS", "AURIS HYBRID", "AVALON", "AVANZA", "AVENSIS", "AVENSIS VERSO", "AYGO", "Bandeirante", "bB", "Blade", "Brevis", "Caldina", "Cami", "CAMRY", "Camry Solara", "Carib", "CARINA", "CARINA E", "Carina ED", "CARINA II", "Cavalier", "CELICA", "Celsior", "Century", "Chaser", "Coaster", "COMMUTER", "COROLLA", "COROLLA 2", "Corolla Altis", "Corolla Ceres", "Corolla Fielder", "Corolla II", "Corolla Levin", "Corolla Rumion", "Corolla Runx", "Corolla Spacio", "COROLLA VERSO", "CORONA", "Corona Premio", "Corsa", "CRESSIDA", "Cresta", "CROWN", "Crown Athlete", "Crown Majesta", "Crown Royal", "CRUISER", "Curren", "Cynos", "Duet", "DYNA", "E", "Echo", "Emina Estima", "Estima", "Estima Hybrid", "Estima Lucida", "Etios", "Etios Sedan", "F", "FJ Cruiser", "Fortuner", "Funcargo", "FUNCRUISER", "Gaia", "Grand hiace", "Granvia", "GT86", "Harrier", "HI ACE", "HI LUX", "HI-ACE", "HI-LUX", "Hiace", "Highlander", "Hilux", "Hilux Surf", "II", "Innova", "Ipsum", "IQ", "Isis", "Ist", "Kluger", "LAND CRUISER", "Land Cruiser Prado", "Land Cruiser Prado 150", "LANDCRUISER", "LANDCRUISER 100", "LANDCRUISER 80", "LANDCRUISER 90", "LEXUS", "LITE", "LITE ACE", "LIVA", "Mark II", "Mark X", "Mark X Zio", "MASTERACE", "Matrix", "MODELE", "MODELE F", "MR", "MR ROADSTER", "MR2", "MRS", "Nadia", "Noah", "Opa", "Origin", "PASEO", "Passo", "Passo Sette", "PICNIC", "Platz", "Porte", "PRADO", "Premio", "PREVIA", "PRIUS", "PRIUS+", "Proace +", "Probox", "Progres", "Pronard", "QUALIS", "Ractis", "Raum", "RAV", "RAV 4", "RAV4", "RAV4 II", "Regius", "Regius ACE", "RUNNER", "Rush", "Scepter", "Scion", "Sequoia", "Sera", "Sienna", "Sienta", "Soarer", "Solara", "Sparky", "Sprinter", "Sprinter Marino", "STARLET", "Succeed", "SUPRA", "Tacoma", "TERCEL", "Town Ace", "TRD MR2", "Tundra", "URBAN", "URBAN CRUISER", "VENTURY", "Venza", "Verossa", "VERSO", "VERSO-S", "Vios", "Vista", "Vitz", "Voltz", "Voxy", "Will Cypha", "Will VS", "Windom", "Wish", "YARIS", "YARIS HYBRID", "YARIS II", "YARIS III", "Yaris Verso"];
 
+        $arr_Marques = array(
+            'AUDI' => $Modeles_AUDI_String,
+            'BMW' => $Modeles_BMW_String,
+            'FIAT' => $Modeles_FIAT_String,
+            'MERCEDES' => $Modeles_MERCEDES_String,
+            'MITSUBISHI' => $Modeles_MITSUBISHI_String,
+            'NISSAN' => $Modeles_NISSAN_String,
+            'RENAULT' => $Modeles_RENAULT_String,
+            'TOYOTA' => $Modeles_TOYOTA_String,
+        );
 
-        $AUDI = $this->addModeles($AUDI, $this->getListModele($Modeles_AUDI_String));
-        $BMW = $this->addModeles($BMW, $this->getListModele($Modeles_BMW_String));
-        $FIAT = $this->addModeles($FIAT, $this->getListModele($Modeles_FIAT_String));
-        $NISSAN = $this->addModeles($NISSAN, $this->getListModele($Modeles_NISSAN_String));
-        $MERCEDES = $this->addModeles($MERCEDES, $this->getListModele($Modeles_MERCEDES_String));
-        $MITSUBISHI = $this->addModeles($MITSUBISHI, $this->getListModele($Modeles_MITSUBISHI_String));
-        $RENAULT = $this->addModeles($RENAULT, $this->getListModele($Modeles_RENAULT_String));
-        $TOYOTA = $this->addModeles($TOYOTA, $this->getListModele($Modeles_TOYOTA_String));
+
+        foreach($arr_Marques as $key=> $value){
+
+            $marque=new Marque();
+            $marque->setId($key);
+            $marque->setCarBrand($key);
 
 
-        $manager->persist($AUDI);
-        $manager->persist($BMW);
-        $manager->persist($FIAT);
-        $manager->persist($NISSAN);
-        $manager->persist($MERCEDES);
-        $manager->persist($MITSUBISHI);
-        $manager->persist($RENAULT);
-        $manager->persist($TOYOTA);
+            foreach($value as $mdl){
+                $model=new Modele();
+                $model->setCarModel($mdl);
+                $model->setMarque($marque);
+                $marque->addModele($model);
+            }
+
+            $manager->persist($marque);
+        }
 
         $manager->flush();
 
-*/
-    }
-
-    function addModeles(Marque $marque, ArrayCollection $modeles)
-    {
-        foreach ($modeles as $modele) {
-            $modele->setMarque($marque);
-            $marque->addModele($modele);
-        }
-
-        return $marque;
-    }
-
-    function getListModele($arr)
-    {
-        $modeles = new ArrayCollection();
-        foreach ($arr as $value) {
-
-            $Modele = new Modele();
-
-            $Modele->setCarModel($value);
-
-            $modeles[] = $Modele;
-        }
-
-        return $modeles;
 
     }
 

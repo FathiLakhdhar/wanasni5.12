@@ -90,7 +90,7 @@ $(document).ready(function() {
         $prototype.children('div').addClass('waypoint pos-relative');
         $prototype.find('input[type=text]')
             .before($marker)
-            .addClass('form-waypoint-lieu form-control text-indent')
+            .addClass('form-waypoint-lieu form-control input-lg text-indent')
             .attr('placeholder','Ville étape')
         ;
 

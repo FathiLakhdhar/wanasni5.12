@@ -1015,9 +1015,9 @@ span.input-icon{
 span.date-icon{
     position: absolute;
     opacity: 0.5;
-    top: 12px;
+    top: 4px;
     left: 14px;
-    z-index: 2;
+    z-index: 1;
     font-size: 25px;
 }
 .text-indent{
