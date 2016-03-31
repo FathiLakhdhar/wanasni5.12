@@ -4,6 +4,7 @@ namespace Wanasni\TrajetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
 use Wanasni\TrajetBundle\Form\TrajetType;
@@ -79,6 +80,7 @@ class TrajetController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $trajet->setConducteur($this->getUser());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($trajet);
                 $em->flush();
@@ -113,6 +115,28 @@ class TrajetController extends Controller
             array(
                 'id'=>$id,
             ));
+    }
+
+
+
+    /**
+     * @Route("/prix-optimal/{metre}", name="prix_optimal")
+     */
+
+    public function PrixOptimalAction($metre)
+    {
+        // 100 km => 5 TND
+
+        $prix=0;
+
+        $em=$this->getDoctrine()->getManager();
+        $PrixOptimel=$em->find('WanasniTrajetBundle:PrixOptimal',1);
+
+        if($PrixOptimel){
+            $prix= $metre/$PrixOptimel->getX();
+        }
+
+        return new JsonResponse(array('PrixOptimal'=>ceil($prix),'Unite'=>'TND'));
     }
 
 }

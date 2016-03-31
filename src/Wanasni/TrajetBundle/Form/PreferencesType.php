@@ -16,25 +16,32 @@ class PreferencesType extends AbstractType
     {
         $builder
             ->add('fumeurs','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('animaux','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('animauxEnCage','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('musique','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('detours','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('pauseCafe','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
             ->add('nourriture','checkbox',array(
-                'attr'=>array('class'=>'iCheck')
+                'attr'=>array('class'=>'iCheck'),
+                'required'=>false
             ))
         ;
     }

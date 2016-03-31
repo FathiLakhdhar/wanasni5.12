@@ -95,6 +95,12 @@ class User extends BaseUser
     protected $vehicules;
 
     /**
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Trajet", mappedBy="conducteur",cascade={"remove"})
+     */
+    private $trajets;
+
+
+    /**
      * @return mixed
      */
     public function getMinibio()
@@ -168,6 +174,7 @@ class User extends BaseUser
         parent::__construct();
         $this->addRole('ROLE_PASSAGER');
         $this->vehicules=new \Doctrine\Common\Collections\ArrayCollection();
+        $this->trajets=new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -261,5 +268,38 @@ class User extends BaseUser
     public function getVehicules()
     {
         return $this->vehicules;
+    }
+
+    /**
+     * Add trajets
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajets
+     * @return User
+     */
+    public function addTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajets)
+    {
+        $this->trajets[] = $trajets;
+    
+        return $this;
+    }
+
+    /**
+     * Remove trajets
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajets
+     */
+    public function removeTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajets)
+    {
+        $this->trajets->removeElement($trajets);
+    }
+
+    /**
+     * Get trajets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrajets()
+    {
+        return $this->trajets;
     }
 }

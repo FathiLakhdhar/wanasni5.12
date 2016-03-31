@@ -43,12 +43,7 @@ class Segment
      */
     private $prix;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="Order", type="integer")
-     */
-    private $order;
+
 
 
     /**
@@ -66,7 +61,8 @@ class Segment
     private $end;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Trajet", inversedBy="Segments")
+     * @ORM\ManyToOne(targetEntity="Wanasni\TrajetBundle\Entity\Trajet", inversedBy="Segments")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $trajet;
 
@@ -130,28 +126,6 @@ class Segment
 
 
 
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Segment
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-    
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
 
     /**
      * Set start

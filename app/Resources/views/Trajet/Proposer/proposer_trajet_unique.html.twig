@@ -9,6 +9,20 @@
 
         {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
 
+
+        <div class="row">
+            <div class="col-md-8">
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form)}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+
+
         <div class="row">
             <!-- Trajet -->
             <div class="col-lg-8">
@@ -51,6 +65,7 @@
                     </div>
 
 
+
                     <div class="form-proposer">
 
                         {{ form_widget(form.frequence) }}
@@ -72,6 +87,7 @@
                                         {{ form_widget(form.round_trip) }}
                                         {{ form_label(form.round_trip,'Trajet aller-retour',{'label_attr': {'class': 'bg-green'}}) }}
                                     </div>
+                                    {{ form_errors(form.round_trip)}}
                                 </div>
 
                             </div>
@@ -85,15 +101,18 @@
                                         <div class="pos-relative">
                                             <span class="fa fa-calendar  date-icon"></span>
                                             {{ form_widget(form.date_allet_unique) }}
+                                            {{ form_errors(form.date_allet_unique)}}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         {{ form_label(form.heureAller,'Heure Aller') }}
                                         {{ form_widget(form.heureAller) }}
+                                        {{ form_errors(form.heureAller)}}
                                     </div>
                                     <div class="col-md-3">
                                         {{ form_label(form.Depart_prevu,'Depart Prévu') }}
                                         {{ form_widget(form.Depart_prevu) }}
+                                        {{ form_errors(form.Depart_prevu)}}
                                     </div>
 
                                 </div>
@@ -105,11 +124,13 @@
                                         <div class="pos-relative">
                                             <span class="fa fa-calendar  date-icon"></span>
                                             {{ form_widget(form.date_retour_unique,{'attr':{'class':'text-indent form-control'}}) }}
+                                            {{ form_errors(form.date_retour_unique)}}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         {{ form_label(form.heureRetour,'Heure Retour') }}
                                         {{ form_widget(form.heureRetour) }}
+                                        {{ form_errors(form.heureRetour)}}
                                     </div>
                                 </div>
 
@@ -137,8 +158,8 @@
                             <div>
                                 {{ form_widget(form.informationsComplementaires) }}
                             </div>
+                            {{ form_errors(form.informationsComplementaires)}}
                         </section><!-- End Informations complémentaires -->
-
 
 
                         <section class="alert alert-warning">
@@ -179,11 +200,23 @@
                     <div id="directions-panel"></div>
                     <ul class="Segments list-unstyled">
                         {{ form_row(form.Segments) }}
+                        {{ form_errors(form.Segments)}}
                     </ul>
                     <div id="panel">
                         {{ form_widget(form.totalDistance) }}
+                        {{ form_errors(form.totalDistance)}}
                         {{ form_widget(form.totalDuration) }}
-                        {{ form_widget(form.totalPrix) }}
+                        {{ form_errors(form.totalDuration)}}
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg-green white">Prix Total</span>
+                            {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                            {{ form_widget(form.totalPrix,{'attr':{'data-prix-optimal-url':prix_optimal_url,'disable':'' }} )}}
+                            <span class="input-group-addon bg-green white">TND</span>
+                        </div>
+                        {{ form_errors(form.totalPrix)}}
+
+
                     </div>
                 </div>
             </div>

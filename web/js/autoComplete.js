@@ -29,18 +29,21 @@ function AutoComplete($id){
     $autoCompelt = new google.maps.places.Autocomplete(
         /** @type {!HTMLInputElement} */
         ($elem), {
-            types: ['geocode'],
+            types: [],
             componentRestrictions: {'country': 'TN'}
         });
     $autoCompelt.bindTo('bounds', map);
 
     $autoCompelt.addListener('place_changed', function(){
         var place = $autoCompelt.getPlace();
-
+        if (null === place)return;
+        if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
         if (place.geometry) {
             map.panTo(place.geometry.location);
             map.setZoom(7);
-            calculateAndDisplayRoute(directionsService,directionsDisplay);
             var $parent =$($elem).parent();
             $parent.find('input[class=latitude]').val(place.geometry.location.lat());
             $parent.find('input[class=longitude]').val(place.geometry.location.lng());
@@ -49,7 +52,7 @@ function AutoComplete($id){
 
             $db_parent.find('input[class=latitude]').val(place.geometry.location.lat());
             $db_parent.find('input[class=longitude]').val(place.geometry.location.lng());
-
+            calculateAndDisplayRoute(directionsService,directionsDisplay);
 
         } else {
             //window.alert("Autocomplete's returned place contains no geometry");

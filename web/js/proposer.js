@@ -276,8 +276,6 @@ function info_Complementaire(){
 $( document ).ready(function() {
 
 
-
-
     updateRoundTripChanged();
 
     UniqueTrip();

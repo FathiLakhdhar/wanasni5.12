@@ -43,9 +43,25 @@ $(document).ready(function() {
         var $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
     }
 
+    var $marker;
+
+    $container.children('div').each(function(){
+
+        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
+        var child=$(this);
+        child.find('label').addClass('sr-only');
+        child.addClass('form-group');
+        child.children('div').addClass('waypoint pos-relative');
+        child.find('input[type=text]').before($marker);
+        var $li=$('<li class="point"></li>');
+        $li.append(child);
+        $container.append($li);
+    });
+
+
     // On ajoute un lien pour ajouter une nouvelle Waypoint
     var $lienAjout = $('<a href="#" id="ajout_waypoint" class="btn btn-green">Ajouter un Lieu</a>');
-    $container.append($lienAjout);
+    $container.prepend($lienAjout);
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $lienAjout.click(function(e) {
@@ -62,7 +78,7 @@ $(document).ready(function() {
         ajouterWaypoint($container);
     }  else {
         // Pour chaque Waypoint déjà existante, on ajoute un lien de suppression
-        $container.children('div').each(function() {
+        $container.children('li.point').each(function() {
             ajouterLienSuppression($(this));
         });
     }
@@ -76,14 +92,16 @@ $(document).ready(function() {
             // - le texte "__name__label__" qu'il contient par le label du champ
             // - le texte "__name__" qu'il contient par le numéro du champ
         var $prototype = $($container.attr('data-prototype')
-            .replace(/__name__label__/g, 'Ville étape')
+            .replace(/__name__label__/g, index)
             .replace(/__name__/g, index)
         );
+
+
+        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
 
         //
         $prototype.find('label').addClass('sr-only');
 
-        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
 
         $prototype.first('div').addClass('form-group');
 

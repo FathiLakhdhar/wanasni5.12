@@ -37,10 +37,11 @@ class TrajetType extends AbstractType
                 'type' => new PointType(),
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => false,
+                'label_attr' => array('class'=>'sr-only'),
             ))
             ->add('round_trip', 'checkbox', array(
-                'attr' => array('class' => 'round_trip')
+                'attr' => array('class' => 'round_trip'),
+                'required'=>false,
             ))
             ->add('date_allet_unique', 'text', array(
                 'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA')
@@ -55,7 +56,9 @@ class TrajetType extends AbstractType
 
             ))
             ->add('date_retour_unique', 'text', array(
-                'attr' => array('class'=>'text-indent form-control','datepicker' => 'date_retour_unique', 'placeholder' => 'JJ/MM/AAAA')
+                'attr' => array('class'=>'text-indent form-control','datepicker' => 'date_retour_unique', 'placeholder' => 'JJ/MM/AAAA'),
+                'required'=>false
+
             ))
             ->add('heureRetour', 'time', array(
                 'input' => 'timestamp',
@@ -91,13 +94,15 @@ class TrajetType extends AbstractType
                 'expanded' => true,
             ))
             ->add('Preferences', new PreferencesType())
+
             ->add('informationsComplementaires', 'textarea', array(
                 'attr' => array(
                     'class' => 'form-control',
                     'placeholder' => '0..500 caractères',
                     'maxlength' => "500",
-                    "rows" => "5"
+                    "rows" => "5",
                 ),
+                'required'=>false,
 
 
             ))
@@ -116,11 +121,13 @@ class TrajetType extends AbstractType
             ))
             ->add('nbPlaces', 'text', array(
                 'attr' => array('class' => 'form-control car-place-spinner'),
-                'disabled'=>true,
-                'data'=>1
+                'data'=>1,
+                'read_only'=>true,
             ))
             ->add('totalPrix', 'number', array(
-                'attr' => array('class' => 'form-control')
+                'attr' => array('class' => 'form-control'),
+                'data'=>0,
+                'read_only'=>true,
             ))
             ->add('vehicule', 'entity', array(
                 'empty_value' => 'Sélectionnez votre véhicule',

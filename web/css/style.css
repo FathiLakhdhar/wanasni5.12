@@ -805,6 +805,14 @@ Color
     color: #FFFFFF;
 }
 
+.darkgrey{
+    color: #607D8B;
+}
+
+.bg-darkgrey{
+    background-color:#607D8B ;
+}
+
 .red {
     color: #FA6C65 !important;
 }
@@ -822,6 +830,10 @@ Color
 
 .bg-green {
     background-color:  #1ABB9C !important;
+}
+
+.white{
+    color: #FFFFFF;
 }
 
 .bg-white{

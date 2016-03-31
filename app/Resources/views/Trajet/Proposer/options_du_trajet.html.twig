@@ -51,6 +51,8 @@
                     </label>
                 </div>
 
+                {{ form_errors(form.Bagages)}}
+
             </div>
 
         </div>
@@ -144,6 +146,8 @@
 
             </div>
         </div>
+
+        {{ form_errors(form.Preferences)}}
     </div>
 
 
@@ -156,9 +160,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_widget(form.vehicule) }}
+                        {{ form_errors(form.vehicule)}}
                     </div>
                     <div class="col-md-3">
                         {{ form_widget(form.nbPlaces) }}
+                        {{ form_errors(form.nbPlaces)}}
                     </div>
                 </div>
             </div>

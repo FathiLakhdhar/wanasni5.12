@@ -8,6 +8,7 @@ use Wanasni\TrajetBundle\Entity\TrajetDate;
 use Wanasni\TrajetBundle\Entity\Preferences;
 use Symfony\Component\Validator\Constraints as Assert;
 use Wanasni\TrajetBundle\Entity\Point;
+use Wanasni\UserBundle\Entity\User;
 use Wanasni\VehiculeBundle\Entity\Vehicule;
 
 /**
@@ -15,6 +16,7 @@ use Wanasni\VehiculeBundle\Entity\Vehicule;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\TrajetRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Trajet
 {
@@ -32,20 +34,19 @@ class Trajet
 
     /**
      * @var Point
-     * @ORM\OneToOne(targetEntity="Point", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="origine_id", nullable=false)
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
      */
     private $Origine;
 
     /**
      * @var Point
-     *@ORM\OneToOne(targetEntity="Point", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="destination_id", nullable=false)
+     *@ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     *
      */
     private $Destination;
 
     /**
-     * @ORM\OneToMany(targetEntity="Point", mappedBy="trajet")
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="trajet", cascade={"persist","remove"})
      */
     private $waypoints;
 
@@ -54,7 +55,7 @@ class Trajet
      * @var string
      *
      * @ORM\Column(name="frequence", type="string", length=10)
-     * @Assert\Choice(choices = {"unique", "regulier"}, message = "Choose a valid frequence.")
+     * @Assert\Choice(choices = {"UNIQUE", "REGULAR"}, message = "Choose a valid frequence.")
      */
     private $frequence;
 
@@ -62,7 +63,7 @@ class Trajet
      * @var integer
      *
      * @ORM\Column(name="nbPlaces", type="integer")
-     *  @Assert\NotBlank()
+     * @Assert\NotBlank()
      */
     private $nbPlaces;
 
@@ -170,7 +171,7 @@ class Trajet
     private $datesRetour;
 
     /**
-     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Segment", mappedBy="trajet")
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Segment", mappedBy="trajet" ,cascade={"persist", "remove"})
      */
     private $Segments;
 
@@ -192,6 +193,11 @@ class Trajet
      */
     private $vehicule;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User", inversedBy="trajets")
+     */
+    private $conducteur;
 
     /**
      * @var boolean
@@ -259,6 +265,7 @@ class Trajet
         $this->datesRetour = new ArrayCollection();
         $this->waypoints=new ArrayCollection();
         $this->Segments=new ArrayCollection();
+        $this->nbPlacesRestants=0;
     }
 
 
@@ -783,4 +790,58 @@ class Trajet
     {
         return $this->totalPrix;
     }
+
+    /**
+     * Set conducteur
+     *
+     * @param \Wanasni\UserBundle\Entity\User $conducteur
+     * @return Trajet
+     */
+    public function setConducteur(\Wanasni\UserBundle\Entity\User $conducteur = null)
+    {
+        $this->conducteur = $conducteur;
+    
+        return $this;
+    }
+
+    /**
+     * Get conducteur
+     *
+     * @return \Wanasni\UserBundle\Entity\User 
+     */
+    public function getConducteur()
+    {
+        return $this->conducteur;
+    }
+
+
+
+    /**
+     * @ORM\PrePersist()
+    */
+
+    public function prePersist(){
+
+        
+        $arrCollection=new ArrayCollection();
+
+        $arrCollection->add($this->getOrigine());
+
+        foreach($this->getWaypoints() as $waypoint){
+            $arrCollection->add($waypoint);
+        }
+
+        $arrCollection->add($this->getDestination());
+
+
+
+        foreach($this->getSegments() as $key => $segment){
+            $segment->setTrajet($this);
+            $segment->setStart($arrCollection->get($key));
+            $segment->setEnd($arrCollection->get($key+1));
+        }
+
+    }
+
+
 }

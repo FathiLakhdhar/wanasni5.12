@@ -3,6 +3,8 @@
 namespace Wanasni\TrajetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Preferences
@@ -25,6 +27,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="Fumeurs", type="boolean")
+     *
      */
     private $fumeurs;
 
@@ -39,6 +42,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="AnimauxEnCage", type="boolean")
+     *
      */
     private $animauxEnCage;
 
@@ -46,6 +50,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="Musique", type="boolean")
+     *
      */
     private $musique;
 
@@ -53,6 +58,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="Detours", type="boolean")
+     *
      */
     private $detours;
 
@@ -60,6 +66,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="PauseCafe", type="boolean")
+     *
      */
     private $pauseCafe;
 
@@ -67,6 +74,7 @@ class Preferences
      * @var boolean
      *
      * @ORM\Column(name="Nourriture", type="boolean")
+     *
      */
     private $nourriture;
 

@@ -18,20 +18,23 @@ class SegmentType extends AbstractType
             ->add('distance','text',array(
                 'attr'=>array('class'=>'distance form-control'),
                 'data'=>'0 km',
-                'disabled'=>true,
+                'read_only'=>true,
+                'label'=>false
+
             ))
             ->add('duration','text',array(
                 'attr'=>array('class'=>'duration form-control'),
-                'data'=>'0 heurs 0 min',
-                'disabled'=>true,
+                'data'=>'0 heure 0 min',
+                'read_only'=>true,
+                'label'=>false
             ))
 
             ->add('prix','number',array(
-                'attr'=>array('class'=>'prix form-control')
+                'attr'=>array('class'=>'prix form-control'),
+                'label'=>false,
+                'data'=>0,
             ))
-            ->add('order','hidden',array(
-                'attr'=>array('class'=>'order form-control'),
-            ))
+
         ;
     }
     
