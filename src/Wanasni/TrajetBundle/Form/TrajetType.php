@@ -46,12 +46,9 @@ class TrajetType extends AbstractType
             ->add('date_allet_unique', 'text', array(
                 'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA')
             ))
-            ->add('heureAller', 'time', array(
-                'input' => 'timestamp',
-                'widget' => 'choice',
-            ))
+
             ->add('Depart_prevu', 'choice', array(
-                'choices' => array('0' => 'Heure exacte', '10' => '+/- 10 minutes', '20' => '+/- 20 minutes', '30' => '+/- 30 minutes'),
+                'choices' => array('Heure exacte' => 'Heure exacte', '+/- 10 minutes' => '+/- 10 minutes', '+/- 20 minutes' => '+/- 20 minutes', '+/- 30 minutes' => '+/- 30 minutes'),
                 'attr'=> array('class'=>'form-control'),
 
             ))
@@ -60,8 +57,13 @@ class TrajetType extends AbstractType
                 'required'=>false
 
             ))
+            ->add('heureAller', 'time', array(
+                'input' => 'datetime',
+                'widget' => 'choice',
+            ))
+
             ->add('heureRetour', 'time', array(
-                'input' => 'timestamp',
+                'input' => 'datetime',
                 'widget' => 'choice',
             ))
             ->add('datesAller', 'collection', array(
@@ -119,7 +121,7 @@ class TrajetType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ))
-            ->add('nbPlaces', 'text', array(
+            ->add('nbPlaces', 'number', array(
                 'attr' => array('class' => 'form-control car-place-spinner'),
                 'data'=>1,
                 'read_only'=>true,

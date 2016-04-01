@@ -20,7 +20,7 @@ wanasni_trajet:
 
 # FosUserBundle Routing EN
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@WanasniUserBundle/Resources/config/all.xml"
 
 
 

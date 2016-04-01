@@ -48,14 +48,14 @@ class Segment
 
     /**
      * @var Point
-     * @ORM\OneToOne(targetEntity="Point")
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="start_id", nullable=false)
      */
     private $start;
 
     /**
      * @var Point
-     * @ORM\OneToOne(targetEntity="Point")
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="end_id", nullable=false)
      */
     private $end;

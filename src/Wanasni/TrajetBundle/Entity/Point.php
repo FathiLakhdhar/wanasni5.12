@@ -4,6 +4,7 @@ namespace Wanasni\TrajetBundle\Entity;
 
 use Doctrine\DBAL\Types\DecimalType;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Point
@@ -27,6 +28,7 @@ class Point
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $lieu;
 
@@ -34,24 +36,20 @@ class Point
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", scale=10)
+     * @ORM\Column(name="latitude", type="string")
+     * @Assert\NotBlank()
      */
     private $latitude;
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", scale=10)
+     * @ORM\Column(name="longitude", type="string")
+     * @Assert\NotBlank()
      */
     private $longitude;
 
 
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Trajet", inversedBy="waypoints")
-     *
-     */
-    private $trajet;
 
     /**
      * Get id
@@ -110,28 +108,6 @@ class Point
         return $this->longitude;
     }
 
-    /**
-     * Set trajet
-     *
-     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajet
-     * @return Point
-     */
-    public function setTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajet = null)
-    {
-        $this->trajet = $trajet;
-    
-        return $this;
-    }
-
-    /**
-     * Get trajet
-     *
-     * @return \Wanasni\TrajetBundle\Entity\Trajet 
-     */
-    public function getTrajet()
-    {
-        return $this->trajet;
-    }
 
     /**
      * Set lieu

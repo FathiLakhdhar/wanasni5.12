@@ -3,6 +3,7 @@
 namespace Wanasni\TrajetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Wanasni\TrajetBundle\Entity\TrajetDate;
 use Wanasni\TrajetBundle\Entity\Preferences;
@@ -35,18 +36,20 @@ class Trajet
     /**
      * @var Point
      * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @Assert\Valid
      */
     private $Origine;
 
     /**
      * @var Point
      *@ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
-     *
+     * @Assert\Valid
      */
     private $Destination;
 
     /**
-     * @ORM\OneToMany(targetEntity="Point", mappedBy="trajet", cascade={"persist","remove"})
+     * @var Collection
+     * @Assert\Valid
      */
     private $waypoints;
 
@@ -64,6 +67,12 @@ class Trajet
      *
      * @ORM\Column(name="nbPlaces", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 9,
+     *      minMessage = "You must be at least {{ limit }} Places tall to enter",
+     *      maxMessage = "You cannot be taller than {{ limit }} Places to enter"
+     * )
      */
     private $nbPlaces;
 
@@ -77,17 +86,20 @@ class Trajet
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $totalDuration;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $totalDistance;
 
     /**
      * @var integer
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     private $totalPrix;
 
@@ -105,25 +117,26 @@ class Trajet
     private $informationsComplementaires;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="heureAller", type="string", length=5, nullable=false)
-     *  @Assert\NotBlank()
+     * @var \DateTime
+     * @ORM\Column(name="heureAller", type="time", nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Time()
      */
     private $heureAller;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="heureRetour", type="string", length=5, nullable=true)
+     * @ORM\Column(name="heureRetour", type="time", nullable=false)
+     * @Assert\Time()
      */
     private $heureRetour;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="Depart_prevu", type="integer", nullable=false)
-     *  @Assert\Choice(choices = {0, 10, 20, 30}, message = "Choose a valid Depart prévu")
+     * @ORM\Column(name="Depart_prevu", type="string", nullable=false)
+     * @Assert\Choice(choices = {"Heure exacte", "+/- 10 minutes", "+/- 20 minutes", "+/- 30 minutes"}, message = "Choose a valid Depart prévu")
      */
     private $Depart_prevu;
 
@@ -137,18 +150,20 @@ class Trajet
 
 
     /**
-     *@ORM\OneToOne(targetEntity="Preferences", cascade={"persist","remove"})
+     *@ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Preferences", cascade={"persist","remove"})
      */
     private $Preferences;
 
 
     /**
      * @var \DateTime
+     * @Assert\NotBlank()
      */
     private $Date_Allet_unique;
 
     /**
      * @var \DateTime
+     *
      */
     private $Date_Retour_unique;
 
@@ -183,6 +198,7 @@ class Trajet
 
     /**
      * @var \DateTime
+     *
      */
     private $regularEndDate;
 
@@ -190,6 +206,7 @@ class Trajet
     /**
      * @var Vehicule
      * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets")
+     *
      */
     private $vehicule;
 
@@ -266,6 +283,8 @@ class Trajet
         $this->waypoints=new ArrayCollection();
         $this->Segments=new ArrayCollection();
         $this->nbPlacesRestants=0;
+        //$this->heureAller= new \DateTime();
+        //$this->heureRetour= new \DateTime();
     }
 
 
@@ -400,53 +419,6 @@ class Trajet
         return $this->nbPlacesRestants;
     }
 
-
-
-    /**
-     * Set heureAller
-     *
-     * @param string $heureAller
-     * @return Trajet
-     */
-    public function setHeureAller($heureAller)
-    {
-        $this->heureAller = $heureAller;
-    
-        return $this;
-    }
-
-    /**
-     * Get heureAller
-     *
-     * @return string 
-     */
-    public function getHeureAller()
-    {
-        return $this->heureAller;
-    }
-
-    /**
-     * Set heureRetour
-     *
-     * @param string $heureRetour
-     * @return Trajet
-     */
-    public function setHeureRetour($heureRetour)
-    {
-        $this->heureRetour = $heureRetour;
-    
-        return $this;
-    }
-
-    /**
-     * Get heureRetour
-     *
-     * @return string 
-     */
-    public function getHeureRetour()
-    {
-        return $this->heureRetour;
-    }
 
 
     /**
@@ -597,28 +569,9 @@ class Trajet
         return $this->waypoints;
     }
 
-    /**
-     * Set Depart_prevu
-     *
-     * @param integer $departPrevu
-     * @return Trajet
-     */
-    public function setDepartPrevu($departPrevu)
-    {
-        $this->Depart_prevu = $departPrevu;
-    
-        return $this;
-    }
 
-    /**
-     * Get Depart_prevu
-     *
-     * @return integer 
-     */
-    public function getDepartPrevu()
-    {
-        return $this->Depart_prevu;
-    }
+
+
 
     /**
      * Set datesAller
@@ -643,6 +596,18 @@ class Trajet
         return $this->datesAller;
     }
 
+
+    public function addDatesAller($Date)
+    {
+        if (!in_array($Date, $this->datesAller, true)) {
+            $this->datesAller[] = $Date;
+        }
+
+        return $this;
+    }
+
+
+
     /**
      * Set datesRetour
      *
@@ -665,6 +630,17 @@ class Trajet
     {
         return $this->datesRetour;
     }
+
+
+    public function addDatesRetour($Date)
+    {
+        if (!in_array($Date, $this->datesRetour, true)) {
+            $this->datesRetour[] = $Date;
+        }
+
+        return $this;
+    }
+
 
     /**
      * Set totalDuration
@@ -815,6 +791,29 @@ class Trajet
     }
 
 
+    /**
+     * Set Depart_prevu
+     *
+     * @param string $departPrevu
+     * @return Trajet
+     */
+    public function setDepartPrevu($departPrevu)
+    {
+        $this->Depart_prevu = $departPrevu;
+
+        return $this;
+    }
+
+    /**
+     * Get Depart_prevu
+     *
+     * @return string
+     */
+    public function getDepartPrevu()
+    {
+        return $this->Depart_prevu;
+    }
+
 
     /**
      * @ORM\PrePersist()
@@ -822,6 +821,13 @@ class Trajet
 
     public function prePersist(){
 
+
+        if($this->getFrequence()==="UNIQUE"){
+            $this->setDatesAller(array($this->getDateAlletUnique()));
+            if($this->isRoundTrip()){
+                $this->setDatesRetour(array($this->getDateRetourUnique()));
+            }
+        }
         
         $arrCollection=new ArrayCollection();
 
@@ -844,4 +850,50 @@ class Trajet
     }
 
 
+
+    /**
+     * Set heureRetour
+     *
+     * @param \DateTime $heureRetour
+     * @return Trajet
+     */
+    public function setHeureRetour($heureRetour)
+    {
+        $this->heureRetour = $heureRetour;
+    
+        return $this;
+    }
+
+    /**
+     * Get heureRetour
+     *
+     * @return \DateTime 
+     */
+    public function getHeureRetour()
+    {
+        return $this->heureRetour;
+    }
+
+    /**
+     * Set heureAller
+     *
+     * @param \DateTime $heureAller
+     * @return Trajet
+     */
+    public function setHeureAller($heureAller)
+    {
+        $this->heureAller = $heureAller;
+    
+        return $this;
+    }
+
+    /**
+     * Get heureAller
+     *
+     * @return \DateTime 
+     */
+    public function getHeureAller()
+    {
+        return $this->heureAller;
+    }
 }

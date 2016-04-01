@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voir Trajet{% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+
+
+
+    {% if trajet %}
+
+        <div class="row">
+            id : {{ trajet.id }}<br>
+            Origine : {{ trajet.origine.lieu }}<br>
+            Destination : {{ trajet.destination.lieu }}<br>
+        </div>
+
+    {% else %}
+        <div class="alert alert-warning">
+            Trajet Not Found :/
+        </div>
+
+    {% endif %}
+
+
+    </div>
+
+{% endblock body %}

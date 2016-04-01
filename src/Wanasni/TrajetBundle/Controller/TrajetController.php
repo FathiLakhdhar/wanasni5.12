@@ -9,6 +9,7 @@ use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
 use Wanasni\TrajetBundle\Form\TrajetType;
 use Wanasni\TrajetBundle\Form\TrajetUniqueType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class TrajetController extends Controller
@@ -80,6 +81,7 @@ class TrajetController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 $trajet->setConducteur($this->getUser());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($trajet);
@@ -108,12 +110,13 @@ class TrajetController extends Controller
     /**
      *
      * @Route("/voir-trajet/{id}", name="trajet_show")
+     * @ParamConverter("trajet", class="WanasniTrajetBundle:Trajet")
      */
-    public function ShowAction($id)
+    public function ShowAction(Trajet $trajet)
     {
         return $this->render(':Trajet/Gerer:voir_trajet.html.twig',
             array(
-                'id'=>$id,
+                'trajet'=>$trajet,
             ));
     }
 

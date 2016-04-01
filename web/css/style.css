@@ -1021,7 +1021,7 @@ span.input-icon{
     position: absolute;
     top: 12px;
     left: 10px;
-    z-index: 2;
+    z-index: 1;
     font-size: 25px;
 }
 span.date-icon{
