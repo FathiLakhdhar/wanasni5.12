@@ -22,7 +22,7 @@ class TrajetController extends Controller
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
 
         $trajet = new Trajet();
@@ -39,6 +39,7 @@ class TrajetController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                $trajet->setConducteur($this->getUser());
                 $em->persist($trajet);
                 $em->flush();
 
@@ -68,9 +69,14 @@ class TrajetController extends Controller
     public function ProposerRegulierAction()
     {
 
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+
         $trajet = new Trajet();
         // On crée le formulaire grâce à la TrajetType
-        $form = $this->createForm(new TrajetRegulierType(), $trajet);
+        $form = $this->createForm(new TrajetRegulierType($this->getUser()),$trajet);
 
         // On récupère la requête
         $request = $this->getRequest();
@@ -81,9 +87,8 @@ class TrajetController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-
-                $trajet->setConducteur($this->getUser());
                 $em = $this->getDoctrine()->getManager();
+                $trajet->setConducteur($this->getUser());
                 $em->persist($trajet);
                 $em->flush();
 
@@ -103,7 +108,6 @@ class TrajetController extends Controller
             array(
                 'form'=>$form->createView(),
             ));
-
 
     }
 

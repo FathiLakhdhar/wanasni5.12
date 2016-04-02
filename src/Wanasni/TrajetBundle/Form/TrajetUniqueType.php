@@ -2,10 +2,8 @@
 
 namespace Wanasni\TrajetBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Date;
 
 class TrajetUniqueType extends TrajetType
 {

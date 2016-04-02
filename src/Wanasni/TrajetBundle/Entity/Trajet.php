@@ -36,13 +36,15 @@ class Trajet
     /**
      * @var Point
      * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
     private $Origine;
 
     /**
      * @var Point
-     *@ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
     private $Destination;
@@ -66,7 +68,7 @@ class Trajet
      * @var integer
      *
      * @ORM\Column(name="nbPlaces", type="integer")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Places ne doit pas être vide.")
      * @Assert\Range(
      *      min = 1,
      *      max = 9,
@@ -86,20 +88,20 @@ class Trajet
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="total Durée ne doit pas être vide.")
      */
     private $totalDuration;
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="total Distance ne doit pas être vide.")
      */
     private $totalDistance;
 
     /**
      * @var integer
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
+     *
      */
     private $totalPrix;
 
@@ -119,7 +121,7 @@ class Trajet
     /**
      * @var \DateTime
      * @ORM\Column(name="heureAller", type="time", nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="heure Aller ne doit pas être vide.")
      * @Assert\Time()
      */
     private $heureAller;
@@ -157,7 +159,7 @@ class Trajet
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Date Allet unique ne doit pas être vide.")
      */
     private $Date_Allet_unique;
 
@@ -169,36 +171,39 @@ class Trajet
 
     /**
      * @var boolean
+     * @ORM\Column(type="boolean")
      */
     private $roundTrip;
 
 
     /**
-     * @ORM\Column(type="array")
      * @var array
+     * @ORM\Column(type="array",nullable=false)
      */
     private $datesAller;
 
     /**
-     * @ORM\Column(type="array")
      * @var array
+     * @ORM\Column(type="array")
      */
     private $datesRetour;
 
     /**
      * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Segment", mappedBy="trajet" ,cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $Segments;
 
     /**
      * @var \DateTime
+     * @Assert\NotBlank(message="start Date Regulier ne doit pas être vide.")
      */
     private $regularBeginDate;
 
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank(message="fin Date Regulier ne doit pas être vide.")
      */
     private $regularEndDate;
 
@@ -206,19 +211,20 @@ class Trajet
     /**
      * @var Vehicule
      * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets")
-     *
+     * @ORM\JoinColumn(nullable=false)
      */
     private $vehicule;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User", inversedBy="trajets")
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User",inversedBy="trajets")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $conducteur;
 
     /**
      * @var boolean
-     *@Assert\IsTrue(message = "Vous devez certifier être en possession d'un permis de conduire et d'une assurance en cours de validité pour publier votre annonce")
+     * @Assert\IsTrue(message = "Vous devez certifier être en possession d'un permis de conduire et d'une assurance en cours de validité pour publier votre annonce")
      */
     private $cgu;
 
@@ -278,11 +284,15 @@ class Trajet
      */
     public function __construct()
     {
-        $this->datesAller = new ArrayCollection();
-        $this->datesRetour = new ArrayCollection();
+       $this->datesAller = array();
+       $this->datesRetour = array();
         $this->waypoints=new ArrayCollection();
         $this->Segments=new ArrayCollection();
         $this->nbPlacesRestants=0;
+        $this->Date_Allet_unique= date("Y-m-d");
+        $this->Date_Retour_unique= date("Y-m-d");
+        $this->regularBeginDate=date("Y-m-d");
+        $this->regularEndDate=date("Y-m-d");
         //$this->heureAller= new \DateTime();
         //$this->heureRetour= new \DateTime();
     }
@@ -582,14 +592,14 @@ class Trajet
     public function setDatesAller($datesAller)
     {
         $this->datesAller = $datesAller;
-    
+
         return $this;
     }
 
     /**
      * Get datesAller
      *
-     * @return array 
+     * @return array
      */
     public function getDatesAller()
     {
@@ -601,6 +611,16 @@ class Trajet
     {
         if (!in_array($Date, $this->datesAller, true)) {
             $this->datesAller[] = $Date;
+        }
+
+        return $this;
+    }
+
+    public function removeDatesAller($Date)
+    {
+        if (false !== $key = array_search(strtoupper($Date), $this->datesAller, true)) {
+            unset($this->datesAller[$key]);
+            $this->datesAller = array_values($this->datesAller);
         }
 
         return $this;
@@ -641,6 +661,15 @@ class Trajet
         return $this;
     }
 
+    public function removeDatesRetour($Date)
+    {
+        if (false !== $key = array_search(strtoupper($Date), $this->datesRetour, true)) {
+            unset($this->datesRetour[$key]);
+            $this->datesRetour = array_values($this->datesRetour);
+        }
+
+        return $this;
+    }
 
     /**
      * Set totalDuration
@@ -767,29 +796,6 @@ class Trajet
         return $this->totalPrix;
     }
 
-    /**
-     * Set conducteur
-     *
-     * @param \Wanasni\UserBundle\Entity\User $conducteur
-     * @return Trajet
-     */
-    public function setConducteur(\Wanasni\UserBundle\Entity\User $conducteur = null)
-    {
-        $this->conducteur = $conducteur;
-    
-        return $this;
-    }
-
-    /**
-     * Get conducteur
-     *
-     * @return \Wanasni\UserBundle\Entity\User 
-     */
-    public function getConducteur()
-    {
-        return $this->conducteur;
-    }
-
 
     /**
      * Set Depart_prevu
@@ -823,9 +829,13 @@ class Trajet
 
 
         if($this->getFrequence()==="UNIQUE"){
-            $this->setDatesAller(array($this->getDateAlletUnique()));
+            $this->setDatesAller(array(
+                date_format(date_create($this->getDateAlletUnique()),'Ymd')
+            ));
             if($this->isRoundTrip()){
-                $this->setDatesRetour(array($this->getDateRetourUnique()));
+                $this->setDatesRetour(array(
+                    date_format(date_create($this->getDateRetourUnique()),'Ymd')
+                ));
             }
         }
         
@@ -839,13 +849,16 @@ class Trajet
 
         $arrCollection->add($this->getDestination());
 
-
+        $p=0;
 
         foreach($this->getSegments() as $key => $segment){
             $segment->setTrajet($this);
             $segment->setStart($arrCollection->get($key));
             $segment->setEnd($arrCollection->get($key+1));
+            $p+=$segment->getPrix();
         }
+
+        $this->setTotalPrix($p);
 
     }
 
@@ -895,5 +908,28 @@ class Trajet
     public function getHeureAller()
     {
         return $this->heureAller;
+    }
+
+    /**
+     * Set conducteur
+     *
+     * @param \Wanasni\UserBundle\Entity\User $conducteur
+     * @return Trajet
+     */
+    public function setConducteur(\Wanasni\UserBundle\Entity\User $conducteur = null)
+    {
+        $this->conducteur = $conducteur;
+    
+        return $this;
+    }
+
+    /**
+     * Get conducteur
+     *
+     * @return \Wanasni\UserBundle\Entity\User 
+     */
+    public function getConducteur()
+    {
+        return $this->conducteur;
     }
 }

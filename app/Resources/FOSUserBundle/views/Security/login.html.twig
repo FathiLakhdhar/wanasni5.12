@@ -1,6 +1,9 @@
-{% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends '@FOSUser/layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Se connecter{% endblock title %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/style_Security.css') }}"/>

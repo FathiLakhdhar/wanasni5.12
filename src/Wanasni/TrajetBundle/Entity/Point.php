@@ -28,7 +28,7 @@ class Point
      * @var string
      *
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="lieu ne doit pas être vide.")
      */
     private $lieu;
 
@@ -37,14 +37,14 @@ class Point
      * @var string
      *
      * @ORM\Column(name="latitude", type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Cette latitude ne doit pas être vide.")
      */
     private $latitude;
     /**
      * @var string
      *
      * @ORM\Column(name="longitude", type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Cette longitude ne doit pas être vide.")
      */
     private $longitude;
 

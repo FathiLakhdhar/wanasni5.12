@@ -8,13 +8,7 @@
 
 
 {% block javascripts %}
-
     {{ parent() }}
-
-    <script src="{{ asset('js/proposer.js') }}"></script>
-    <script src="{{ asset('js/waypoints.js') }}"></script>
-    <script src="{{ asset('js/map.js') }}"></script>
-
 
     <script>
         $(function() {
@@ -22,7 +16,12 @@
             $('#idProposer').addClass('active');
         });
     </script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBk9B9hwksRr8Sr0LGF-uj0GtDZlKCw1r4&signed_in=true&libraries=places"></script>
 
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script src="{{ asset('js/proposer.js') }}"></script>
+    <script src="{{ asset('js/waypoints.js') }}"></script>
+    <script src="{{ asset('js/autoComplete.js') }}"></script>
 
 
 

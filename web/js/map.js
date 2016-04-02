@@ -34,6 +34,18 @@ if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
 
 function initialize() {
+    //var map;
+    var mapProp = {
+        center: new google.maps.LatLng(33.7774359, 9.4269145),
+        zoom: 6,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControl: false,
+        panControl: false,
+        zoomControl: false,
+        streetViewControl: false
+    };
+    map = new google.maps.Map(document.getElementById("map"), mapProp);
+
 
     directionsDisplay.setMap(map);
 
@@ -133,20 +145,14 @@ function setPrixOptimal(input,$metre){
 
     var prixOpt=0;
 
-    var inputPrixTotal;
-    if($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE'){
-        inputPrixTotal=$('#wanasni_trajetbundle_trajetunique_totalPrix');
-    }else {
-        inputPrixTotal=$('#wanasni_trajetbundle_trajetregulier_totalPrix');
-    }
 
-    var url=inputPrixTotal.data("prix-optimal-url");
+    var url=$Segments.data("prix-optimal-url");
     url = url.replace("__METRE__", $metre);
 
     $.getJSON(url, {ajax: "true"}, function (data) {
         prixOpt= data['PrixOptimal'];
         input.val(prixOpt);
-        prixTotal();
+        //prixTotal();
     });
 
 }
@@ -173,7 +179,7 @@ function NewSegment(route, index) {
     var inputOrder = $prototype.find('input.order');
 
 
-    setPrixOptimal(inputPrix,route.legs[index].distance.value);
+
     inputDistance.val(route.legs[index].distance.text);
     inputDuration.val(route.legs[index].duration.text);
     inputOrder.val(index);
@@ -204,6 +210,14 @@ function NewSegment(route, index) {
 
     var $segment = $('<li class="segment alert alert-info"></li>');
     $segment.append($prototype);
+
+    var $a=$('<a href="Javascript:void(0);" data-metre="'+route.legs[index].distance.value+'" class="label label-success">Prix Optimal</a>');
+
+    $a.on('click',function(){
+        setPrixOptimal(inputPrix, route.legs[index].distance.value);
+    });
+
+    $segment.append($a);
 
     $Segments.append($segment);
 

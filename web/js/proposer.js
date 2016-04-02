@@ -149,6 +149,17 @@ var regularTrip = function () {
     that.init = function () {
 
         self.load();
+
+
+        $('#wanasni_trajetbundle_trajetregulier_datesAller').children().each(function(){
+            var date=self.getReverseDateKey($(this).find('input').val());
+            self.addRemoveDate("add", "simple", date);
+        });
+        $('#wanasni_trajetbundle_trajetregulier_datesRetour').children().each(function(){
+            var date=self.getReverseDateKey($(this).find('input').val());
+            self.addRemoveDate("add", "round", date);
+        });
+
         self.initialEndDate = self.widgetDateStop.datepicker("getDate");
         var optionsCalendar = {
             selectOtherMonths: true,
@@ -278,9 +289,15 @@ $( document ).ready(function() {
 
     updateRoundTripChanged();
 
-    UniqueTrip();
 
-    regularTrip.init();
+
+    if($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE'){
+        UniqueTrip();
+    }else{
+        regularTrip.init();
+    }
+
+
 
     info_Complementaire()
 

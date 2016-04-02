@@ -5,7 +5,6 @@ namespace Wanasni\TrajetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\Date;
 
 class TrajetRegulierType extends TrajetType
 {
@@ -18,7 +17,6 @@ class TrajetRegulierType extends TrajetType
         parent::buildForm($builder, $options);
 
         $builder
-
             ->remove('date_allet_unique')
 
             ->remove('date_retour_unique')

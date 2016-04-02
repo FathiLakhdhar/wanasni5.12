@@ -6,7 +6,19 @@
 
 {% block body %}
     <div id="proposer" class="container">
-        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_unique'), 'attr': {'class':''}}) }}
+        {{ form_start(form, {'method': 'post', 'action': path('trajet_proposer_regulier'), 'attr': {'class':''}}) }}
+
+
+        <div class="row">
+            <div class="col-md-8">
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger">
+                        {{ form_errors(form)}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
 
         <div class="row">
             <!-- Trajet -->
@@ -74,6 +86,7 @@
                                         {{ form_widget(form.round_trip) }}
                                         {{ form_label(form.round_trip,'Trajet aller-retour',{'label_attr': {'class': 'bg-green'}}) }}
                                     </div>
+                                    {{ form_errors(form.round_trip)}}
                                 </div>
 
                             </div>
@@ -88,12 +101,12 @@
 
                                             {{ form_label(form.heureAller,'Heure Aller') }}
                                             {{ form_widget(form.heureAller) }}
-
                                             <div class="legend-container">
                                                 <i class="legend green" aria-hidden="true"></i>
                                                 <span class="legend-green-label">Mes allers</span>
                                             </div>
 
+                                            {{ form_errors(form.heureAller)}}
                                         </div>
                                         <div class="col-md-4 Retour return-container">
                                             {{ form_label(form.heureRetour,'Heure Retour') }}
@@ -102,10 +115,12 @@
                                                 <i class="legend blue" aria-hidden="true"></i>
                                                 <span class="legend-blue-label">Mes retours</span>
                                             </div>
+                                            {{ form_errors(form.heureRetour)}}
                                         </div>
                                         <div class="col-md-3">
                                             {{ form_label(form.Depart_prevu,'Depart Prévu') }}
                                             {{ form_widget(form.Depart_prevu) }}
+                                            {{ form_errors(form.Depart_prevu)}}
                                         </div>
                                     </div>
 
@@ -121,6 +136,7 @@
                                                     <span class="fa fa-calendar  date-icon"></span>
                                                     {{ form_widget(form.regular_begin_date,{'attr':{'class':'text-indent form-control'}}) }}
                                                 </div>
+                                                {{ form_errors(form.regular_begin_date)}}
                                             </div>
                                             <div class="col-md-12"><!-- Jusqu'au : -->
                                                 {{ form_label(form.regular_end_date,'Jusqu\'au :') }}
@@ -128,19 +144,30 @@
                                                     <span class="fa fa-calendar  date-icon"></span>
                                                     {{ form_widget(form.regular_end_date,{'attr':{'class':'text-indent form-control'}}) }}
                                                 </div>
+                                                {{ form_errors(form.regular_end_date)}}
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <div id="regular-calendar" data-date-format="yy-mm-dd"
-                                             class="ll-skin-melon"></div>
+                                        <div id="regular-calendar" data-date-format="yy-mm-dd" class="ll-skin-melon"></div>
                                     </div>
                                 </section>
 
 
-                                {{ form_widget(form.datesAller) }}
-                                {{ form_widget(form.datesRetour) }}
+                                <section class="row">
+                                    <div class="col-md-6">
+                                        {{ form_widget(form.datesAller) }}
+                                        {{ form_errors(form.datesAller)}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_widget(form.datesRetour) }}
+                                        {{ form_errors(form.datesRetour) }}
+                                    </div>
+                                </section>
+
+
+
 
 
                             </div>
@@ -167,8 +194,25 @@
 
                             <div>
                                 {{ form_widget(form.informationsComplementaires) }}
+                                {{ form_errors(form.informationsComplementaires) }}
                             </div>
+
                         </section><!-- End Informations complémentaires -->
+
+                        <section class="alert alert-warning">
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    {{ form_widget(form.cgu) }}
+                                </div>
+                                <div class="col-xs-11">
+                                    {{ form_label(form.cgu) }}
+                                </div>
+                            </div>
+                        </section>
+
+
+                        {{ form_errors(form.cgu) }}
+
 
 
                         <div class="row">
@@ -195,12 +239,21 @@
 
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
-                    <ul class="Segments">
-                        {{ form_row(form.Segments) }}
+                    <ul class="Segments list-unstyled">
+                        {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                        {{ form_row(form.Segments,{'attr':{'data-prix-optimal-url':prix_optimal_url,'disable':'' }} ) }}
+                        {{ form_errors(form.Segments)}}
                     </ul>
-                    <div id="panel"></div>
+                    <div id="panel">
+                        {{ form_widget(form.totalDistance) }}
+                        {{ form_errors(form.totalDistance)}}
+                        {{ form_widget(form.totalDuration) }}
+                        {{ form_errors(form.totalDuration)}}
+
+                    </div>
                 </div>
             </div>
+
         </div>
         {{ form_end(form) }}
     </div>

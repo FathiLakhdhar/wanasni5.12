@@ -44,7 +44,7 @@ class TrajetType extends AbstractType
                 'required'=>false,
             ))
             ->add('date_allet_unique', 'text', array(
-                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA')
+                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA'),
             ))
 
             ->add('Depart_prevu', 'choice', array(
@@ -70,13 +70,13 @@ class TrajetType extends AbstractType
                 'type' => 'text',
                 'allow_add' => true,
                 'allow_delete' => true,
-                'attr'=> array('class'=>'form-control'),
+                'label'=>false
             ))
             ->add('datesRetour', 'collection', array(
                 'type' => 'text',
                 'allow_add' => true,
                 'allow_delete' => true,
-                'attr'=> array('class'=>'form-control'),
+                'label'=>false,
             ))
             ->add('regular_begin_date', 'text', array(
                 'attr' => array('datepicker' => '', 'placeholder' => 'JJ/MM/AAAA'),
@@ -126,11 +126,13 @@ class TrajetType extends AbstractType
                 'data'=>1,
                 'read_only'=>true,
             ))
+            /*
             ->add('totalPrix', 'number', array(
                 'attr' => array('class' => 'form-control'),
                 'data'=>0,
                 'read_only'=>true,
             ))
+            */
             ->add('vehicule', 'entity', array(
                 'empty_value' => 'Sélectionnez votre véhicule',
                 'class' => 'Wanasni\VehiculeBundle\Entity\Vehicule',

@@ -199,7 +199,8 @@
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
                     <ul class="Segments list-unstyled">
-                        {{ form_row(form.Segments) }}
+                        {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                        {{ form_row(form.Segments,{'attr':{'data-prix-optimal-url':prix_optimal_url,'disable':'' }} ) }}
                         {{ form_errors(form.Segments)}}
                     </ul>
                     <div id="panel">
@@ -207,7 +208,7 @@
                         {{ form_errors(form.totalDistance)}}
                         {{ form_widget(form.totalDuration) }}
                         {{ form_errors(form.totalDuration)}}
-
+{#
                         <div class="input-group">
                             <span class="input-group-addon bg-green white">Prix Total</span>
                             {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
@@ -216,10 +217,11 @@
                         </div>
                         {{ form_errors(form.totalPrix)}}
 
-
+#}
                     </div>
                 </div>
             </div>
+
         </div>
 
 
