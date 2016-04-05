@@ -12,4 +12,49 @@ use Doctrine\ORM\EntityRepository;
  */
 class TrajetRepository extends EntityRepository
 {
+
+    public function getTrajetById($id){
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->join('t.Origine', 'o')
+            ->addSelect('o')
+            ->join('t.Destination', 'd')
+            ->addSelect('d')
+            ->join('t.Segments', 's')
+            ->addSelect('s')
+            ->join('t.datesAller', 'da')
+            ->addSelect('da')
+            ->join('t.datesRetour', 'dr')
+            ->addSelect('dr')
+            ->where('t.id = :id')
+            ->setParameter('id',$id)
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
+
+    public function SearchByOrigineAndDestination($depart,$arrive,$date){
+        $qb = $this->createQueryBuilder('t');
+
+        $qb->join('t.Origine', 'origine')
+            ->join('t.Destination','destination')
+            ->join('t.datesAller','datesAller')
+            ->join('t.datesRetour','datesRetour')
+            ->where('origine.lieu LIKE :depart')
+            ->setParameter('depart', '%'.$depart.'%')
+            ->andWhere('destination.lieu LIKE :arrive')
+            ->setParameter('arrive', '%'.$arrive.'%')
+            ->andWhere('datesAller.date = :dateA')
+            ->orWhere('datesRetour.date = :dateR')
+            ->setParameter('dateA', $date)
+            ->setParameter('dateR', $date)
+
+        ;
+
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

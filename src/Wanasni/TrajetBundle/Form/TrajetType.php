@@ -5,6 +5,7 @@ namespace Wanasni\TrajetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Wanasni\TrajetBundle\Entity\WayDate;
 use Wanasni\UserBundle\Entity\User;
 
 class TrajetType extends AbstractType
@@ -67,13 +68,14 @@ class TrajetType extends AbstractType
                 'widget' => 'choice',
             ))
             ->add('datesAller', 'collection', array(
-                'type' => 'text',
+                'type'=>new WayDateType(),
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label'=>false
+                'label'=>false,
+
             ))
             ->add('datesRetour', 'collection', array(
-                'type' => 'text',
+                'type'=>new WayDateType(),
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label'=>false,

@@ -157,11 +157,16 @@
 
                                 <section class="row">
                                     <div class="col-md-6">
-                                        {{ form_widget(form.datesAller) }}
-                                        {{ form_errors(form.datesAller)}}
+
+                                        <ul id="wanasni_trajetbundle_trajetregulier_datesAller" class="datesAller" data-prototype="<div>{{ form_widget(form.datesAller.vars.prototype.date)|e }}</div>">
+                                        </ul>
+                                        {{ form_errors(form.datesAller) }}
+
                                     </div>
                                     <div class="col-md-6">
-                                        {{ form_widget(form.datesRetour) }}
+                                        <ul id="wanasni_trajetbundle_trajetregulier_datesRetour" class="datesAller" data-prototype="<div>{{ form_widget(form.datesRetour.vars.prototype.date)|e }}</div>">
+                                        </ul>
+
                                         {{ form_errors(form.datesRetour) }}
                                     </div>
                                 </section>

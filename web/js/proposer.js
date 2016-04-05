@@ -66,7 +66,7 @@ var regularTrip = function () {
         var prototype = $(collectionId).data("prototype");
         var newItem = prototype.replace(/__name__/g, dateKey);
         $(collectionId).append(newItem);
-        $(collectionId + "_" + dateKey).attr("value", dateKey)
+        $(collectionId + "_" + dateKey+ "_date").attr("value", dateKey)
     };
 
     self.addRemoveDate = function (action, typeTrip, dateTrip) {

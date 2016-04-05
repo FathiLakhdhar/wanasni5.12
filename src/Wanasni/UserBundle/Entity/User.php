@@ -101,6 +101,12 @@ class User extends BaseUser
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Wanasni\NotificationBundle\Entity\Notification", mappedBy="user", cascade={"remove"})
+     */
+    private $Notifications;
+
+
+    /**
      * @return mixed
      */
     public function getMinibio()
@@ -175,6 +181,7 @@ class User extends BaseUser
         $this->addRole('ROLE_PASSAGER');
         $this->vehicules=new \Doctrine\Common\Collections\ArrayCollection();
         $this->trajets=new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Notifications=new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -301,5 +308,38 @@ class User extends BaseUser
     public function getTrajets()
     {
         return $this->trajets;
+    }
+
+    /**
+     * Add Notifications
+     *
+     * @param \Wanasni\NotificationBundle\Entity\Notification $notifications
+     * @return User
+     */
+    public function addNotification(\Wanasni\NotificationBundle\Entity\Notification $notifications)
+    {
+        $this->Notifications[] = $notifications;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Notifications
+     *
+     * @param \Wanasni\NotificationBundle\Entity\Notification $notifications
+     */
+    public function removeNotification(\Wanasni\NotificationBundle\Entity\Notification $notifications)
+    {
+        $this->Notifications->removeElement($notifications);
+    }
+
+    /**
+     * Get Notifications
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotifications()
+    {
+        return $this->Notifications;
     }
 }

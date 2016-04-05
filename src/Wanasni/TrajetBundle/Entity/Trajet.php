@@ -5,7 +5,6 @@ namespace Wanasni\TrajetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Wanasni\TrajetBundle\Entity\TrajetDate;
 use Wanasni\TrajetBundle\Entity\Preferences;
 use Symfony\Component\Validator\Constraints as Assert;
 use Wanasni\TrajetBundle\Entity\Point;
@@ -106,7 +105,6 @@ class Trajet
     private $totalPrix;
 
 
-
     /**
      *
      * @ORM\Column(name="Informations_complementaires", type="text", length=500, nullable=true)
@@ -143,7 +141,6 @@ class Trajet
     private $Depart_prevu;
 
 
-
     /**
      * @ORM\Column(type="string")
      * @Assert\Choice(choices = {"Petit", "Moyen", "Grand", "Aucun"}, message = "Choose a valid Bagages.")
@@ -152,7 +149,7 @@ class Trajet
 
 
     /**
-     *@ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Preferences", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Preferences", cascade={"persist","remove"})
      */
     private $Preferences;
 
@@ -177,14 +174,15 @@ class Trajet
 
 
     /**
-     * @var array
-     * @ORM\Column(type="array",nullable=false)
+     * @var WayDate
+     *
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\WayDate", mappedBy="tarjet_aller", cascade={"persist", "remove"})
      */
     private $datesAller;
 
     /**
-     * @var array
-     * @ORM\Column(type="array")
+     * @var WayDate
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\WayDate", mappedBy="tarjet_retour", cascade={"persist", "remove"})
      */
     private $datesRetour;
 
@@ -227,6 +225,41 @@ class Trajet
      * @Assert\IsTrue(message = "Vous devez certifier être en possession d'un permis de conduire et d'une assurance en cours de validité pour publier votre annonce")
      */
     private $cgu;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $proposerAt;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Reservation", mappedBy="trajet")
+     */
+    private $reservations;
+
+
+
+    /**
+     * Trajet constructor.
+     */
+    public function __construct()
+    {
+
+        $this->waypoints = new ArrayCollection();
+        $this->Segments = new ArrayCollection();
+        $this->datesAller = new ArrayCollection();
+        $this->datesRetour = new ArrayCollection();
+        $this->reservations=new ArrayCollection();
+        $this->nbPlacesRestants = 0;
+        $this->Date_Allet_unique = date("Y-m-d");
+        $this->Date_Retour_unique = date("Y-m-d");
+        $this->regularBeginDate = date("Y-m-d");
+        $this->regularEndDate = date("Y-m-d");
+    }
+
+
+
 
     /**
      * @return boolean
@@ -280,26 +313,6 @@ class Trajet
 
 
     /**
-     * Trajet constructor.
-     */
-    public function __construct()
-    {
-       $this->datesAller = array();
-       $this->datesRetour = array();
-        $this->waypoints=new ArrayCollection();
-        $this->Segments=new ArrayCollection();
-        $this->nbPlacesRestants=0;
-        $this->Date_Allet_unique= date("Y-m-d");
-        $this->Date_Retour_unique= date("Y-m-d");
-        $this->regularBeginDate=date("Y-m-d");
-        $this->regularEndDate=date("Y-m-d");
-        //$this->heureAller= new \DateTime();
-        //$this->heureRetour= new \DateTime();
-    }
-
-
-
-    /**
      * @return boolean
      */
     public function isRoundTrip()
@@ -348,12 +361,10 @@ class Trajet
     }
 
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -369,14 +380,14 @@ class Trajet
     public function setFrequence($frequence)
     {
         $this->frequence = $frequence;
-    
+
         return $this;
     }
 
     /**
      * Get frequence
      *
-     * @return string 
+     * @return string
      */
     public function getFrequence()
     {
@@ -392,14 +403,14 @@ class Trajet
     public function setNbPlaces($nbPlaces)
     {
         $this->nbPlaces = $nbPlaces;
-    
+
         return $this;
     }
 
     /**
      * Get nbPlaces
      *
-     * @return integer 
+     * @return integer
      */
     public function getNbPlaces()
     {
@@ -415,20 +426,19 @@ class Trajet
     public function setNbPlacesRestants($nbPlacesRestants)
     {
         $this->nbPlacesRestants = $nbPlacesRestants;
-    
+
         return $this;
     }
 
     /**
      * Get nbPlacesRestants
      *
-     * @return integer 
+     * @return integer
      */
     public function getNbPlacesRestants()
     {
         return $this->nbPlacesRestants;
     }
-
 
 
     /**
@@ -440,14 +450,14 @@ class Trajet
     public function setInformationsComplementaires($informationsComplementaires)
     {
         $this->informationsComplementaires = $informationsComplementaires;
-    
+
         return $this;
     }
 
     /**
      * Get informationsComplementaires
      *
-     * @return string 
+     * @return string
      */
     public function getInformationsComplementaires()
     {
@@ -463,14 +473,14 @@ class Trajet
     public function setBagages($bagages)
     {
         $this->Bagages = $bagages;
-    
+
         return $this;
     }
 
     /**
      * Get Bagages
      *
-     * @return string 
+     * @return string
      */
     public function getBagages()
     {
@@ -486,14 +496,14 @@ class Trajet
     public function setPreferences(\Wanasni\TrajetBundle\Entity\Preferences $preferences = null)
     {
         $this->Preferences = $preferences;
-    
+
         return $this;
     }
 
     /**
      * Get Preferences
      *
-     * @return \Wanasni\TrajetBundle\Entity\Preferences 
+     * @return \Wanasni\TrajetBundle\Entity\Preferences
      */
     public function getPreferences()
     {
@@ -509,14 +519,14 @@ class Trajet
     public function setOrigine(\Wanasni\TrajetBundle\Entity\Point $origine = null)
     {
         $this->Origine = $origine;
-    
+
         return $this;
     }
 
     /**
      * Get Origine
      *
-     * @return \Wanasni\TrajetBundle\Entity\Point 
+     * @return \Wanasni\TrajetBundle\Entity\Point
      */
     public function getOrigine()
     {
@@ -532,14 +542,14 @@ class Trajet
     public function setDestination(\Wanasni\TrajetBundle\Entity\Point $destination = null)
     {
         $this->Destination = $destination;
-    
+
         return $this;
     }
 
     /**
      * Get Destination
      *
-     * @return \Wanasni\TrajetBundle\Entity\Point 
+     * @return \Wanasni\TrajetBundle\Entity\Point
      */
     public function getDestination()
     {
@@ -555,7 +565,7 @@ class Trajet
     public function addWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
     {
         $this->waypoints[] = $waypoints;
-    
+
         return $this;
     }
 
@@ -572,103 +582,11 @@ class Trajet
     /**
      * Get waypoints
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWaypoints()
     {
         return $this->waypoints;
-    }
-
-
-
-
-
-    /**
-     * Set datesAller
-     *
-     * @param array $datesAller
-     * @return Trajet
-     */
-    public function setDatesAller($datesAller)
-    {
-        $this->datesAller = $datesAller;
-
-        return $this;
-    }
-
-    /**
-     * Get datesAller
-     *
-     * @return array
-     */
-    public function getDatesAller()
-    {
-        return $this->datesAller;
-    }
-
-
-    public function addDatesAller($Date)
-    {
-        if (!in_array($Date, $this->datesAller, true)) {
-            $this->datesAller[] = $Date;
-        }
-
-        return $this;
-    }
-
-    public function removeDatesAller($Date)
-    {
-        if (false !== $key = array_search(strtoupper($Date), $this->datesAller, true)) {
-            unset($this->datesAller[$key]);
-            $this->datesAller = array_values($this->datesAller);
-        }
-
-        return $this;
-    }
-
-
-
-    /**
-     * Set datesRetour
-     *
-     * @param array $datesRetour
-     * @return Trajet
-     */
-    public function setDatesRetour($datesRetour)
-    {
-        $this->datesRetour = $datesRetour;
-    
-        return $this;
-    }
-
-    /**
-     * Get datesRetour
-     *
-     * @return array 
-     */
-    public function getDatesRetour()
-    {
-        return $this->datesRetour;
-    }
-
-
-    public function addDatesRetour($Date)
-    {
-        if (!in_array($Date, $this->datesRetour, true)) {
-            $this->datesRetour[] = $Date;
-        }
-
-        return $this;
-    }
-
-    public function removeDatesRetour($Date)
-    {
-        if (false !== $key = array_search(strtoupper($Date), $this->datesRetour, true)) {
-            unset($this->datesRetour[$key]);
-            $this->datesRetour = array_values($this->datesRetour);
-        }
-
-        return $this;
     }
 
     /**
@@ -680,14 +598,14 @@ class Trajet
     public function setTotalDuration($totalDuration)
     {
         $this->totalDuration = $totalDuration;
-    
+
         return $this;
     }
 
     /**
      * Get totalDuration
      *
-     * @return string 
+     * @return string
      */
     public function getTotalDuration()
     {
@@ -703,14 +621,14 @@ class Trajet
     public function setTotalDistance($totalDistance)
     {
         $this->totalDistance = $totalDistance;
-    
+
         return $this;
     }
 
     /**
      * Get totalDistance
      *
-     * @return string 
+     * @return string
      */
     public function getTotalDistance()
     {
@@ -726,7 +644,7 @@ class Trajet
     public function addSegment(\Wanasni\TrajetBundle\Entity\Segment $segments)
     {
         $this->Segments[] = $segments;
-    
+
         return $this;
     }
 
@@ -743,7 +661,7 @@ class Trajet
     /**
      * Get Segments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSegments()
     {
@@ -759,14 +677,14 @@ class Trajet
     public function setVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicule = null)
     {
         $this->vehicule = $vehicule;
-    
+
         return $this;
     }
 
     /**
      * Get vehicule
      *
-     * @return \Wanasni\VehiculeBundle\Entity\Vehicule 
+     * @return \Wanasni\VehiculeBundle\Entity\Vehicule
      */
     public function getVehicule()
     {
@@ -782,14 +700,14 @@ class Trajet
     public function setTotalPrix($totalPrix)
     {
         $this->totalPrix = $totalPrix;
-    
+
         return $this;
     }
 
     /**
      * Get totalPrix
      *
-     * @return integer 
+     * @return integer
      */
     public function getTotalPrix()
     {
@@ -822,49 +740,6 @@ class Trajet
 
 
     /**
-     * @ORM\PrePersist()
-    */
-
-    public function prePersist(){
-
-
-        if($this->getFrequence()==="UNIQUE"){
-            $this->setDatesAller(array(
-                date_format(date_create($this->getDateAlletUnique()),'Ymd')
-            ));
-            if($this->isRoundTrip()){
-                $this->setDatesRetour(array(
-                    date_format(date_create($this->getDateRetourUnique()),'Ymd')
-                ));
-            }
-        }
-        
-        $arrCollection=new ArrayCollection();
-
-        $arrCollection->add($this->getOrigine());
-
-        foreach($this->getWaypoints() as $waypoint){
-            $arrCollection->add($waypoint);
-        }
-
-        $arrCollection->add($this->getDestination());
-
-        $p=0;
-
-        foreach($this->getSegments() as $key => $segment){
-            $segment->setTrajet($this);
-            $segment->setStart($arrCollection->get($key));
-            $segment->setEnd($arrCollection->get($key+1));
-            $p+=$segment->getPrix();
-        }
-
-        $this->setTotalPrix($p);
-
-    }
-
-
-
-    /**
      * Set heureRetour
      *
      * @param \DateTime $heureRetour
@@ -873,14 +748,14 @@ class Trajet
     public function setHeureRetour($heureRetour)
     {
         $this->heureRetour = $heureRetour;
-    
+
         return $this;
     }
 
     /**
      * Get heureRetour
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getHeureRetour()
     {
@@ -896,14 +771,14 @@ class Trajet
     public function setHeureAller($heureAller)
     {
         $this->heureAller = $heureAller;
-    
+
         return $this;
     }
 
     /**
      * Get heureAller
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getHeureAller()
     {
@@ -919,17 +794,242 @@ class Trajet
     public function setConducteur(\Wanasni\UserBundle\Entity\User $conducteur = null)
     {
         $this->conducteur = $conducteur;
-    
+
         return $this;
     }
 
     /**
      * Get conducteur
      *
-     * @return \Wanasni\UserBundle\Entity\User 
+     * @return \Wanasni\UserBundle\Entity\User
      */
     public function getConducteur()
     {
         return $this->conducteur;
+    }
+
+
+    /**
+     * Get roundTrip
+     *
+     * @return boolean
+     */
+    public function getRoundTrip()
+    {
+        return $this->roundTrip;
+    }
+
+    /**
+     * Add datesAller
+     *
+     * @param \Wanasni\TrajetBundle\Entity\WayDate $datesAller
+     * @return Trajet
+     */
+    public function addDatesAller(\Wanasni\TrajetBundle\Entity\WayDate $datesAller)
+    {
+        $this->datesAller[] = $datesAller;
+
+        return $this;
+    }
+
+    /**
+     * Remove datesAller
+     *
+     * @param \Wanasni\TrajetBundle\Entity\WayDate $datesAller
+     */
+    public function removeDatesAller(\Wanasni\TrajetBundle\Entity\WayDate $datesAller)
+    {
+        $this->datesAller->removeElement($datesAller);
+    }
+
+    /**
+     * Get datesAller
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDatesAller()
+    {
+        return $this->datesAller;
+    }
+
+    /**
+     * Add datesRetour
+     *
+     * @param \Wanasni\TrajetBundle\Entity\WayDate $datesRetour
+     * @return Trajet
+     */
+    public function addDatesRetour(\Wanasni\TrajetBundle\Entity\WayDate $datesRetour)
+    {
+        $this->datesRetour[] = $datesRetour;
+
+        return $this;
+    }
+
+    /**
+     * Remove datesRetour
+     *
+     * @param \Wanasni\TrajetBundle\Entity\WayDate $datesRetour
+     */
+    public function removeDatesRetour(\Wanasni\TrajetBundle\Entity\WayDate $datesRetour)
+    {
+        $this->datesRetour->removeElement($datesRetour);
+    }
+
+    /**
+     * Get datesRetour
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDatesRetour()
+    {
+        return $this->datesRetour;
+    }
+
+
+    public function getDatesAllerToArray()
+    {
+        $arr = array();
+        foreach ($this->getDatesAller() as $wayDate) {
+            $arr[] = date_format($wayDate->getDate(), 'Ymd');
+        }
+        return $arr;
+    }
+
+    public function getDatesRetourToArray()
+    {
+        $arr = array();
+        foreach ($this->getDatesRetour() as $wayDate) {
+            $arr[] = date_format($wayDate->getDate(), 'Ymd');
+        }
+        return $arr;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+
+    public function prePersist()
+    {
+
+
+
+
+        if ($this->getFrequence() === "UNIQUE") {
+            $wayDateA = new WayDate();
+            $wayDateA->setDate($this->getDateAlletUnique());
+            $wayDateA->setTarjetAller($this);
+            $this->addDatesAller($wayDateA);
+            if ($this->isRoundTrip()) {
+                $wayDateR = new WayDate();
+                $wayDateR->setDate($this->getDateRetourUnique());
+                $wayDateR->setTarjetRetour($this);
+                $this->addDatesRetour($wayDateR);
+            }
+        }else{
+            foreach( $this->getDatesAller() as $waydate){
+                $waydate->setTarjetAller($this);
+            }
+            foreach( $this->getDatesRetour() as $waydate){
+                $waydate->setTarjetRetour($this);
+            }
+        }
+
+        $arrCollection = new ArrayCollection();
+
+        $arrCollection->add($this->getOrigine());
+
+        foreach ($this->getWaypoints() as $waypoint) {
+            $arrCollection->add($waypoint);
+        }
+
+        $arrCollection->add($this->getDestination());
+
+        $p = 0;
+
+        foreach ($this->getSegments() as $key => $segment) {
+            $segment->setTrajet($this);
+            $segment->setStart($arrCollection->get($key));
+            $segment->setEnd($arrCollection->get($key + 1));
+            $p += $segment->getPrix();
+        }
+
+        $this->setTotalPrix($p);
+        $this->setProposerAt(new \DateTime());
+
+    }
+
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function PostLoad()
+    {
+
+        if ($this->getSegments()->count() > 1) {
+            for ($i = 1; $i < $this->getSegments()->count(); $i++) {
+                $this->addWaypoint($this->getSegments()->get($i)->getStart());
+            }
+        }
+
+
+    }
+
+
+
+    /**
+     * Set proposerAt
+     *
+     * @param \DateTime $proposerAt
+     * @return Trajet
+     */
+    public function setProposerAt($proposerAt)
+    {
+        $this->proposerAt = $proposerAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get proposerAt
+     *
+     * @return \DateTime 
+     */
+    public function getProposerAt()
+    {
+        return $this->proposerAt;
+    }
+
+    /**
+     * Add reservations
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Reservation $reservations
+     * @return Trajet
+     */
+    public function addReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations[] = $reservations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations->removeElement($reservations);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

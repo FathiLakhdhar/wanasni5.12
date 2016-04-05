@@ -75,7 +75,7 @@ a,a:hover,a:active,a:focus{
 }
 
 header {
-    background-color: rgba(64,72,82,1);
+    background-color: rgba(45, 56, 71, 1);
     color: #fff;
     padding-top: 20px;
     padding-bottom: 12px;
@@ -176,16 +176,19 @@ Menu nav
     width: 0;
     height: 0;
     position: absolute;
-    right: 151px;
-    top: -24px;
+    right: 40px;
+    top: -10px;
 }
 .triangle-up-darkviolet:before{
+
     border-left: 35px solid transparent;
     border-right: 35px solid transparent;
     border-bottom: 25px solid #9400D3 !important;
 }
 
 .triangle-up-light-blue:before{
+    right: 151px;
+    top: -24px;
     border-left: 35px solid transparent;
     border-right: 35px solid transparent;
     border-bottom: 25px solid #03A9F4 !important;
@@ -836,6 +839,11 @@ Color
     color: #FFFFFF;
 }
 
+.steelblue{
+    color: steelblue;
+}
+
+
 .bg-white{
     background-color: #FFFFFF;
 }
@@ -890,7 +898,7 @@ footer {
 
 footer .footer-body{
     height: 400px;
-    background-color: #404852;
+    background-color: #2D3847;
     color: #fff;
 }
 
@@ -1041,7 +1049,7 @@ span.date-icon{
 }
 
 #proposer h3{
-    color: #337AB7;
+    color: steelblue;
 }
 
 #proposer .waypoint:hover .close{
@@ -1095,6 +1103,12 @@ span.date-icon{
     padding: 0;
     width: 100%;
 }
+
+.ll-skin-melon td .ui-state-active{
+    background-color: inherit;
+    color: inherit;
+}
+
 
  .ui-datepicker td.simple-date-selected a,
  .ui-datepicker td.simple-date-selected a {

@@ -1,0 +1,7 @@
+parameters:
+#    wanasni_notification.example.class: Wanasni\NotificationBundle\Example
+
+services:
+#    wanasni_notification.example:
+#        class: %wanasni_notification.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
