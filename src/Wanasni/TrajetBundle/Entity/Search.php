@@ -15,7 +15,7 @@ class Search
     private $destination;
 
     /**
-     * @var DateTime
+     * @var string
      */
     private $date;
 
@@ -27,22 +27,22 @@ class Search
         $this->date=date('Y-m-d');
     }
 
-
     /**
-     * @return DateTime
+     * @return string
      */
     public function getDate()
     {
-        return date_format($this->date,'Y-m-d');
+        return $this->date;
     }
 
     /**
-     * @param DateTime $date
+     * @param string $date
      */
     public function setDate($date)
     {
-        $this->date = date_create($date);
+        $this->date = $date;
     }
+
 
     /**
      * @return string

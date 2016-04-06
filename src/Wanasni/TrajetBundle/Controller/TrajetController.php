@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Wanasni\TrajetBundle\Entity\Alert;
 use Wanasni\TrajetBundle\Entity\Trajet;
+use Wanasni\TrajetBundle\Form\AlertType;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
 use Wanasni\TrajetBundle\Form\TrajetType;
 use Wanasni\TrajetBundle\Form\TrajetUniqueType;
@@ -130,41 +132,54 @@ class TrajetController extends Controller
 
     public function SearchAction(Request $request)
     {
+
+        $search = new Search();
+        $Trajets = null;
+
         if ($request->getMethod() == 'POST') {
-
-            $search=new Search();
-
             $search->setOrigine($request->get('search_origine'));
             $search->setDestination($request->get('search_destination'));
-            $date= $request->get('search_date');
+            $date = $request->get('search_date');
             $search->setDate($date);
-
-            $formBuilder = $this->createFormBuilder($search);
-
-            $formBuilder
-                ->add('origine')
-                ->add('destination')
-                ->add('date', 'text',array(
-                    'attr'=>array('datepicker'=>'')
-                ))
-            ;
-            $form= $formBuilder->getForm();
 
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('WanasniTrajetBundle:Trajet');
-            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(),$search->getDestination(),$search->getDate());
+            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(), $search->getDestination(), $search->getDate());
             // On définit un message flash
-            $this->get('session')->getFlashBag()->add('info', 'Trajet Trouver');
-
-            return $this->render(':Trajet/Gerer:resultat_rechercher_trajet.html.twig',array(
-                'trajets'=>$Trajets,
-                'form'=> $form->createView()
-            ));
+            //$this->get('session')->getFlashBag()->add('info', 'Trajet Trouver');
 
         }
 
-        return $this->render(':Trajet/Gerer:rechercher_trajet.html.twig');
+
+        return $this->render(':Trajet/Gerer:rechercher_trajet.html.twig', array(
+            'search'=>$search,
+            'trajets'=>$Trajets
+        ));
     }
+
+
+    /**
+     * @Route("/resultat-rechercher-trajet", name="trajet_search_result")
+     */
+    public function ResultSearchAction(Request $request)
+    {
+
+    }
+
+
+    public function AlertAction()
+    {
+
+        $alert=new Alert();
+
+        $form=$this->createForm(new AlertType(),$alert);
+
+        return $this->render('Trajet/Gerer/alert.html.twig', array(
+            'form'=>$form->createView()
+        ));
+    }
+
+
 
 
     /**

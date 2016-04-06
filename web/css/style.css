@@ -23,6 +23,11 @@ section {
     padding-bottom: 80px;
 }
 
+.section-padding-left-right-50{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .text-right {
     text-align: right;
 }
@@ -50,6 +55,18 @@ label{
 a,a:hover,a:active,a:focus{
     text-decoration: none;
 }
+
+::-moz-selection { /* Code for Firefox */
+    color: #FFFFFF;
+    background: #78AB4E;
+}
+
+::selection {
+    color: #FFFFFF;
+    background: #78AB4E;
+}
+
+
 /*================================
   HEADER STYLES
 ==================================*/
@@ -814,6 +831,12 @@ Color
 
 .bg-darkgrey{
     background-color:#607D8B ;
+    color: #FFFFFF;
+}
+
+.bg-lightcoral{
+    background-color: lightcoral;
+    color: #FFFFFF;
 }
 
 .red {
@@ -831,8 +854,13 @@ Color
     background-color: #78ab4e;;
 }
 
+.bg-gray {
+    background-color: #eeeeee;
+}
+
 .bg-green {
     background-color:  #1ABB9C !important;
+    color: #FFFFFF;
 }
 
 .white{
@@ -1093,7 +1121,42 @@ span.date-icon{
     opacity: .2;
     filter: alpha(opacity=20);
 }
+/**************************
+        Rechercher
+****************************/
 
+.form-search-bg{
+    background-color: #eeeeee;
+}
+
+.box-highlight{
+    padding: 5px;
+    background-color: #f4f4ea;
+    border-radius: 5px;
+}
+
+.Alert-or {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.Alert-orBar {
+    border: .2em solid #f4f4ea;
+    position: relative;
+    top: 1.0810810810811em;
+    margin: 0 10px;
+}
+.Alert-orText {
+    background-color: #f4f4ea;
+    color: #000;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    line-height: 1.9em;
+    text-align: center;
+    font-size: 1.0810810810811em;
+    margin: 0 auto;
+    position: relative;
+}
 
 /*============================
     Calendar simple | round day

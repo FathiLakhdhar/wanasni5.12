@@ -1,18 +1,36 @@
+{% extends ':Trajet:layout.html.twig' %}
 
 
-{{ form_start(form) }}
+{% block title %} Resultat-Rechercher {% endblock title %}
 
-{{ form_end(form) }}
+{% block body %}
 
 
-<ul>
-{% for trajet in trajets %}
-    <li>
-        {{ trajet.id }} : {{ trajet.origine.lieu }} ==> {{ trajet.destination.lieu }}
+    <section class="container section-padding-top-bottom-80">
+        {{ form_start(form) }}
+
+        {{ form_end(form) }}
+
+
+
+
         <ul>
-            <li> {{ trajet.datesAllerToArray|join('|') }}  </li>
-            <li> {{ trajet.datesRetourToArray|join('|') }}  </li>
+            {% for trajet in trajets %}
+                <li>
+                    {{ trajet.id }} : {{ trajet.origine.lieu }} ==> {{ trajet.destination.lieu }}
+                    <ul>
+                        <li> {{ trajet.datesAllerToArray|join('|') }}  </li>
+                        <li> {{ trajet.datesRetourToArray|join('|') }}  </li>
+                    </ul>
+                </li>
+            {% endfor %}
         </ul>
-    </li>
-{% endfor %}
-</ul>
+
+    </section>
+
+
+{% endblock body %}
+
+
+
+

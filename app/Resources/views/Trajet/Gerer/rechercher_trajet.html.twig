@@ -1,1 +1,156 @@
-rechercher
+{% extends ':Trajet:layout.html.twig' %}
+
+
+{% block title %} Rechercher {% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+
+
+        <section class="row">
+            <div class="col-md-8 ">
+
+                <section class="form-search-bg thumbnail" style="padding-top: 30px">
+
+                    <form id="search_form" action="{{ path('trajet_search') }}" method="post" class="">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4  col-sm-4 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <span class="glyphicon glyphicon-map-marker green input-icon"></span>
+                                    <label class="sr-only" for="search_origine">Origine</label>
+                                    <input type="text" id="search_origine" name="search_origine"
+                                           class="form-control input-lg text-indent" placeholder="Origine"
+                                           inputautocomplete="on" value="{{ search.origine }}"/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <span class="glyphicon glyphicon-map-marker red input-icon"></span>
+                                    <label class="sr-only" for="search_destination">Arrivée</label>
+                                    <input type="text" id="search_destination" name="search_destination"
+                                           class="form-control input-lg text-indent" placeholder="Destination"
+                                           inputautocomplete="on" value="{{ search.destination }}"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                <div class="form-group pos-relative">
+                                    <label class="sr-only" for="search_date">date</label>
+                                    <span class="glyphicon glyphicon-calendar darkgrey input-icon"></span>
+                                    <input type="text" id="search_date" name="search_date"
+                                           class="form-control input-lg text-indent" datepicker=""
+                                           placeholder="aaaa-mm-jj" value="{{ search.date }}">
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12 text-center">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-green btn-lg">
+                                        <i class="glyphicon glyphicon-search"></i> Rechercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </section>
+
+
+                <section class="row ">
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <h4>Filtrer les résultats par :</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>
+                                        <input id="REGULAR" type="radio" name="fr_t" class="iCheck"/>
+                                        Trajets réguliers
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>
+                                        <input id="UNIQUE" type="radio" name="fr_t" class="iCheck"/>
+                                        Trajets uniques
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select>
+                                        <option>Par prix</option>
+                                        <option>Par heure</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <div class="thumbnail">
+
+                    <h1 class="page-header steelblue">Mes résultats de recherche</h1>
+                    <ul>
+                        {% for trajet in trajets %}
+                            <li>
+                                {{ trajet.id }} : {{ trajet.origine.lieu }} ==> {{ trajet.destination.lieu }}
+                                <ul>
+                                    <li> {{ trajet.datesAllerToArray|join('|') }}  </li>
+                                    <li> {{ trajet.datesRetourToArray|join('|') }}  </li>
+                                </ul>
+                            </li>
+
+                        {% else %}
+                            <p>Pour le moment, il n'y a pas de trajet déposé à cette date.
+                                Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
+
+            </div>
+            <div class="col-md-4 ">
+                <div class="row">
+                    <div class="col-md-12 thumbnail">
+                        <h3>Créer une alerte</h3>
+                        <div>
+                            {{ render(controller('WanasniTrajetBundle:Trajet:Alert')) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12 bg-lightcoral">
+                        <h3>Proposez un trajet</h3>
+                        <p>Pour un trajet unique ou régulier pensez à covoiturer. Créez une annonce gratuite
+                            pour partager les frais de votre voyage ! </p>
+                        <a href="{{ path('trajet_proposer_unique') }}" class="darkviolet">Créer votre annonce dès
+                            maintenant !</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+{% endblock body %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $('.menu-links a').removeClass('active');
+            $('#idRechercher').addClass('active');
+        });
+    </script>
+
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBk9B9hwksRr8Sr0LGF-uj0GtDZlKCw1r4&signed_in=true&libraries=places"></script>
+    <script src="{{ asset('js/autoComplete.js') }}"></script>
+
+
+
+{% endblock %}
