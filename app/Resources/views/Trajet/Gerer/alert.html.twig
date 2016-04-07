@@ -1,4 +1,13 @@
-{{ form_start(form) }}
+{{ form_start(form,{'method': 'post', 'action': path('trajet_create_alert'), 'attr': {'class':''}}) }}
+
+{% for label, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        <div class="alert alert-{{ label }}">
+            {{ flash }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
 <div class="text-center">
 
 <div class=" form-group box-highlight">
@@ -18,7 +27,7 @@
     </label>
 </div>
 
-<div class="form-group has-feedback col-5">
+<div class="form-group has-feedback">
     {{ form_widget(form.date) }}
     <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
 </div>
@@ -27,5 +36,10 @@
     <p>Recevez les nouvelles annonces par email</p>
     {{ form_widget(form.email) }}
 </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-block btn-green">Créer mon alerte trajet</button>
+    </div>
+
 </div>
 {{ form_end(form) }}

@@ -40,15 +40,15 @@ class TrajetRepository extends EntityRepository
 
         $qb->join('t.Origine', 'origine')
             ->join('t.Destination','destination')
-            ->join('t.datesAller','datesAller')
-            ->join('t.datesRetour','datesRetour')
+            ->leftJoin('t.datesAller','datesAller')
+            ->leftJoin('t.datesRetour','datesRetour')
             ->where('origine.lieu LIKE :depart')
             ->setParameter('depart', '%'.$depart.'%')
             ->andWhere('destination.lieu LIKE :arrive')
             ->setParameter('arrive', '%'.$arrive.'%')
             ->andWhere('datesAller.date = :dateA OR datesRetour.date = :dateR')
-            ->setParameter('dateA', date_create($date))
-            ->setParameter('dateR', date_create($date))
+            ->setParameter('dateA', $date)
+            ->setParameter('dateR', $date)
 
         ;
 

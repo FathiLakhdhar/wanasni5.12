@@ -23,10 +23,23 @@ class Alert
      */
     private $id;
 
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $origine;
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $destination;
+
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email()
      */
     private $email;
 
@@ -41,7 +54,7 @@ class Alert
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 
@@ -118,7 +131,7 @@ class Alert
      */
     public function setDate($date)
     {
-        $this->date = $date;
+        $this->date = date_create($date);
     
         return $this;
     }
@@ -131,5 +144,51 @@ class Alert
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set origine
+     *
+     * @param string $origine
+     * @return Alert
+     */
+    public function setOrigine($origine)
+    {
+        $this->origine = $origine;
+    
+        return $this;
+    }
+
+    /**
+     * Get origine
+     *
+     * @return string 
+     */
+    public function getOrigine()
+    {
+        return $this->origine;
+    }
+
+    /**
+     * Set destination
+     *
+     * @param string $destination
+     * @return Alert
+     */
+    public function setDestination($destination)
+    {
+        $this->destination = $destination;
+    
+        return $this;
+    }
+
+    /**
+     * Get destination
+     *
+     * @return string 
+     */
+    public function getDestination()
+    {
+        return $this->destination;
     }
 }

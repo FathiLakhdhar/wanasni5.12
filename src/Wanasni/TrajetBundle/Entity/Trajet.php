@@ -904,6 +904,21 @@ class Trajet
         return $arr;
     }
 
+    public function getDatesToArray(){
+
+        $arr=array();
+
+        foreach ($this->getDatesAller() as $wayDate) {
+            $arr[]=$wayDate->getDate()->format('Y-m-d');
+        }
+        foreach ($this->getDatesRetour() as $wayDate) {
+            $arr[]=$wayDate->getDate()->format('Y-m-d');
+        }
+
+        return $arr;
+
+    }
+
 
     /**
      * @ORM\PrePersist()

@@ -45,6 +45,9 @@ class TrajetController extends Controller
                 $em->persist($trajet);
                 $em->flush();
 
+                $serviceAlert=$this->container->get('wanasni_trajet.alert_mailer');
+                $serviceAlert->EnvoyerMailer($trajet);
+
                 // On définit un message flash
                 $this->get('session')->getFlashBag()->add('info', 'Trajet bien ajouté');
 
@@ -93,6 +96,9 @@ class TrajetController extends Controller
                 $em->persist($trajet);
                 $em->flush();
 
+                $serviceAlert=$this->container->get('wanasni_trajet.alert_mailer');
+                $serviceAlert->EnvoyerMailer($trajet);
+
                 // On définit un message flash
                 $this->get('session')->getFlashBag()->add('info', 'Trajet bien ajouté');
 
@@ -134,6 +140,12 @@ class TrajetController extends Controller
     {
 
         $search = new Search();
+        $alert=new Alert();
+
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $alert->setEmail($this->getUser()->getEmail());
+        }
+
         $Trajets = null;
 
         if ($request->getMethod() == 'POST') {
@@ -142,18 +154,23 @@ class TrajetController extends Controller
             $date = $request->get('search_date');
             $search->setDate($date);
 
+            $alert->setOrigine($search->getOrigine());
+            $alert->setDestination($search->getDestination());
+
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('WanasniTrajetBundle:Trajet');
-            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(), $search->getDestination(), $search->getDate());
+            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(), $search->getDestination(), date($search->getDate()));
             // On définit un message flash
             //$this->get('session')->getFlashBag()->add('info', 'Trajet Trouver');
 
         }
 
+        $form=$this->createForm(new AlertType(),$alert);
 
         return $this->render(':Trajet/Gerer:rechercher_trajet.html.twig', array(
             'search'=>$search,
-            'trajets'=>$Trajets
+            'trajets'=>$Trajets,
+            'form'=>$form->createView()
         ));
     }
 
@@ -167,18 +184,31 @@ class TrajetController extends Controller
     }
 
 
-    public function AlertAction()
-    {
-
+    /**
+     * @Route("/create-alert", name="trajet_create_alert")
+     */
+    public function CreateAlertAction(Request $request){
         $alert=new Alert();
 
         $form=$this->createForm(new AlertType(),$alert);
 
-        return $this->render('Trajet/Gerer/alert.html.twig', array(
+        if($request->getMethod()=="POST"){
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em= $this->getDoctrine()->getManager();
+                $em->persist($alert);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info', 'Alert create');
+
+                return $this->render(':Trajet/Gerer:confirmed_alert.html.twig');
+            }
+        }
+
+        return $this->render(':Trajet/Gerer:alert.html.twig',array(
             'form'=>$form->createView()
         ));
     }
-
 
 
 

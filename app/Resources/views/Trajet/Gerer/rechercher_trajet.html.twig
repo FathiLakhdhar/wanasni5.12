@@ -9,7 +9,7 @@
 
 
         <section class="row">
-            <div class="col-md-8 ">
+            <div class="col-md-9 ">
 
                 <section class="form-search-bg thumbnail" style="padding-top: 30px">
 
@@ -102,8 +102,11 @@
                             </li>
 
                         {% else %}
-                            <p>Pour le moment, il n'y a pas de trajet déposé à cette date.
-                                Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+                            <div class="alert alert-info">
+                                <p>Pour le moment, il n'y a pas de trajet déposé à cette date.
+                                    Vous pouvez déposer un trajet ou créer une alerte dès maintenant.</p>
+                            </div>
+
                         {% endfor %}
                     </ul>
 
@@ -111,12 +114,12 @@
                 </div>
 
             </div>
-            <div class="col-md-4 ">
+            <div class="col-md-3 ">
                 <div class="row">
                     <div class="col-md-12 thumbnail">
-                        <h3>Créer une alerte</h3>
+                        <h3 class="steelblue page-header"><i class="ion ion-ios-alarm-outline"></i>  Créer une alerte</h3>
                         <div>
-                            {{ render(controller('WanasniTrajetBundle:Trajet:Alert')) }}
+                            {{ include(':Trajet/Gerer:alert.html.twig') }}
                         </div>
                     </div>
                     <div class="col-md-12 bg-lightcoral">

@@ -15,6 +15,10 @@ class AlertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
+            ->add('origine','text')
+            ->add('destination','text')
+
             ->add('email','email',array(
                 'attr'=>array('class'=>'form-control','placeholder'=>'Email'),
 

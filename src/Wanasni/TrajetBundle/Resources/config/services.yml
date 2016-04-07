@@ -1,7 +1,7 @@
 parameters:
-#    wanasni_trajet.example.class: Wanasni\TrajetBundle\Example
+#    wanasni_trajet.proposerlistener.class: Wanasni\TrajetBundle\Listener\ProposerListener
 
 services:
-#    wanasni_trajet.example:
-#        class: %wanasni_trajet.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    wanasni_trajet.alert_mailer:
+        class: Wanasni\TrajetBundle\Services\AlertService
+        arguments: [@mailer, @doctrine.orm.entity_manager, @templating]
