@@ -18,17 +18,13 @@ class TrajetUniqueType extends TrajetType
         $builder
 
             ->remove('datesAller')
-
             ->remove('datesRetour')
-
             ->remove('regular_begin_date')
-
             ->remove('regular_end_date')
 
             ->add('frequence','hidden',array(
                 'data'=>'UNIQUE'
             ))
-
         ;
 
     }

@@ -175,42 +175,6 @@ class TrajetController extends Controller
     }
 
 
-    /**
-     * @Route("/resultat-rechercher-trajet", name="trajet_search_result")
-     */
-    public function ResultSearchAction(Request $request)
-    {
-
-    }
-
-
-    /**
-     * @Route("/create-alert", name="trajet_create_alert")
-     */
-    public function CreateAlertAction(Request $request){
-        $alert=new Alert();
-
-        $form=$this->createForm(new AlertType(),$alert);
-
-        if($request->getMethod()=="POST"){
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em= $this->getDoctrine()->getManager();
-                $em->persist($alert);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('info', 'Alert create');
-
-                return $this->render(':Trajet/Gerer:confirmed_alert.html.twig');
-            }
-        }
-
-        return $this->render(':Trajet/Gerer:alert.html.twig',array(
-            'form'=>$form->createView()
-        ));
-    }
-
-
 
     /**
      * @Route("/prix-optimal/{metre}", name="prix_optimal")
@@ -231,5 +195,38 @@ class TrajetController extends Controller
 
         return new JsonResponse(array('PrixOptimal' => ceil($prix), 'Unite' => 'TND'));
     }
+
+
+    /**
+     * @Route("/modifier-trajet/{id}", name="trajet_edit")
+     * @ParamConverter("trajet", class="WanasniTrajetBundle:Trajet")
+     */
+
+    public function EditAction(Trajet $trajet){
+
+
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+
+        if($trajet->getFrequence()=="UNIQUE"){
+
+            $form=$this->createForm(new TrajetUniqueType($this->getUser()), $trajet);
+            return $this->render(':Trajet/Gerer:modifier_trajet_unique.html.twig',array(
+                'form'=>$form->createView()
+            ));
+        }else{
+
+            $form=$this->createForm(new TrajetRegulierType($this->getUser()), $trajet);
+            return $this->render(':Trajet/Gerer:modifier_trajet_regulier.html.twig', array(
+                'form'=>$form->createView()
+            ));
+        }
+
+
+
+    }
+
+
 
 }

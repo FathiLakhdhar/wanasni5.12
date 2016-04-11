@@ -17,10 +17,9 @@ class TrajetRegulierType extends TrajetType
         parent::buildForm($builder, $options);
 
         $builder
+
             ->remove('date_allet_unique')
-
             ->remove('date_retour_unique')
-
             ->add('frequence','hidden',array(
                 'data'=>'REGULAR'
             ))

@@ -48,7 +48,14 @@ class AlertService
                     ->setSubject('AppWanasni Alert')
                     ->setFrom('app.wanasni@gmail.com')
                     ->setTo($alert->getEmail())
-                    ->setBody('Hi Alert')
+                    ->setBody(
+                        $this->templating->render(':Trajet/Gerer:content_mail_alert.html.twig',
+                            array(
+                                'trajet'=>$trajet
+                            )
+                            ),
+                        'text/html'
+                    )
                 ;
                 $this->mailer->send($message);
             }

@@ -12,12 +12,12 @@
     <![endif]-->
 
     {% block stylesheets %}
-
-        {% stylesheets output="css/app.css"
-        "%kernel.root_dir%/Resources/assets/css/*" %}
-        <link rel="stylesheet" href="{{ asset_url }}"/>
-        {% endstylesheets %}
-        {# #}
+        {#
+                {% stylesheets output="css/app.css"
+                "%kernel.root_dir%/Resources/assets/css/*" %}
+                <link rel="stylesheet" href="{{ asset_url }}"/>
+                {% endstylesheets %}
+                 #}
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
@@ -172,7 +172,7 @@
 
             var $options_Date=
             {
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd/mm/yy",
                 minDate: new Date(),
                 maxDate: "+1y",
                 monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],

@@ -45,7 +45,6 @@ class WayDate
      */
     public function __construct()
     {
-        $this->date=date('Y-m-d');
     }
 
 
@@ -67,7 +66,7 @@ class WayDate
      */
     public function setDate($date)
     {
-        $this->date = date_create($date);
+        $this->date = $date;
     
         return $this;
     }

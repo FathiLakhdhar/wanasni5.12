@@ -25,26 +25,102 @@
                                 <div class="row">
                                     <div class="col-md-6">
 
-                                        {{ trajet.proposerAt|date("F jS \\a\\t g:ia") }}
+                                        <div class="col-md-12">
+                                            <p>
+                                                Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                            </p>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="darkviolet">Bagages autorisés :</h4>
+                                                </div>
+                                                <div class="col-md-12">
+
+                                                    <a data-toggle="tooltip" href="javascript:void(0);"
+                                                       title="Petit bagage">
+                                                        <i class="flat flaticon-icon-72242 flat-2x {% if trajet.bagages=='Petit' %}darkviolet{% endif %}"></i>
+                                                    </a>
+
+                                                    <a data-toggle="tooltip" href="javascript:void(0);"
+                                                       title="Bagage moyen">
+                                                        <i class="flat flaticon-travelling-654654 flat-2x {% if trajet.bagages=='Moyen' %}darkviolet{% endif %}"></i>
+                                                    </a>
+
+                                                    <a data-toggle="tooltip" href="javascript:void(0);"
+                                                       title="Grand bagage">
+                                                        <i class="flat flaticon-icon-81465 flat-2x {% if trajet.bagages=='Grand' %}darkviolet{% endif %}"></i>
+                                                    </a>
+
+                                                    <a data-toggle="tooltip" href="javascript:void(0);"
+                                                       title="Aucun">
+                                                        <i class="flat flaticon-cross6546 flat-2x {% if trajet.bagages=='Aucun' %}darkviolet{% endif %}"></i>
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
 
 
-                                        <ul class="alert alert-info">
-                                        {%  for segment in trajet.segments %}
-                                            <li>
-                                                {{ segment.start.lieu }} <i class="ion ion-android-arrow-forward"></i> {{ segment.end.lieu }}
-                                                <ul>
-                                                    <li> {{ segment.distance }}   </li>
-                                                    <li> {{ segment.duration }}   </li>
-                                                    <li> {{ segment.prix }} TND  </li>
-                                                </ul>
-                                            </li>
-                                        {% endfor %}
-                                        </ul>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4 class="darkviolet">Préférences :</h4>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.fumeurs %}Non{% endif %} Fumeur">
+                                                            <i class="flat flaticon-cigar flat-2x  {% if trajet.preferences.fumeurs %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.animaux %}Non{% endif %} animaux">
+                                                            <i class="flat flaticon-icon-107409 flat-2x  {% if trajet.preferences.fumeurs %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.animauxEnCage %}Non{% endif %} animaux en cage">
+                                                            <i class="flat flaticon-icon-105685 flat-2x   {% if trajet.preferences.animauxEnCage %}darkviolet{% endif %}"></i>
+                                                        </a>
+
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.musique %}Non{% endif %} musique">
+                                                            <i class="flat flaticon-music-l5156 flat-2x  {% if trajet.preferences.musique %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.detours %}Non{% endif %} Détours">
+                                                            <i class="flat flaticon-detour flat-2x {% if trajet.preferences.detours %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.pauseCafe %}Non{% endif %} Pause cafe">
+                                                            <i class="flat flaticon-icon-112407 flat-2x {% if trajet.preferences.pauseCafe %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                        <a data-toggle="tooltip" href="javascript:void(0);"
+                                                           title="{% if not trajet.preferences.nourriture %}Non{% endif %} Nourriture">
+                                                            <i class="flat flaticon-food-1545 flat-2x {% if trajet.preferences.nourriture %}darkviolet{% endif %}"></i>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
 
 
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Véhicule :</h4>
+                                                    {{ trajet.vehicule.fullNameCar }}
+                                                    <i class="ion ion-model-s" style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
 
 
                                     </div>
+
 
                                     <div class="col-md-6">
 
@@ -95,14 +171,24 @@
                             {% endif %}
                         {% endfor %}
 
-
-                        {{ strPointWaypoints }}
-
                         <div id="map" data-Origine="{{ strPointOrigine }}" data-Destination="{{ strPointDestination }}"
                              data-Waypoints="{{ strPointWaypoints }}"></div>
                     </div>
                     <div class="thumbnail">
-                        <div id="directions-panel"></div>
+                        <div id="directions-panel">
+                            <ul class="list-group">
+                                {% for segment in trajet.segments %}
+                                    <li class="list-group-item list-group-item-info">
+                                        {{ segment.start.lieu }} <i
+                                                class="ion ion-android-arrow-forward"></i> {{ segment.end.lieu }}
+
+                                    <li class="list-group-item"> {{ segment.distance }}   </li>
+                                    <li class="list-group-item"> {{ segment.duration }}   </li>
+                                    <li class="list-group-item"> {{ segment.prix }} TND</li>
+
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,7 +216,7 @@
 
             hasDate = function (typeDate, dateKey) {
                 var dates = typeDate === "simple" ? widgetCalendar.data('date-aller').toString() : widgetCalendar.data('date-retour').toString();
-                console.log(dates);
+                //console.log(dates);
                 return dates.includes(dateKey);
             };
 
@@ -189,7 +275,7 @@
             var $Arraywaypts = [];
             $Arraywaypts = $map.data('waypoints').split('|');
             $.each($Arraywaypts, function (i, val) {
-                console.log(val);
+                //console.log(val);
                 waypts.push({
                     location: val,
                     stopover: true
@@ -199,24 +285,12 @@
             directionsService.route({
                 origin: $map.data('origine'),
                 destination: $map.data('destination'),
-                waypoints: waypts,
+                //waypoints: waypts,
                 optimizeWaypoints: true,
                 travelMode: google.maps.TravelMode.DRIVING
             }, function (response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
-                    var route = response.routes[0];
-                    var summaryPanel = document.getElementById('directions-panel');
-                    summaryPanel.innerHTML = '';
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        var routeSegment = i + 1;
-                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                                '</b><br>';
-                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                    }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }

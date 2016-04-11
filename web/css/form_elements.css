@@ -16,13 +16,7 @@ select{
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s;
     -ms-transition: all .3s; transition: all .3s;
 }
-input[type="date"]{
-    font-size: 16px;
-    height: 50px;
-    padding: 15px 15px;
-    font-weight: 300;
-    color: #888;
-}
+
 
 select{
     height: 34px;

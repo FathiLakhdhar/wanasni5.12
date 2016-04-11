@@ -105,10 +105,8 @@ function getDurationText(secs) {
     if (seconds < 10) {
         seconds = "0" + seconds;
     }
-    var time = hours + ' heure ' + minutes + ' minutes';
-    if (hours > 1) {
-        time = hours + ' heures ' + minutes + ' minutes';
-    }
+    var time = hours + ':' + minutes;
+
 
     return time;
 }
@@ -181,7 +179,7 @@ function NewSegment(route, index) {
 
 
     inputDistance.val(route.legs[index].distance.text);
-    inputDuration.val(route.legs[index].duration.text);
+    inputDuration.val(getDurationText(route.legs[index].duration.value));
     inputOrder.val(index);
 
     var parentPrix = inputPrix.parent();

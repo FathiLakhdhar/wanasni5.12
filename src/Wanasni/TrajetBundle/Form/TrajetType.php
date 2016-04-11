@@ -40,24 +40,34 @@ class TrajetType extends AbstractType
                 'allow_delete' => true,
                 'label_attr' => array('class'=>'sr-only'),
             ))
+            ->add('date_allet_unique', 'date', array(
+                //'format'=>'yyyy/MM/dd',
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide',
+                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA'),
+            ))
+
+            ->add('date_retour_unique', 'date', array(
+                //'format'=>'yyyy/MM/dd',
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide',
+                'attr' => array('class'=>'text-indent form-control','datepicker' => 'date_retour_unique', 'placeholder' => 'JJ/MM/AAAA'),
+                'required'=>false
+
+            ))
+
             ->add('round_trip', 'checkbox', array(
                 'attr' => array('class' => 'round_trip'),
                 'required'=>false,
             ))
-            ->add('date_allet_unique', 'text', array(
-                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA'),
-            ))
+
 
             ->add('Depart_prevu', 'choice', array(
                 'choices' => array('Heure exacte' => 'Heure exacte', '+/- 10 minutes' => '+/- 10 minutes', '+/- 20 minutes' => '+/- 20 minutes', '+/- 30 minutes' => '+/- 30 minutes'),
                 'attr'=> array('class'=>'form-control'),
 
             ))
-            ->add('date_retour_unique', 'text', array(
-                'attr' => array('class'=>'text-indent form-control','datepicker' => 'date_retour_unique', 'placeholder' => 'JJ/MM/AAAA'),
-                'required'=>false
 
-            ))
             ->add('heureAller', 'time', array(
                 'input' => 'datetime',
                 'widget' => 'choice',
@@ -67,25 +77,27 @@ class TrajetType extends AbstractType
                 'input' => 'datetime',
                 'widget' => 'choice',
             ))
-            ->add('datesAller', 'collection', array(
-                'type'=>new WayDateType(),
-                'allow_add' => true,
-                'allow_delete' => true,
-                'label'=>false,
-
-            ))
-            ->add('datesRetour', 'collection', array(
-                'type'=>new WayDateType(),
-                'allow_add' => true,
-                'allow_delete' => true,
-                'label'=>false,
-            ))
             ->add('regular_begin_date', 'text', array(
                 'attr' => array('datepicker' => '', 'placeholder' => 'JJ/MM/AAAA'),
             ))
             ->add('regular_end_date', 'text', array(
                 'attr' => array('datepicker' => '', 'placeholder' => 'JJ/MM/AAAA')
             ))
+
+            ->add('datesAller', 'collection', array(
+                'type'=>new WayDateType(),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label'=>false,
+            ))
+
+            ->add('datesRetour', 'collection', array(
+                'type'=>new WayDateType(),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label'=>false,
+            ))
+
             ->add('Bagages', 'choice', array(
                 'choices' => array(
                     'Petit' => 'Petit bagage',
@@ -97,6 +109,7 @@ class TrajetType extends AbstractType
                 'multiple' => false,
                 'expanded' => true,
             ))
+
             ->add('Preferences', new PreferencesType())
 
             ->add('informationsComplementaires', 'textarea', array(
@@ -107,7 +120,6 @@ class TrajetType extends AbstractType
                     "rows" => "5",
                 ),
                 'required'=>false,
-
 
             ))
             ->add('totalDistance', 'hidden', array(
@@ -128,13 +140,7 @@ class TrajetType extends AbstractType
                 'data'=>1,
                 'read_only'=>true,
             ))
-            /*
-            ->add('totalPrix', 'number', array(
-                'attr' => array('class' => 'form-control'),
-                'data'=>0,
-                'read_only'=>true,
-            ))
-            */
+
             ->add('vehicule', 'entity', array(
                 'empty_value' => 'Sélectionnez votre véhicule',
                 'class' => 'Wanasni\VehiculeBundle\Entity\Vehicule',

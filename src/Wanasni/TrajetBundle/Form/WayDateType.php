@@ -15,9 +15,11 @@ class WayDateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date','text', array(
-                'label'=>false,
-                'label_attr'=>array('class'=>'sr-only')
+            ->add('date','date', array(
+                //'input'=>'datetime',
+                'format'=>'yyyyMMdd',
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide'
             ))
         ;
     }

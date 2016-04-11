@@ -5,6 +5,7 @@ namespace Wanasni\TrajetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\ExecutionContextInterface;
 use Wanasni\TrajetBundle\Entity\Preferences;
 use Symfony\Component\Validator\Constraints as Assert;
 use Wanasni\TrajetBundle\Entity\Point;
@@ -17,6 +18,7 @@ use Wanasni\VehiculeBundle\Entity\Vehicule;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\TrajetRepository")
  * @ORM\HasLifecycleCallbacks
+ * @Assert\Callback(methods={"UniqueValid","vehiculeValid"})
  */
 class Trajet
 {
@@ -156,7 +158,7 @@ class Trajet
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank(message="Date Allet unique ne doit pas être vide.")
+     *
      */
     private $Date_Allet_unique;
 
@@ -194,14 +196,14 @@ class Trajet
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank(message="start Date Regulier ne doit pas être vide.")
+     *
      */
     private $regularBeginDate;
 
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank(message="fin Date Regulier ne doit pas être vide.")
+     *
      */
     private $regularEndDate;
 
@@ -239,7 +241,6 @@ class Trajet
     private $reservations;
 
 
-
     /**
      * Trajet constructor.
      */
@@ -250,15 +251,15 @@ class Trajet
         $this->Segments = new ArrayCollection();
         $this->datesAller = new ArrayCollection();
         $this->datesRetour = new ArrayCollection();
-        $this->reservations=new ArrayCollection();
+        $this->reservations = new ArrayCollection();
         $this->nbPlacesRestants = 0;
-        $this->Date_Allet_unique = date("Y-m-d");
-        $this->Date_Retour_unique = date("Y-m-d");
-        $this->regularBeginDate = date("Y-m-d");
-        $this->regularEndDate = date("Y-m-d");
+
+        $this->Date_Allet_unique = date_create();
+        $this->Date_Retour_unique = date_create();
+        $this->regularBeginDate = date('d/m/y');
+        $this->regularEndDate = date('d/m/y');
+
     }
-
-
 
 
     /**
@@ -904,15 +905,16 @@ class Trajet
         return $arr;
     }
 
-    public function getDatesToArray(){
+    public function getDatesToArray()
+    {
 
-        $arr=array();
+        $arr = array();
 
         foreach ($this->getDatesAller() as $wayDate) {
-            $arr[]=$wayDate->getDate()->format('Y-m-d');
+            $arr[] = $wayDate->getDate()->format('Y-m-d');
         }
         foreach ($this->getDatesRetour() as $wayDate) {
-            $arr[]=$wayDate->getDate()->format('Y-m-d');
+            $arr[] = $wayDate->getDate()->format('Y-m-d');
         }
 
         return $arr;
@@ -928,8 +930,6 @@ class Trajet
     {
 
 
-
-
         if ($this->getFrequence() === "UNIQUE") {
             $wayDateA = new WayDate();
             $wayDateA->setDate($this->getDateAlletUnique());
@@ -941,11 +941,11 @@ class Trajet
                 $wayDateR->setTarjetRetour($this);
                 $this->addDatesRetour($wayDateR);
             }
-        }else{
-            foreach( $this->getDatesAller() as $waydate){
+        } else {
+            foreach ($this->getDatesAller() as $waydate) {
                 $waydate->setTarjetAller($this);
             }
-            foreach( $this->getDatesRetour() as $waydate){
+            foreach ($this->getDatesRetour() as $waydate) {
                 $waydate->setTarjetRetour($this);
             }
         }
@@ -988,8 +988,17 @@ class Trajet
         }
 
 
-    }
+        if ($this->getFrequence() == 'UNIQUE') {
+            if ($this->datesAller->count() == 1) {
+                $this->setDateAlletUnique($this->datesAller->first()->getDate());
+            }
+            if ($this->datesRetour->count() == 1) {
+                //$this->setDateRetourUnique($this->datesRetour->first()->getDate());
+            }
 
+        }
+
+    }
 
 
     /**
@@ -1001,14 +1010,14 @@ class Trajet
     public function setProposerAt($proposerAt)
     {
         $this->proposerAt = $proposerAt;
-    
+
         return $this;
     }
 
     /**
      * Get proposerAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getProposerAt()
     {
@@ -1024,7 +1033,7 @@ class Trajet
     public function addReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
     {
         $this->reservations[] = $reservations;
-    
+
         return $this;
     }
 
@@ -1041,10 +1050,92 @@ class Trajet
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReservations()
     {
         return $this->reservations;
     }
+
+
+    public function UniqueValid(ExecutionContextInterface $context)
+    {
+        if ($this->frequence == 'UNIQUE') {
+
+            $new=date_create();
+
+            //Datealler Test
+            if ($this->checkDate($this->getDateAlletUnique())) {
+
+
+                if (intval(date_diff($this->getDateAlletUnique(), $new)->format('%R%a')) > 0) {
+                    $context->addViolationAt('Date_Allet_unique', 'date Aller invalid >' . date('d/m/y'));
+                }
+
+            } else {
+                $context->addViolationAt('Date_Allet_unique', 'invalid date Aller');
+            }
+
+
+            if (intval(date_diff($this->getDateAlletUnique(), $new)->format('%R%a')) == 0) {
+                if (intval($this->heureAller->format('hi')) < intval($new->format('hi'))) {
+                    $context->addViolationAt('heureAller', 'invalid heure aller !!');
+                }
+            }
+
+            //dateRetour test
+
+            if ($this->roundTrip) {
+
+                if ($this->checkDate($this->getDateRetourUnique())) {
+
+                    if (intval(date_diff($this->getDateRetourUnique(), $this->getDateAlletUnique())->format('%R%a')) > 0) {
+                        $context->addViolationAt('Date_Retour_unique', 'date Retour invalid >=' . $this->getDateAlletUnique()->format('d/m/y'));
+                    }
+
+
+                    if (intval(date_diff($this->getDateRetourUnique(), $this->getDateAlletUnique())->format('%R%a')) == 0) {
+                        //Heure Retour test
+
+                        if (intval($this->heureRetour->format('HI')) <= intval($this->heureAller->format('HI'))) {
+                            $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller)');
+                        }
+
+                        if (intval(date_diff($this->heureAller, $this->heureRetour)->format('%H%I')) < intval(date_create($this->getTotalDuration())->format('HI'))) {
+                            $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller + durée estime)');
+                        }
+
+
+                    }
+
+
+                } else {
+                    $context->addViolationAt('Date_Retour_unique', 'invalid date Retour');
+                }
+
+
+            }
+
+
+        }
+    }
+
+
+    public function vehiculeValid(ExecutionContextInterface $context)
+    {
+        if ($this->getVehicule()->getNbrPlaces() < $this->nbPlaces) {
+            $context->addViolationAt('nbPlaces', 'invalid nombre de places pour cette véhicule (max : ' . $this->getVehicule()->getNbrPlaces() . ")");
+        }
+    }
+
+
+    function checkDate(\DateTime $date)
+    {
+        $month = intval($date->format('m'));
+        $day = intval($date->format('d'));
+        $year = intval($date->format('y'));
+        return checkdate($month, $day, $year);
+    }
+
+
 }
