@@ -39,9 +39,9 @@
                                 <div class="form-group pos-relative">
                                     <label class="sr-only" for="search_date">date</label>
                                     <span class="glyphicon glyphicon-calendar darkgrey input-icon"></span>
-                                    <input type="text" id="search_date" name="search_date"
+                                    <input type="date" id="search_date" name="search_date"
                                            class="form-control input-lg text-indent" datepicker=""
-                                           placeholder="aaaa-mm-jj" value="{{ search.date }}">
+                                           placeholder="" value="{{ search.date }}">
                                 </div>
 
                             </div>
@@ -119,7 +119,15 @@
                     <div class="col-md-12 thumbnail">
                         <h3 class="steelblue page-header"><i class="ion ion-ios-alarm-outline"></i>  Créer une alerte</h3>
                         <div>
-                            {{ include(':Trajet/Gerer:alert.html.twig') }}
+                            {% if form %}
+                                {{ include(':Trajet/Gerer:alert.html.twig') }}
+                            {% else %}
+                                <ol>
+                                    <li>Recherche ton trajet</li>
+                                    <li>Ajoute une alerte</li>
+                                </ol>
+                            {% endif  %}
+
                         </div>
                     </div>
                     <div class="col-md-12 bg-lightcoral">

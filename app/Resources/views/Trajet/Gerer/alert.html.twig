@@ -1,13 +1,5 @@
 {{ form_start(form,{'method': 'post', 'action': path('trajet_create_alert'), 'attr': {'class':''}}) }}
 
-{% for label, flashes in app.session.flashbag.all %}
-    {% for flash in flashes %}
-        <div class="alert alert-{{ label }}">
-            {{ flash }}
-        </div>
-    {% endfor %}
-{% endfor %}
-
 <div class="text-center">
 
 <div class=" form-group box-highlight">

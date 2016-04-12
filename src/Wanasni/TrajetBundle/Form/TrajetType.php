@@ -44,7 +44,7 @@ class TrajetType extends AbstractType
                 //'format'=>'yyyy/MM/dd',
                 'widget'=>'single_text',
                 'invalid_message'=>'Format invalide',
-                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique', 'placeholder' => 'JJ/MM/AAAA'),
+                'attr' => array('class' => 'text-indent form-control', 'datepicker' => 'date_allet_unique'),
             ))
 
             ->add('date_retour_unique', 'date', array(

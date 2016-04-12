@@ -7,6 +7,13 @@
     <div class="container">
 
         {% if trajet %}
+            {% for label, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    <div class="alert alert-{{ label }}">
+                        {{ flash }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
             <div class="row">
                 <div class="col-md-8 ">

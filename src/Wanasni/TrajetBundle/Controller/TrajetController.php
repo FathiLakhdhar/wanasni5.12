@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanasni\TrajetBundle\Entity\Alert;
 use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\AlertType;
@@ -24,7 +25,7 @@ class TrajetController extends Controller
     {
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+            throw new AccessDeniedException();
         }
 
         $trajet = new Trajet();
@@ -75,7 +76,7 @@ class TrajetController extends Controller
     {
 
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirect($this->generateUrl('fos_user_security_login'));
+            throw new AccessDeniedException();
         }
 
         $trajet = new Trajet();
@@ -159,19 +160,35 @@ class TrajetController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('WanasniTrajetBundle:Trajet');
-            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(), $search->getDestination(), date($search->getDate()));
+            $Trajets = $rep->SearchByOrigineAndDestination($search->getOrigine(), $search->getDestination(), $search->getDate());
             // On définit un message flash
             //$this->get('session')->getFlashBag()->add('info', 'Trajet Trouver');
 
-        }
+            $form=$this->createForm(new AlertType(),$alert);
 
-        $form=$this->createForm(new AlertType(),$alert);
+            return $this->render(':Trajet/Gerer:rechercher_trajet.html.twig', array(
+                'search'=>$search,
+                'trajets'=>$Trajets,
+                'form'=>$form->createView()
+            ));
+
+        }
 
         return $this->render(':Trajet/Gerer:rechercher_trajet.html.twig', array(
             'search'=>$search,
             'trajets'=>$Trajets,
-            'form'=>$form->createView()
+            'form'=>null
         ));
+    }
+
+
+    /**
+     * @Route("/add-alert", name="trajet_create_alert")
+     */
+    public function AlertAction(Request $request){
+        if($request->getMethod()=="POST"){
+
+        }
     }
 
 
@@ -197,6 +214,9 @@ class TrajetController extends Controller
     }
 
 
+
+
+
     /**
      * @Route("/modifier-trajet/{id}", name="trajet_edit")
      * @ParamConverter("trajet", class="WanasniTrajetBundle:Trajet")
@@ -205,8 +225,8 @@ class TrajetController extends Controller
     public function EditAction(Trajet $trajet){
 
 
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $this->redirect($this->generateUrl('fos_user_security_login'));
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
         }
 
         if($trajet->getFrequence()=="UNIQUE"){
