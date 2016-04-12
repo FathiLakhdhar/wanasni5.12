@@ -6,7 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Validator\Constraints\Date;
 use Wanasni\TrajetBundle\Entity\Alert;
 use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\AlertType;
@@ -153,10 +156,12 @@ class TrajetController extends Controller
             $search->setOrigine($request->get('search_origine'));
             $search->setDestination($request->get('search_destination'));
             $date = $request->get('search_date');
+
             $search->setDate($date);
 
             $alert->setOrigine($search->getOrigine());
             $alert->setDestination($search->getDestination());
+            $alert->setDate($date);
 
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('WanasniTrajetBundle:Trajet');
@@ -186,9 +191,23 @@ class TrajetController extends Controller
      * @Route("/add-alert", name="trajet_create_alert")
      */
     public function AlertAction(Request $request){
-        if($request->getMethod()=="POST"){
 
+        $alert=new Alert();
+        $form= $this->createForm(new AlertType(),$alert);
+        if($request->getMethod()=="POST"){
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()) {
+                $em=$this->getDoctrine()->getManager();
+                $em->persist($alert);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('info','Alert create');
+                return $this->redirect($this->generateUrl('trajet_search'));
+            }
         }
+
+
+        return new Response();
+
     }
 
 

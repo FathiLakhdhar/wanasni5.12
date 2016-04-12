@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class AlertRepository extends EntityRepository
 {
 
-    public function MyFind($origine,$destination,$dates){
+    public function MyFind($origine,$destination,$dates,$frequence){
         $qb = $this->createQueryBuilder('a');
 
         $qb->where('a.origine LIKE :o')
@@ -22,6 +22,8 @@ class AlertRepository extends EntityRepository
             ->setParameter('d',$destination)
             ->andWhere('a.date IN (:dates)')
             ->setParameter('dates',$dates)
+            ->andWhere('a.freqeunce LIKE :f')
+            ->setParameter('f',$frequence)
         ;
 
         return $qb->getQuery()->getResult();

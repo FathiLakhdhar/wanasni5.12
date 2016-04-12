@@ -39,7 +39,8 @@ class AlertService
             $alerts= $rep->MyFind(
                 $trajet->getOrigine()->getLieu(),
                 $trajet->getDestination()->getLieu(),
-                $trajet->getDatesToArray()
+                $trajet->getDatesToArray(),
+                $trajet->getFrequence()
                 );
 
             foreach($alerts as $alert){

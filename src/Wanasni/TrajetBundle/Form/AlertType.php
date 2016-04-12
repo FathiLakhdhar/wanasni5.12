@@ -24,14 +24,16 @@ class AlertType extends AbstractType
 
             ))
             ->add('freqeunce','choice',array(
-                'choices'=>array('UNIQUE'=>'Trajet Unique', 'REGULAR'=>'Trajet Regulier'),
+                'choices'=>array('REGULAR'=>'Trajet Regulier','UNIQUE'=>'Trajet Unique'),
                 'multiple'=>false,
                 'expanded'=>true,
                 'data'=>'UNIQUE',
                 'label'=>false
             ))
-            ->add('date', 'text', array(
-                'attr'=>array('class'=>'form-control','datepicker'=>'')
+            ->add('date', 'date', array(
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide',
+                'attr' => array('class' => 'form-control', 'datepicker' => ''),
             ))
         ;
     }

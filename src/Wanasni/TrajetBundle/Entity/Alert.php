@@ -63,7 +63,6 @@ class Alert
      */
     public function __construct()
     {
-        $this->date= date('Y-m-d');
     }
 
 
@@ -131,8 +130,12 @@ class Alert
      */
     public function setDate($date)
     {
-        $this->date = date_create($date);
-    
+        if(is_string($date)){
+            $this->date = date_create($date);
+        }else{
+            $this->date = $date;
+        }
+
         return $this;
     }
 

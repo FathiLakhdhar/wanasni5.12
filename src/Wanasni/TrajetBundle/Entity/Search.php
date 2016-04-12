@@ -2,6 +2,8 @@
 namespace Wanasni\TrajetBundle\Entity;
 
 
+use Symfony\Component\Validator\Constraints\Date;
+
 class Search
 {
 
@@ -14,8 +16,10 @@ class Search
      */
     private $destination;
 
+
+
     /**
-     * @var string
+     * @var \DateTime
      */
     private $date;
 
@@ -24,24 +28,8 @@ class Search
      */
     public function __construct()
     {
-        $this->date=date('Y-m-d');
     }
 
-    /**
-     * @return string
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-    }
 
 
     /**
@@ -76,5 +64,19 @@ class Search
         $this->origine = $origine;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
 }
