@@ -10,7 +10,7 @@
     <div class="form-group col-7">
         <li class="point">
             <div class="from pos-relative">
-                {{ form_errors(form.Origine) }}
+
                 <span class="glyphicon glyphicon-map-marker green input-icon"></span>
                 {{ form_label(form.Origine.lieu, 'Origine', {'label_attr': {'class': 'sr-only'}}) }}
                 {{ form_widget(form.Origine.lieu, {'attr': {'class': 'form-Origine-lieu form-control input-lg text-indent',
@@ -18,13 +18,16 @@
                 {{ form_widget(form.Origine.latitude) }}
                 {{ form_widget(form.Origine.longitude) }}
 
+                {{ form_errors(form.Origine.lieu) }}
+                {{ form_errors(form.Origine.latitude) }}
+                {{ form_errors(form.Origine.longitude) }}
+
             </div>
         </li>
     </div>
     <div class="form-group col-7">
         <li class="point_Destination">
             <div class="to pos-relative">
-                {{ form_errors(form.Destination) }}
 
                 {{ form_label(form.Destination.lieu, 'Destination', {'label_attr': {'class': 'sr-only'}}) }}
 
@@ -33,6 +36,10 @@
                 <span class="glyphicon glyphicon-map-marker red input-icon"></span>
                 {{ form_widget(form.Destination.latitude) }}
                 {{ form_widget(form.Destination.longitude) }}
+
+                {{ form_errors(form.Destination.lieu) }}
+                {{ form_errors(form.Destination.latitude) }}
+                {{ form_errors(form.Destination.longitude) }}
             </div>
         </li>
     </div>
@@ -44,9 +51,24 @@
             villes étapes :</p>
 
         <div class="col-7">
-            <div class="waypoint-list">
-                {{ form_widget(form.waypoints) }}
-            </div>
+            <ul id="wanasni_trajetbundle_trajetunique_waypoints" class="waypoint-list list-unstyled"
+                data-prototype="<li class='point form-group'><div class='waypoint pos-relative'><span class='glyphicon glyphicon-map-marker yellow-dark input-icon'></span>{{ form_widget(form.waypoints.vars.prototype.lieu)|e }}{{ form_widget(form.waypoints.vars.prototype.latitude)|e }}{{ form_widget(form.waypoints.vars.prototype.longitude)|e }}</div></li>">
+
+                {% for waypoint in form.waypoints %}
+                    <li class="point form-group">
+                        <div class="waypoint pos-relative">
+                            <span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>
+                            {{ form_widget(waypoint.lieu) }}
+                            {{ form_widget(waypoint.latitude) }}
+                            {{ form_widget(waypoint.longitude) }}
+                            {{ form_errors(waypoint.lieu) }}
+                            {{ form_errors(waypoint.latitude) }}
+                            {{ form_errors(waypoint.longitude) }}
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
         </div>
 
 

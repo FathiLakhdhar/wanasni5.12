@@ -45,10 +45,6 @@ function AutoComplete($id) {
             $parent.find('input[class=latitude]').val(place.geometry.location.lat());
             $parent.find('input[class=longitude]').val(place.geometry.location.lng());
 
-            var $db_parent = $parent.parent();
-
-            $db_parent.find('input[class=latitude]').val(place.geometry.location.lat());
-            $db_parent.find('input[class=longitude]').val(place.geometry.location.lng());
             calculateAndDisplayRoute(directionsService, directionsDisplay);
 
         } else {

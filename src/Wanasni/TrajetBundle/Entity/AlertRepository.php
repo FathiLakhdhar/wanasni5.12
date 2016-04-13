@@ -22,7 +22,7 @@ class AlertRepository extends EntityRepository
             ->setParameter('d',$destination)
             ->andWhere('a.date IN (:dates)')
             ->setParameter('dates',$dates)
-            ->andWhere('a.freqeunce LIKE :f')
+            ->andWhere('a.freqeunce = :f')
             ->setParameter('f',$frequence)
         ;
 

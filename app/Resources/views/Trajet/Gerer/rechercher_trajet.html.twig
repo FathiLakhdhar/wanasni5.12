@@ -97,7 +97,10 @@
 
                 <div class="thumbnail">
 
-                    <h1 class="page-header steelblue">Mes résultats de recherche</h1>
+                    <h3 class="page-header steelblue">Mes résultats de recherche</h3>
+                    <div class="text-center">
+                        <h3 class="alert alert-success"><span class="">{{ trajets|length }}</span> TRAJETS TROUVÉS</h3>
+                    </div>
                     <ul>
                         {% for trajet in trajets %}
                             <li>
@@ -129,9 +132,9 @@
                             {% if form %}
                                 {{ include(':Trajet/Gerer:alert.html.twig') }}
                             {% else %}
-                                <ol>
-                                    <li>Recherche ton trajet</li>
-                                    <li>Ajoute une alerte</li>
+                                <ol class="list-group">
+                                    <li class="list-group-item"><span class="badge">1</span> Recherche ton trajet</li>
+                                    <li class="list-group-item"><span class="badge">2</span> Ajoute une alerte</li>
                                 </ol>
                             {% endif  %}
 

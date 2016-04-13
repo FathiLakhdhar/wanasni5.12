@@ -1027,7 +1027,10 @@ footer a, footer a:hover, footer a:focus {
 }
 
 
-#proposer .nav-tabs > li > a {
+#proposer .nav-tabs > li > a ,
+#edit .nav-tabs > li > a
+
+{
     display: block;
     font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
@@ -1040,7 +1043,9 @@ footer a, footer a:hover, footer a:focus {
 
 
 }
-#proposer label {
+#proposer label ,
+#edit label
+{
     font-weight: 500;
 }
 
@@ -1048,13 +1053,17 @@ footer a, footer a:hover, footer a:focus {
     border-bottom: 2px solid #eeeeee;
 }
 
-#proposer .nav-tabs > li.active > a{
+#proposer .nav-tabs > li.active > a,
+#edit .nav-tabs > li.active > a
+{
     background: #FFFFFF;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
 }
 
-#proposer .tab-content{
+#proposer .tab-content
+#edit .tab-content
+{
     background: #FFFFFF;
     padding: 20px;
 }
@@ -1083,20 +1092,31 @@ span.date-icon{
     text-indent: 26px;
 }
 
-#proposer .tab-content  .form-group{
+#proposer .tab-content  .form-group,
+#edit .tab-content  .form-group
+{
     margin-left:40px;
 }
 
-#proposer h3{
+#proposer h3,
+#edit h3
+
+{
     color: steelblue;
 }
 
-#proposer .waypoint:hover .close{
+#proposer .waypoint:hover .close,
+#edit .waypoint:hover .close
+
+{
     opacity: 0.4;
 }
 
 
-#proposer .waypoint .close {
+#proposer .waypoint .close ,
+#edit .waypoint .close
+
+{
     position: absolute;
     float: none;
     width: 12px;

@@ -2,25 +2,10 @@
 ADD+Remove Ville Etape
  */
 
-function UpdateOrderPoint(){
-
-    var index_Destination=0;
-    $('ul.points_trajet li.point').each(function(index ){
-        $(this).find('input.order').val(index);
-        index_Destination=index;
-    });
-
-    $('ul.points_trajet li.point_Destination input.order').val(index_Destination+1);
-}
-
 
 function updateWaypointsIndices() {
     var i = 0;
     $(".waypoint-list li.point").each(function () {
-
-        var $divWaypoint=$(this).find('div.waypoint');
-        var $divID=$divWaypoint.attr('id');
-        $divWaypoint.attr('id', $divID.replace(/waypoints_\d+/, "waypoints_" + i));
 
         $(this).find("input").each(function () {
             var id = $(this).attr("id");
@@ -37,26 +22,11 @@ $(document).ready(function() {
     // On récupère la balise <div> en question qui contient
     // l'attribut « data-prototype » qui nous intéresse.
 
-    var $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+    var $container = $('#wanasni_trajetbundle_trajetunique_waypoints');
 
     if (!$container.length){
-        var $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+         $container = $('#wanasni_trajetbundle_trajetregulier_waypoints');
     }
-
-    var $marker;
-
-    $container.children('div').each(function(){
-
-        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
-        var child=$(this);
-        child.find('label').addClass('sr-only');
-        child.addClass('form-group');
-        child.children('div').addClass('waypoint pos-relative');
-        child.find('input[type=text]').before($marker);
-        var $li=$('<li class="point"></li>');
-        $li.append(child);
-        $container.append($li);
-    });
 
 
     // On ajoute un lien pour ajouter une nouvelle Waypoint
@@ -66,7 +36,7 @@ $(document).ready(function() {
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $lienAjout.click(function(e) {
         ajouterWaypoint($container);
-        e.preventDefault();// évite qu'un # apparaisse dans l'URL
+        e.preventDefault();
         return false;
     });
 
@@ -86,35 +56,11 @@ $(document).ready(function() {
     // La fonction qui ajoute un formulaire Waypoints
     function ajouterWaypoint($container) {
 
-
-
-            // Dans le contenu de l'attribut « data-prototype », on remplace :
-            // - le texte "__name__label__" qu'il contient par le label du champ
-            // - le texte "__name__" qu'il contient par le numéro du champ
         var $prototype = $($container.attr('data-prototype')
             .replace(/__name__label__/g, index)
             .replace(/__name__/g, index)
         );
 
-
-        $marker = $('<span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>');
-
-        //
-        $prototype.find('label').addClass('sr-only');
-
-
-        $prototype.first('div').addClass('form-group');
-
-        $prototype.children('div').addClass('waypoint pos-relative');
-        $prototype.find('input[type=text]')
-            .before($marker)
-            .addClass('form-waypoint-lieu form-control input-lg text-indent')
-            .attr('placeholder','Ville étape')
-        ;
-
-        var $item=$('<li class="point"></li>');
-        $item.append($prototype);
-        $prototype=$item;
 
         // On ajoute au prototype un lien pour pouvoir supprimer la Waypoint
         ajouterLienSuppression($prototype);
@@ -132,12 +78,7 @@ $(document).ready(function() {
             AutoComplete($(this).attr('id'));
         });
 
-
-        UpdateOrderPoint();
-
-
     }
-
 
     // La fonction qui ajoute un lien de suppression d'une catégorie
     function ajouterLienSuppression($prototype) {
@@ -149,8 +90,6 @@ $(document).ready(function() {
             $prototype.remove();
             e.preventDefault();// évite qu'un # apparaisse dans l'URL
             calculateAndDisplayRoute(directionsService,directionsDisplay);
-
-            UpdateOrderPoint();
 
             updateWaypointsIndices();
             return false;

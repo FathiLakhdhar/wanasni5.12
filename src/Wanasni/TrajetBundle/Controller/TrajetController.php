@@ -249,13 +249,11 @@ class TrajetController extends Controller
         }
 
         if($trajet->getFrequence()=="UNIQUE"){
-
             $form=$this->createForm(new TrajetUniqueType($this->getUser()), $trajet);
             return $this->render(':Trajet/Gerer:modifier_trajet_unique.html.twig',array(
                 'form'=>$form->createView()
             ));
         }else{
-
             $form=$this->createForm(new TrajetRegulierType($this->getUser()), $trajet);
             return $this->render(':Trajet/Gerer:modifier_trajet_regulier.html.twig', array(
                 'form'=>$form->createView()

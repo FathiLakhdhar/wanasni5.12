@@ -19,7 +19,7 @@ if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
      $Origine = $('#wanasni_trajetbundle_trajetunique_Origine_lieu');
      $distination = $('#wanasni_trajetbundle_trajetunique_Destination_lieu');
-     $container = $('div#wanasni_trajetbundle_trajetunique_waypoints');
+     $container = $('#wanasni_trajetbundle_trajetunique_waypoints');
      $Segments = $('div#wanasni_trajetbundle_trajetunique_Segments');
 
 
@@ -28,7 +28,7 @@ if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
     $Origine = $('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
     $distination = $('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
-    $container = $('div#wanasni_trajetbundle_trajetregulier_waypoints');
+    $container = $('#wanasni_trajetbundle_trajetregulier_waypoints');
     $Segments = $('div#wanasni_trajetbundle_trajetregulier_Segments');
 }
 

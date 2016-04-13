@@ -1076,9 +1076,8 @@ class Trajet
                 $context->addViolationAt('Date_Allet_unique', 'invalid date Aller');
             }
 
-
-            if (intval(date_diff($this->getDateAlletUnique(), $new)->format('%R%a')) == 0) {
-                if (intval($this->heureAller->format('hi')) < intval($new->format('hi'))) {
+            if ($this->getDateAlletUnique()->format("y-m-d") == $new->format("y-m-d")) {
+                if ($this->heureAller->format('h:i') < $new->format('h:i')) {
                     $context->addViolationAt('heureAller', 'invalid heure aller !!');
                 }
             }

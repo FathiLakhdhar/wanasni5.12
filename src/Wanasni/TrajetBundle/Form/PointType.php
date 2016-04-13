@@ -17,7 +17,7 @@ class PointType extends AbstractType
         $builder
             ->add('lieu', 'text',array(
                 'label' => false,
-                'attr'=>array('class'=>'form-control input-lg text-indent','inputAutoComplete'=>'on'),
+                'attr'=>array('class'=>'form-control input-lg text-indent','inputAutoComplete'=>'on','placeholder'=>'Ville étape'),
             ))
             ->add('latitude','hidden',array(
                 'attr'=> array('class'=>'latitude'),
