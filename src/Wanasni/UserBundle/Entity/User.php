@@ -252,6 +252,7 @@ class User extends BaseUser
      */
     public function addVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicules)
     {
+        $vehicules->setUser($this);
         $this->vehicules[] = $vehicules;
     
         return $this;

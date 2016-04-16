@@ -184,16 +184,17 @@
                     <div class="thumbnail">
                         <div id="directions-panel">
                             <ul class="list-group">
+
+
+
                                 {% for segment in trajet.segments %}
                                     <li class="list-group-item list-group-item-info">
-                                        {{ segment.start.lieu }} <i
-                                                class="ion ion-android-arrow-forward"></i> {{ segment.end.lieu }}
+                                        {{ segment.start }} <i
+                                                class="ion ion-android-arrow-forward"></i> {{ segment.end }}
 
-                                    <li class="list-group-item"> {{ segment.distance }}   </li>
-                                    <li class="list-group-item"> {{ segment.duration }}   </li>
                                     <li class="list-group-item"> {{ segment.prix }} TND</li>
-
                                 {% endfor %}
+
                             </ul>
                         </div>
                     </div>

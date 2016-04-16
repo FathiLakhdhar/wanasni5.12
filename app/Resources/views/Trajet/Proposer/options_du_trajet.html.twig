@@ -160,6 +160,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_widget(form.vehicule) }}
+                        <a href="{{ path('car-add') }}"><span class="badge bg-green">+ Ajoute véhicule</span></a>
                         {{ form_errors(form.vehicule)}}
                     </div>
                     <div class="col-md-3">

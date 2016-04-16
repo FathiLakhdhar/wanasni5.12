@@ -22,11 +22,7 @@ $(document).ready(function() {
     // On récupère la balise <div> en question qui contient
     // l'attribut « data-prototype » qui nous intéresse.
 
-    var $container = $('#wanasni_trajetbundle_trajetunique_waypoints');
-
-    if (!$container.length){
-         $container = $('#wanasni_trajetbundle_trajetregulier_waypoints');
-    }
+    var $container = $('#waypoints');
 
 
     // On ajoute un lien pour ajouter une nouvelle Waypoint
@@ -41,7 +37,7 @@ $(document).ready(function() {
     });
 
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find('li').length;
+    var index = getIndice;
 
     // On ajoute un premier champ directement s'il n'en existe pas déjà un (cas d'un nouvel Trajet par exemple).
     if (index == 0) {
@@ -53,8 +49,15 @@ $(document).ready(function() {
         });
     }
 
+
+    function getIndice(){
+        return $container.children('li.point').length;
+    }
+
     // La fonction qui ajoute un formulaire Waypoints
     function ajouterWaypoint($container) {
+
+        index=$container.children('li').length;
 
         var $prototype = $($container.attr('data-prototype')
             .replace(/__name__label__/g, index)
@@ -70,11 +73,9 @@ $(document).ready(function() {
 
 
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
+        index=getIndice()+1;
 
-
-        var elemID =$prototype.find('input[inputAutoComplete=on]').attr('id');
-        document.getElementById(elemID).addEventListener('focusin',function() {
+        $prototype.find('input[inputAutoComplete=on]').on('focus',function(){
             AutoComplete($(this).attr('id'));
         });
 
@@ -90,11 +91,26 @@ $(document).ready(function() {
             $prototype.remove();
             e.preventDefault();// évite qu'un # apparaisse dans l'URL
             calculateAndDisplayRoute(directionsService,directionsDisplay);
-
             updateWaypointsIndices();
             return false;
         });
 
     }
+
+
+
+    $( ".sortable" ).sortable({
+        axis: "y",
+        cursor: "move",
+        items: "> li",
+        placeholder: "placeholder-sortable",
+        stop: function(event, ui) {
+            calculateAndDisplayRoute(directionsService,directionsDisplay);
+            updateWaypointsIndices();
+        }
+    })
+    ;
+
+
 
 });

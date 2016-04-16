@@ -46,10 +46,8 @@ class TrajetRepository extends EntityRepository
             ->setParameter('depart', $depart)
             ->andWhere('destination.lieu LIKE :arrive')
             ->setParameter('arrive',$arrive)
-            ->andWhere('datesAller.date = :dateA OR datesRetour.date = :dateR')
-            ->setParameter('dateA', $date)
-            ->setParameter('dateR', $date)
-
+            ->andWhere('datesAller.date = :date OR datesRetour.date = :date OR t.Date_Allet_unique= :date OR t.Date_Retour_unique= :date')
+            ->setParameter('date', $date)
         ;
 
 

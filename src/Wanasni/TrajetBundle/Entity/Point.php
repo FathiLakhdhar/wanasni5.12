@@ -49,6 +49,10 @@ class Point
     private $longitude;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Wanasni\TrajetBundle\Entity\Trajet", inversedBy="waypoints")
+     */
+    private $way;
 
 
     /**
@@ -71,7 +75,6 @@ class Point
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-    
         return $this;
     }
 
@@ -133,4 +136,27 @@ class Point
     }
 
 
+
+    /**
+     * Set way
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $way
+     * @return Point
+     */
+    public function setWay(\Wanasni\TrajetBundle\Entity\Trajet $way = null)
+    {
+        $this->way = $way;
+    
+        return $this;
+    }
+
+    /**
+     * Get way
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Trajet 
+     */
+    public function getWay()
+    {
+        return $this->way;
+    }
 }

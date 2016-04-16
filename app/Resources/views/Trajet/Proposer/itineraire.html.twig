@@ -51,13 +51,19 @@
             villes étapes :</p>
 
         <div class="col-7">
-            <ul id="wanasni_trajetbundle_trajetunique_waypoints" class="waypoint-list list-unstyled"
-                data-prototype="<li class='point form-group'><div class='waypoint pos-relative'><span class='glyphicon glyphicon-map-marker yellow-dark input-icon'></span>{{ form_widget(form.waypoints.vars.prototype.lieu)|e }}{{ form_widget(form.waypoints.vars.prototype.latitude)|e }}{{ form_widget(form.waypoints.vars.prototype.longitude)|e }}</div></li>">
+            <ul id="waypoints" class="waypoint-list list-unstyled sortable"
+                data-prototype="<li class='point form-group '><div class='waypoint pos-relative'>
+                <span class='glyphicon glyphicon-map-marker marker yellow-dark input-icon'></span>
+                <i class='ion ion-navicon-round drag drag-icon'></i>
+                {{ form_widget(form.waypoints.vars.prototype.lieu)|e }}
+                {{ form_widget(form.waypoints.vars.prototype.latitude)|e }}
+                {{ form_widget(form.waypoints.vars.prototype.longitude)|e }}</div></li>">
 
                 {% for waypoint in form.waypoints %}
                     <li class="point form-group">
                         <div class="waypoint pos-relative">
-                            <span class="glyphicon glyphicon-map-marker yellow-dark input-icon"></span>
+                            <span class="glyphicon glyphicon-map-marker marker yellow-dark input-icon"></span>
+                            <i class="ion ion-navicon-round drag drag-icon"></i>
                             {{ form_widget(waypoint.lieu) }}
                             {{ form_widget(waypoint.latitude) }}
                             {{ form_widget(waypoint.longitude) }}

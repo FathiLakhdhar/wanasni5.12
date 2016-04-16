@@ -38,6 +38,7 @@ class TrajetType extends AbstractType
                 'type' => new PointType(),
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference' => false,
                 'label_attr' => array('class'=>'sr-only'),
             ))
             ->add('date_allet_unique', 'date', array(
@@ -88,6 +89,7 @@ class TrajetType extends AbstractType
                 'type'=>new WayDateType(),
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference'=>false,
                 'label'=>false,
             ))
 
@@ -95,6 +97,7 @@ class TrajetType extends AbstractType
                 'type'=>new WayDateType(),
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference'=>false,
                 'label'=>false,
             ))
 
@@ -130,13 +133,21 @@ class TrajetType extends AbstractType
                 'attr' => array('class' => 'totalDuration'),
                 'data' => '0 heurs 0 min',
             ))
+/*
             ->add('Segments', 'collection', array(
                 'type' => new SegmentType(),
                 'allow_add' => true,
                 'allow_delete' => true,
+            ))*/
+
+            ->add('arrPrix','collection',array(
+                'type'=>'number',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label'=>false
             ))
             ->add('nbPlaces', 'number', array(
-                'attr' => array('class' => 'form-control car-place-spinner'),
+                'attr' => array('class' => 'form-control text-indent car-place-spinner'),
                 'data'=>1,
                 'read_only'=>true,
             ))
@@ -146,6 +157,7 @@ class TrajetType extends AbstractType
                 'class' => 'Wanasni\VehiculeBundle\Entity\Vehicule',
                 'property' => 'fullNameCar',
                 'choices' => $this->user->getVehicules(),
+                'by_reference'=>false,
                 'attr' => array('class' => 'form-control')
             ))
             ->add('cgu', 'checkbox', array(

@@ -198,26 +198,21 @@
 
                 <div class="thumbnail">
                     <div id="directions-panel"></div>
-                    <ul class="Segments list-unstyled">
-                        {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
-                        {{ form_row(form.Segments,{'attr':{'data-prix-optimal-url':prix_optimal_url,'disable':'' }} ) }}
-                        {{ form_errors(form.Segments)}}
+                    {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                    <ul id="Segments" class="Segments list-unstyled" data-prototype="<li>Prix : {{ form_widget(form.arrPrix.vars.prototype)|e }}</li>"
+                        data-prix-optimal-url="{{ prix_optimal_url }}">
+                        {% for prix in form.arrPrix %}
+                            <li>{{ form_widget(prix) }}</li>
+                        {% endfor %}
+
+                        {{ form_errors(form.arrPrix)}}
                     </ul>
                     <div id="panel">
                         {{ form_widget(form.totalDistance) }}
                         {{ form_errors(form.totalDistance)}}
                         {{ form_widget(form.totalDuration) }}
                         {{ form_errors(form.totalDuration)}}
-{#
-                        <div class="input-group">
-                            <span class="input-group-addon bg-green white">Prix Total</span>
-                            {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
-                            {{ form_widget(form.totalPrix,{'attr':{'data-prix-optimal-url':prix_optimal_url,'disable':'' }} )}}
-                            <span class="input-group-addon bg-green white">TND</span>
-                        </div>
-                        {{ form_errors(form.totalPrix)}}
 
-#}
                     </div>
                 </div>
             </div>

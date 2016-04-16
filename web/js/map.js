@@ -10,8 +10,8 @@ var directionsDisplay = new google.maps.DirectionsRenderer;
 
 var $Origine;
 var $distination;
-var $container ;
-var $Segments ;
+var $container =$('#waypoints');
+var $Segments= $('#Segments');
 
 if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
@@ -19,8 +19,7 @@ if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
      $Origine = $('#wanasni_trajetbundle_trajetunique_Origine_lieu');
      $distination = $('#wanasni_trajetbundle_trajetunique_Destination_lieu');
-     $container = $('#wanasni_trajetbundle_trajetunique_waypoints');
-     $Segments = $('div#wanasni_trajetbundle_trajetunique_Segments');
+     $arrPrix = $('#wanasni_trajetbundle_trajetunique_arrPrix');
 
 
 } else {
@@ -28,8 +27,7 @@ if ($('#wanasni_trajetbundle_trajetunique_frequence').val() === 'UNIQUE') {
 
     $Origine = $('#wanasni_trajetbundle_trajetregulier_Origine_lieu');
     $distination = $('#wanasni_trajetbundle_trajetregulier_Destination_lieu');
-    $container = $('#wanasni_trajetbundle_trajetregulier_waypoints');
-    $Segments = $('div#wanasni_trajetbundle_trajetregulier_Segments');
+    $arrPrix = $('#wanasni_trajetbundle_trajetregulier_arrPrix');
 }
 
 
@@ -150,6 +148,7 @@ function setPrixOptimal(input,$metre){
     $.getJSON(url, {ajax: "true"}, function (data) {
         prixOpt= data['PrixOptimal'];
         input.val(prixOpt);
+        console.log(prixOpt);
         //prixTotal();
     });
 
@@ -160,53 +159,23 @@ function NewSegment(route, index) {
 
 
     var $prototype = $($Segments.attr('data-prototype')
-        .replace(/__name__label__/g,
-            route.legs[index].start_address.slice(0, 15)
-            + '... <i class="ion ion-ios-arrow-thin-right"></i> '
-            + route.legs[index].end_address.slice(0, 15) + '... <br> <small>'+
-            route.legs[index].distance.text+'<br>'+
-            route.legs[index].duration.text+' </small> <br> '
-
+        .replace(/__name__label__/g,index
         )
         .replace(/__name__/g, index)
     );
 
-    var inputPrix = $prototype.find('input.prix');
-    var inputDistance = $prototype.find('input.distance');
-    var inputDuration = $prototype.find('input.duration');
-    var inputOrder = $prototype.find('input.order');
+    var inputPrix = $prototype.find('input');
+    inputPrix.addClass("text-indent form-control input-sm");
+    var $segment = $('<ul class="segment alert alert-info"></ul>');
+    var $seg_info=$(
+        '<li>'+route.legs[index].start_address +
+            '<i class="ion ion-arrow-right-a"></i>'
+        +route.legs[index].end_address +'</li>'+
+        '<li>'+route.legs[index].distance.text+'</li>' +
+        '<li>'+route.legs[index].duration.text+'</li>'
+        );
 
-
-
-    inputDistance.val(route.legs[index].distance.text);
-    inputDuration.val(getDurationText(route.legs[index].duration.value));
-    inputOrder.val(index);
-
-    var parentPrix = inputPrix.parent();
-    var parentDistance = inputDistance.parent();
-    var parentDuration = inputDuration.parent();
-
-
-    parentPrix.addClass('input-group form-group');
-    parentDistance.addClass('input-group form-group');
-    parentDuration.addClass('input-group form-group');
-
-    var spanPrix     = $('<span class="input-group-addon bg-darkgrey white">Prix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</span>');
-    var spanDistance = $('<span class="input-group-addon bg-darkgrey white">Distance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</span>');
-    var spanDuration = $('<span class="input-group-addon bg-darkgrey white">Durée estimée :</span>');
-
-
-    var spanTND = $('<span class="input-group-addon bg-darkgrey white">TND</span>');
-
-
-    parentDistance.prepend(spanDistance);
-    parentDuration.prepend(spanDuration);
-
-    parentPrix.prepend(spanPrix);
-    parentPrix.append(spanTND);
-
-
-    var $segment = $('<li class="segment alert alert-info"></li>');
+    $segment.append($seg_info);
     $segment.append($prototype);
 
     var $a=$('<a href="Javascript:void(0);" data-metre="'+route.legs[index].distance.value+'" class="label label-success">Prix Optimal</a>');
@@ -227,6 +196,9 @@ function NewSegment(route, index) {
         }
     });
 
+    inputPrix.spinner({
+        min:0
+    });
 
     inputPrix.on("keyup keydown blur",function(){
         prixTotal();
@@ -244,7 +216,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             origin: $Origine.val(),
             destination: $distination.val(),
             waypoints: getStopoversLocation($container),
-            optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING
         }, function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
@@ -261,7 +232,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                 summaryPanel.innerHTML = '';
 
 
-                $('ul.Segments li.segment').each(function () {
+                $('ul.Segments .segment').each(function () {
                     $(this).remove();
                 });
 
@@ -290,7 +261,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 $(document).ready(function(){
 
-    $Segments.children('div').each(function(){
+    $Segments.children().each(function(){
         $(this).remove();
     });
     calculateAndDisplayRoute(directionsService,directionsDisplay);

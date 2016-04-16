@@ -15,7 +15,7 @@ body {
 }
 
 section {
-    padding: 20px 0px;
+    padding: 20px 15px;
 }
 
 .section-padding-top-bottom-80{
@@ -1073,13 +1073,36 @@ footer a, footer a:hover, footer a:focus {
     position: relative;
 }
 
-span.input-icon{
+.input-icon{
     position: absolute;
     top: 12px;
     left: 10px;
     z-index: 1;
     font-size: 25px;
 }
+
+.drag-icon{
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    z-index: 1;
+    font-size: 35px;
+    opacity: 0;
+}
+
+#waypoints li:hover .drag-icon{
+    opacity: .5;
+}
+
+.placeholder-sortable{
+    height: 40px;
+    background-color: #eeeeee;
+}
+
+#waypoints li:hover .marker{
+    opacity: 0;
+}
+
 span.date-icon{
     position: absolute;
     opacity: 0.5;
@@ -1092,15 +1115,10 @@ span.date-icon{
     text-indent: 26px;
 }
 
-#proposer .tab-content  .form-group,
-#edit .tab-content  .form-group
-{
-    margin-left:40px;
-}
+
 
 #proposer h3,
 #edit h3
-
 {
     color: steelblue;
 }
