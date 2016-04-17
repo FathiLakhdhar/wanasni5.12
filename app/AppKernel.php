@@ -16,11 +16,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new FOS\MessageBundle\FOSMessageBundle(),
             new Wanasni\UserBundle\WanasniUserBundle(),
             new Wanasni\TrajetBundle\WanasniTrajetBundle(),
-            new FOS\UserBundle\FOSUserBundle(),
             new Wanasni\VehiculeBundle\WanasniVehiculeBundle(),
             new Wanasni\NotificationBundle\WanasniNotificationBundle(),
+            new Wanasni\MessageBundle\WanasniMessageBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

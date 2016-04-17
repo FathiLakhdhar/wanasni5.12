@@ -2,6 +2,7 @@
 
 namespace Wanasni\UserBundle\Entity;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\UserBundle\Entity\UserRepository")
  */
-class User extends BaseUser
+class User extends BaseUser implements ParticipantInterface
 {
     /**
      * @var integer

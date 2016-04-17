@@ -84,6 +84,13 @@ fos_user:
             type: wanasni_user_edit_profile
 
 
+#FosMessageBundle
+fos_message:
+    db_driver: orm
+    thread_class: Wanasni\MessageBundle\Entity\Thread
+    message_class: Wanasni\MessageBundle\Entity\Message
+
+#Doctrine
 services:
     fos_user.doctrine_registry:
         alias: doctrine

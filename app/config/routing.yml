@@ -1,3 +1,7 @@
+wanasni_message:
+    resource: "@WanasniMessageBundle/Resources/config/routing.yml"
+    prefix:   /
+
 wanasni_notification:
     resource: "@WanasniNotificationBundle/Resources/config/routing.yml"
     prefix:   /
@@ -26,5 +30,8 @@ wanasni_trajet:
 fos_user:
     resource: "@WanasniUserBundle/Resources/config/all.xml"
 
-
+#FosMessageBundle
+fos_message:
+    resource: "@FOSMessageBundle/Resources/config/routing.xml"
+    prefix: /messages
 
