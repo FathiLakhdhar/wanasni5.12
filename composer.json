@@ -21,7 +21,8 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "^1.3",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "friendsofsymfony/message-bundle": "^1.2"
     },
     "scripts": {
         "post-install-cmd": [

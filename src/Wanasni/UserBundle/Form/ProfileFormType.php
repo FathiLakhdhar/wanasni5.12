@@ -24,15 +24,19 @@ class ProfileFormType extends BaseType
             'attr'=>array('class'=>'form-control')
         ))
         ->add('phone','text',array(
-            'attr'=>array('class'=>'form-control','placeholder'=>'XX XXX XXX')
+            'attr'=>array('class'=>'form-control','placeholder'=>'XX XXX XXX'),
+            'required'=>false
         ))
         ->add('date_naissance', 'date', array(
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd',
+            'widget'=>'single_text',
+            'invalid_message'=>'Format invalide',
+            'attr' => array('class'=>'form-control','datepicker' => '', 'placeholder' => 'JJ/MM/AAAA'),
+            'required'=>false
         ))
 
         ->add('minibio','textarea',array(
-            'attr'=>array('class'=>'form-control')
+            'attr'=>array('class'=>'form-control'),
+            'required'=>false
         ))
 
 
