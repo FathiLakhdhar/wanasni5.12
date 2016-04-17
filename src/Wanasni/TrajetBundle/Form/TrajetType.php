@@ -78,10 +78,14 @@ class TrajetType extends AbstractType
                 'input' => 'datetime',
                 'widget' => 'choice',
             ))
-            ->add('regular_begin_date', 'text', array(
+            ->add('regular_begin_date', 'date', array(
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide',
                 'attr' => array('datepicker' => '', 'placeholder' => 'JJ/MM/AAAA'),
             ))
-            ->add('regular_end_date', 'text', array(
+            ->add('regular_end_date', 'date', array(
+                'widget'=>'single_text',
+                'invalid_message'=>'Format invalide',
                 'attr' => array('datepicker' => '', 'placeholder' => 'JJ/MM/AAAA')
             ))
 
@@ -148,7 +152,6 @@ class TrajetType extends AbstractType
             ))
             ->add('nbPlaces', 'number', array(
                 'attr' => array('class' => 'form-control text-indent car-place-spinner'),
-                'data'=>1,
                 'read_only'=>true,
             ))
 

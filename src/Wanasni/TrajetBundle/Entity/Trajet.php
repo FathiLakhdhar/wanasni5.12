@@ -17,7 +17,7 @@ use Wanasni\VehiculeBundle\Entity\Vehicule;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\TrajetRepository")
  * @ORM\HasLifecycleCallbacks
- * @Assert\Callback(methods={"UniqueValid","vehiculeValid"})
+ * @Assert\Callback(methods={"UniqueValid", "RegularValid", "vehiculeValid"})
  */
 class Trajet
 {
@@ -255,8 +255,8 @@ class Trajet
         $this->arrPrix=array();
         $this->Date_Allet_unique = date_create();
         $this->Date_Retour_unique = date_create();
-        $this->regularBeginDate = date('d/m/y');
-        $this->regularEndDate = date('d/m/y');
+        $this->regularBeginDate = date_create();
+        $this->regularEndDate = date_create();
 
     }
 
@@ -763,6 +763,7 @@ class Trajet
      */
     public function removeDatesAller(\Wanasni\TrajetBundle\Entity\WayDate $datesAller)
     {
+        $datesAller->setTarjetAller(null);
         $this->datesAller->removeElement($datesAller);
     }
 
@@ -797,6 +798,7 @@ class Trajet
      */
     public function removeDatesRetour(\Wanasni\TrajetBundle\Entity\WayDate $datesRetour)
     {
+        $datesRetour->setTarjetRetour(null);
         $this->datesRetour->removeElement($datesRetour);
     }
 
@@ -898,29 +900,6 @@ class Trajet
 
         return $arr_Collection;
 
-    }
-
-
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload(){
-        $p=0;
-        foreach($this->arrPrix as $prix){
-            $p+=$prix;
-        }
-        $this->setTotalPrix($p);
-        $this->setProposerAt(new \DateTime());
-    }
-
-
-    /**
-     * @ORM\PostLoad()
-     */
-    public function PostLoad()
-    {
     }
 
 
@@ -1042,6 +1021,31 @@ class Trajet
         }
     }
 
+    public function RegularValid(ExecutionContextInterface $context)
+    {
+        if($this->frequence=='REGULAR'){
+
+            $new= date_create();
+            if ($this->heureAller->format('H:i') < $new->format('H:i')) {
+                $context->addViolationAt('heureAller', 'invalid heure aller !!');
+            }
+
+            if ($this->roundTrip) {
+
+                if (intval($this->heureRetour->format('Hi')) <= intval($this->heureAller->format('Hi'))) {
+                    $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller)');
+                }
+
+                if (intval(date_diff($this->heureAller, $this->heureRetour)->format('%H%I')) < intval(date_create($this->getTotalDuration())->format('Hi'))) {
+                    $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller + durée estime)');
+                }
+            }
+
+
+
+        }
+    }
+
 
     public function vehiculeValid(ExecutionContextInterface $context)
     {
@@ -1148,4 +1152,29 @@ class Trajet
     {
         return $this->Destination;
     }
+
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload(){
+        $p=0;
+        foreach($this->arrPrix as $prix){
+            $p+=$prix;
+        }
+        $this->setTotalPrix($p);
+        $this->setProposerAt(new \DateTime());
+    }
+
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function PostLoad()
+    {
+    }
+
+
+
 }

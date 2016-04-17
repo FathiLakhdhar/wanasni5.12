@@ -185,8 +185,6 @@
                         <div id="directions-panel">
                             <ul class="list-group">
 
-
-
                                 {% for segment in trajet.segments %}
                                     <li class="list-group-item list-group-item-info">
                                         {{ segment.start }} <i
@@ -284,17 +282,16 @@
             $Arraywaypts = $map.data('waypoints').split('|');
             $.each($Arraywaypts, function (i, val) {
                 //console.log(val);
-                waypts.push({
-                    location: val,
-                    stopover: true
-                });
-            });
+                if(val){
+                    waypts.push({location: val});
+                }
+
+        });
 
             directionsService.route({
                 origin: $map.data('origine'),
                 destination: $map.data('destination'),
-                //waypoints: waypts,
-                optimizeWaypoints: true,
+                waypoints: waypts,
                 travelMode: google.maps.TravelMode.DRIVING
             }, function (response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {

@@ -179,46 +179,75 @@ class TrajetController extends Controller
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
         }
+
+        if($trajet->getConducteur() != $this->getUser()){
+            throw new AccessDeniedException();
+        }
+
         $em=$this->getDoctrine()->getManager();
+        $origine_points =$trajet->getWaypoints();
 
         if($trajet->getFrequence()=="UNIQUE"){
             $form=$this->createForm(new TrajetUniqueType($this->getUser()), $trajet);
-
-            $origine_points =$trajet->getWaypoints();
-            $origine_array_prix =$trajet->getArrPrix();
-
             if($request->getMethod()=='POST'){
                 $trajet->setArrPrix(array());
                 $form->handleRequest($request);
                 if($form->isSubmitted() && $form->isValid()){
-
                     foreach($origine_points as $waypoint){
                         if(false === $trajet->getWaypoints()->contains($waypoint)){
                             $waypoint->setWay(null);
                             $em->remove($waypoint);
                         }
                     }
-                    //$trajet->setArrPrix( array_slice($trajet->getArrPrix(),0,$origine_points->count()) );
-
-                    //$em->remove($trajet);
                     $em->persist($trajet);
                     $em->flush();
+                    return $this->redirect($this->generateUrl('trajet_show',array(
+                        'id'=>$trajet->getId()
+                    )));
+                }
+            }
+            return $this->render(':Trajet/Gerer:modifier_trajet_unique.html.twig',array(
+                'form'=>$form->createView(),
+                'id'=>$trajet->getId()
+            ));
+
+        }else{//regulier
+            $form=$this->createForm(new TrajetRegulierType($this->getUser()), $trajet);
+
+            $origine_datesA=$trajet->getDatesAller();
+            $origine_datesR=$trajet->getDatesRetour();
 
 
+            if($request->getMethod()=='POST'){
+                $trajet->setArrPrix(array());
+                $form->handleRequest($request);
+                if($form->isSubmitted() && $form->isValid()){
+                    foreach($origine_points as $waypoint){
+                        if(false === $trajet->getWaypoints()->contains($waypoint)){
+                            $waypoint->setWay(null);
+                            $em->remove($waypoint);
+                        }
+                    }
+                    foreach($origine_datesA as $dateway){
+                        if(false === $trajet->getDatesAller()->contains($dateway)){
+                            $dateway->setTarjetAller(null);
+                            $em->remove($dateway);
+                        }
+                    }
+                    foreach($origine_datesR as $dateway){
+                        if(false === $trajet->getDatesRetour()->contains($dateway)){
+                            $dateway->setTarjetRetour(null);
+                            $em->remove($dateway);
+                        }
+                    }
+                    $em->persist($trajet);
+                    $em->flush();
                     return $this->redirect($this->generateUrl('trajet_show',array(
                         'id'=>$trajet->getId()
                     )));
                 }
             }
 
-
-
-            return $this->render(':Trajet/Gerer:modifier_trajet_unique.html.twig',array(
-                'form'=>$form->createView(),
-                'id'=>$trajet->getId()
-            ));
-        }else{
-            $form=$this->createForm(new TrajetRegulierType($this->getUser()), $trajet);
             return $this->render(':Trajet/Gerer:modifier_trajet_regulier.html.twig', array(
                 'form'=>$form->createView(),
                 'id'=>$trajet->getId()

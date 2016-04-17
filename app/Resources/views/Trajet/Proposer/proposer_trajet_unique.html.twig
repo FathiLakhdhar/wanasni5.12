@@ -161,29 +161,6 @@
                             {{ form_errors(form.informationsComplementaires)}}
                         </section><!-- End Informations complémentaires -->
 
-
-                        <section class="alert alert-warning">
-                            <div class="row">
-                                <div class="col-xs-1">
-                                    {{ form_widget(form.cgu) }}
-                                </div>
-                                <div class="col-xs-11">
-                                    {{ form_label(form.cgu) }}
-                                </div>
-                            </div>
-                        </section>
-
-
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-8">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-bg btn-block">Publier votre
-                                        trajet
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -191,28 +168,56 @@
 
             <!-- Map -->
             <div class="col-lg-4">
-                <div class="thumbnail">
-                    <h3>Votre itinéraire</h3>
-                    <div id="map"></div>
-                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <h3>Votre itinéraire</h3>
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <div id="directions-panel"></div>
+                            {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
+                            <ul id="Segments" class="Segments list-unstyled"
+                                data-prototype="<li>Prix : {{ form_widget(form.arrPrix.vars.prototype)|e }}</li>"
+                                data-prix-optimal-url="{{ prix_optimal_url }}">
+                                {% for prix in form.arrPrix %}
+                                    <li>{{ form_widget(prix) }}</li>
+                                {% endfor %}
 
-                <div class="thumbnail">
-                    <div id="directions-panel"></div>
-                    {% set prix_optimal_url = path('prix_optimal', {'metre':'__METRE__'}) %}
-                    <ul id="Segments" class="Segments list-unstyled" data-prototype="<li>Prix : {{ form_widget(form.arrPrix.vars.prototype)|e }}</li>"
-                        data-prix-optimal-url="{{ prix_optimal_url }}">
-                        {% for prix in form.arrPrix %}
-                            <li>{{ form_widget(prix) }}</li>
-                        {% endfor %}
-
-                        {{ form_errors(form.arrPrix)}}
-                    </ul>
-                    <div id="panel">
-                        {{ form_widget(form.totalDistance) }}
-                        {{ form_errors(form.totalDistance)}}
-                        {{ form_widget(form.totalDuration) }}
-                        {{ form_errors(form.totalDuration)}}
-
+                                {{ form_errors(form.arrPrix) }}
+                            </ul>
+                            <div id="panel">
+                                {{ form_widget(form.totalDistance) }}
+                                {{ form_errors(form.totalDistance) }}
+                                {{ form_widget(form.totalDuration) }}
+                                {{ form_errors(form.totalDuration) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <section class="alert alert-warning">
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        {{ form_widget(form.cgu) }}
+                                    </div>
+                                    <div class="col-xs-11">
+                                        {{ form_label(form.cgu) }}
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-bg btn-block">Proposer votre
+                                            trajet
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

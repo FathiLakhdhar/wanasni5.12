@@ -19,7 +19,9 @@ class WayDateType extends AbstractType
                 //'input'=>'datetime',
                 'format'=>'yyyyMMdd',
                 'widget'=>'single_text',
-                'invalid_message'=>'Format invalide'
+                'invalid_message'=>'Format invalide',
+                'label'=>false,
+                'attr'=>array('style'=>'display:none;')
             ))
         ;
     }

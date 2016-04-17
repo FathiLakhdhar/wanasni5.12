@@ -16,8 +16,8 @@ class AlertType extends AbstractType
     {
         $builder
 
-            ->add('origine','text')
-            ->add('destination','text')
+            ->add('origine','hidden')
+            ->add('destination','hidden')
 
             ->add('email','email',array(
                 'attr'=>array('class'=>'form-control','placeholder'=>'Email'),
