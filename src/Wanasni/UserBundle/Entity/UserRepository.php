@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function getUsersByUsername($username){
+
+        $qb=$this->createQueryBuilder('u');
+        $qb->where('u.username LIKE :login')
+            ->setParameter('login', '%'.$username.'%');
+
+        return $qb->getQuery()->getResult();
+    }
 }

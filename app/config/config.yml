@@ -89,7 +89,11 @@ fos_message:
     db_driver: orm
     thread_class: Wanasni\MessageBundle\Entity\Thread
     message_class: Wanasni\MessageBundle\Entity\Message
-
+    new_thread_form:
+        type:               fos_message.new_thread_multiple_form.type
+        handler:            fos_message.new_thread_multiple_form.handler
+        model:              FOS\MessageBundle\FormModel\NewThreadMultipleMessage
+        name:               message
 #Doctrine
 services:
     fos_user.doctrine_registry:

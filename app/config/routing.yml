@@ -1,10 +1,6 @@
-wanasni_message:
-    resource: "@WanasniMessageBundle/Resources/config/routing.yml"
-    prefix:   /
-
-wanasni_notification:
-    resource: "@WanasniNotificationBundle/Resources/config/routing.yml"
-    prefix:   /
+wanasni_api:
+    resource: "@WanasniApiBundle/Controller"
+    type:     annotation
 
 wanasni_vehicule:
     resource: "@WanasniVehiculeBundle/Controller"

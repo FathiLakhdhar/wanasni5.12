@@ -5,37 +5,37 @@
 
     <ul id="nav-pills-h-profil-e" class="nav nav-pills nav-justified">
         <li class="triangle-down">
-            <a data-toggle="pill" href="#Covoiturages">
+            <a href="{{ path('mes-trajets') }}">
                 <i class="fa fa-car"></i>
                 <p>Covoiturages</p>
             </a>
         </li>
         <li class="triangle-down">
-            <a data-toggle="pill" href="#Avis">
+            <a  href="#Avis">
                 <i class="fa fa-star"></i>
                 <p>Avis</p>
             </a>
         </li>
         <li class="triangle-down">
-            <a data-toggle="pill" href="#Alerts">
+            <a  href="{{ path('mes-alertes') }}">
                 <i class="fa fa-bullhorn"></i>
                 <p>Alerts</p>
             </a>
         </li>
         <li class="triangle-down">
-            <a data-toggle="pill" href="#Messages">
+            <a  href="{{ path('fos_message_inbox') }}">
                 <i class="fa fa-envelope-o"></i>
                 <p>Messages</p>
             </a>
         </li>
         <li class="triangle-down">
-            <a data-toggle="pill" href="#Notifications">
+            <a  href="#Notifications">
                 <i class="fa fa-bell-o"></i>
                 <p>Notifications</p>
             </a>
         </li>
         <li class="triangle-down active">
-            <a data-toggle="pill" href="#Profil">
+            <a  href="{{ path('fos_user_profile_edit') }}">
                 <i class="flaticon-man flat-2x"></i>
                 <p>Profil</p>
             </a>
@@ -65,137 +65,7 @@
             </div>
         </div>
         <!-- end Tab pane Alerts -->
-        <!-- Tab pane Messages -->
-        <div id="Messages" class="tab-pane fade">
-            <div class="page-header">
-                <h2 class="violet-red">Messages</h2>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="messages thumbnail">
-                        <div class="heading-messages">
-                            <h2>Tous les messages</h2>
-                            <div class="pos-relative">
-                                <span class="glyphicon glyphicon-search input-icon"></span>
-                                <input type="text" class="form-control text-indent">
-                            </div>
-                        </div>
-
-                        <ul class="body-messages">
-
-
-                            <li class="message"><!-- start message -->
-                                <a href="#" class="bg-info">
-                                    <div class="pull-left">
-                                        <img src="{{ asset('img/user.jpg') }}" class="img-circle message-user-img"
-                                             alt="User Image">
-                                    </div>
-                                    <h4>
-                                        Sender Name
-                                    </h4>
-                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                    <p>bla bla bla :p hhhh</p>
-                                </a>
-                            </li><!--  end message -->
-
-
-                            <li class="message"><!-- start message -->
-                                <a href="#" class="">
-                                    <div class="pull-left">
-                                        <img src="{{ asset('img/user.jpg') }}" class="img-circle message-user-img"
-                                             alt="User Image">
-                                    </div>
-                                    <h4>
-                                        Sender Name
-                                    </h4>
-                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                    <p>bla bla bla :p hhhh</p>
-                                </a>
-                            </li><!--  end message -->
-
-
-                        </ul>
-
-
-                    </div>
-                </div>
-
-
-                <div class="col-md-6">
-                    <div class="content-message">
-
-                        <div class="box box-success direct-chat direct-chat-success">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Sarah Bullock</h3>
-                                <div class="box-tools pull-right">
-                                        <span data-toggle="tooltip" title="3 New Messages"
-                                              class="badge bg-green">3</span>
-                                    <button class="btn btn-box-tool" data-widget="collapse"><i
-                                                class="fa fa-minus"></i></button>
-                                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
-                                            data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
-                                    <button class="btn btn-box-tool" data-widget="remove"><i
-                                                class="fa fa-times"></i></button>
-                                </div>
-                            </div><!-- /.box-header -->
-                            <div class="box-body">
-                                <!-- Conversations are loaded here -->
-                                <div class="direct-chat-messages">
-
-
-                                    <!-- Message. Default to the left -->
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                                            <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                                        </div><!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
-                                             alt="message user image"><!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            Is this template really for free? That's unbelievable!
-                                        </div><!-- /.direct-chat-text -->
-                                    </div><!-- /.direct-chat-msg -->
-
-                                    <!-- Message to the right -->
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                                        </div><!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
-                                             alt="message user image"><!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            You better believe it!
-                                        </div><!-- /.direct-chat-text -->
-                                    </div><!-- /.direct-chat-msg -->
-                                </div><!--/.direct-chat-messages-->
-
-                            </div><!-- /.box-body -->
-
-
-                            <div class="box-footer">
-                                <form action="#" method="post">
-                                    <div class="">
-                                        <textarea class="form-control" placeholder="Votre réponse..."></textarea>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-flat">Send</button>
-                      </span>
-                                    </div>
-                                </form>
-                            </div><!-- /.box-footer-->
-
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-
-
-        </div>
-        <!-- end Tab pane Messages -->
         <!-- Tab pane Notifications -->
         <div id="Notifications" class="tab-pane fade">
             <div class="page-header">

@@ -1,24 +1,24 @@
 {% extends '::base.html.twig' %}
-
+{% trans_default_domain 'FOSUserBundle' %}
 {% block title %}
 {% endblock title %}
 
 {% block body %}
 
 
-<section class="container section-padding-top-bottom-80">
+<div class="container" style="margin-top: 20px">
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}
             <div class="alert alert-{{ type }}">
                 {% for message in messages %}
 
-                        {{ message }}
+                        {{ message|trans }}
 
                 {% endfor %}
             </div>
             {% endfor %}
         {% endif %}
-</section>
+</div>
 
     <div class="container">
         {% block fos_user_content %}

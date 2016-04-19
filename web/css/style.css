@@ -67,7 +67,17 @@ a,a:hover,a:active,a:focus{
     background: #78AB4E;
 }
 
+.loader{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
 
+}
 /*================================
   HEADER STYLES
 ==================================*/
@@ -1238,6 +1248,41 @@ span.date-icon{
     background-size: cover;
     color: #FFFFFF;
 }
+
+
+/****** jQuery Autocomplete CSS *************/
+.ui-corner-all {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+.ui-menu {
+    border: 1px solid lightgray;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+.ui-menu .ui-menu-item a {
+    color: #888;
+}
+.ui-menu .ui-menu-item:hover {
+    display: block;
+    text-decoration: none;
+    color: #3D3D3D;
+    cursor: pointer;
+    background-color: lightgray;
+    background-image: none;
+    border: 1px solid lightgray;
+}
+.ui-widget-content .ui-state-hover, .ui-widget-content .ui-state-focus {
+    border: 1px solid lightgray;
+    background-image: none;
+    background-color: lightgray;
+    font-weight: normal;
+    color: #3D3D3D;
+}
+
+
+
 /*****************************
     Checkbox css
 **********************************/
@@ -1402,9 +1447,12 @@ Messages style
 .heading-messages{
     padding: 10px;
 }
-
-.message>a{
+li.message{
     position: relative;
+    display: block;
+}
+
+.message a.thread{
     margin: 0;
     padding: 10px;
     display: block;
@@ -1412,7 +1460,7 @@ Messages style
     border-bottom: 1px solid #cccccc;
 }
 
-.message>a:hover{
+.message a.thread:hover{
     background-color: #eeeeee;
 }
 
@@ -1422,12 +1470,18 @@ Messages style
 .message p {
     margin: 0 0 0 45px;
     font-size: 14px;
-    color: #000000;
+    color: #777;
 }
 
 .message small {
     position: absolute;
     top: 60px;
+    right: 6px;
+    color: darkgray;
+}
+.message .link-remove {
+    position: absolute;
+    top: 30px;
     right: 6px;
 }
 

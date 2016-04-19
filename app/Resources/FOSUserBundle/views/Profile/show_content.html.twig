@@ -8,12 +8,11 @@
             <div class="box box-primary">
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="{{ asset('img/user.jpg') }}" alt="{{ user.username }}">
-                    <h3 class="profile-username text-center">{{ user.firstname ~' '~user.lastname }}</h3>
+                    <h3 class="profile-username text-center">{{ app.user.firstname ~' '~app.user.lastname }}</h3>
                     <p class="text-muted text-center"></p>
-
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Messages</b> <a class="pull-right">1,322</a>
+                            <b>Messages</b> <a class="pull-right">1</a>
                         </li>
                         <li class="list-group-item">
                             <b>Notification</b> <a class="pull-right">543</a>
@@ -40,20 +39,20 @@
 
                     <strong><i class="fa fa-phone margin-r-5"></i> Telephone</strong>
                     <p>
-                        <span class="label label-danger">{{ user.phone }}</span>
+                        <span class="label label-danger">{{ app.user.phone }}</span>
                     </p>
 
                     <hr>
 
                     <strong><i class="fa fa-birthday-cake margin-r-5"></i> Date de naissance</strong>
                     <p>
-                        <span class="label label-danger">{{ user.date_naissance|date("m/d/Y", "Europe/Paris") }}</span>
+                        <span class="label label-danger"></span>
                     </p>
 
                     <hr>
 
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Minibio</strong>
+                    <p>{{ app.user.minibio }}</p>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>

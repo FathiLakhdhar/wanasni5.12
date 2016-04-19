@@ -16,6 +16,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Wanasni\TrajetBundle\Entity\Search;
 class TrajetController extends Controller
 {
+
+    /**
+     * @Route("/covoiturages-mes-trajets", name="mes-trajets" )
+     */
+    public function MesTrajetsAction(){
+        return $this->render(':Trajet/Gerer:voir_mes_trajets.html.twig');
+    }
+
+    /**
+     * @Route("/covoiturages-trajets-reserve", name="mes-reservations" )
+     */
+    public function MesReservationAction(){
+        return $this->render(':Trajet/Gerer:voir_mes_trajets.html.twig');
+    }
+    /**
+     * @Route("/mes-alertes", name="mes-alertes")
+     */
+    public function MesAlertesAction(){
+        return $this->render(':Trajet/Gerer:voir_mes_alertes.html.twig');
+    }
+
+
     /**
      * @Route("/proposer-trajet", name="trajet_proposer_unique" )
      */
