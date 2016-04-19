@@ -1575,8 +1575,7 @@ li.message{
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
     padding: 10px;
-    height: 250px;
-    overflow: auto;
+    height: 100%;
 }
 
 .direct-chat-success .right > .direct-chat-text {
@@ -1616,23 +1615,15 @@ li.message{
     border: 1px solid #d2d6de;
     margin: 5px 0 0 50px;
     color: #444;
+    white-space:normal;
+    overflow-wrap: break-word;
 }
 .direct-chat-text:before {
     border-width: 6px;
     margin-top: -6px;
 }
 
-.direct-chat-text:after, .direct-chat-text:before {
-    position: absolute;
-    right: 100%;
-    top: 15px;
-    border: solid transparent;
-    border-right-color: #d2d6de;
-    content: ' ';
-    height: 0;
-    width: 0;
-    pointer-events: none;
-}
+
 
 .direct-chat-text:after {
     border-width: 5px;
@@ -1643,7 +1634,7 @@ li.message{
     position: absolute;
     right: 100%;
     top: 15px;
-    border: solid transparent;
+    border: 10px solid transparent;
     border-right-color: #d2d6de;
     content: ' ';
     height: 0;
