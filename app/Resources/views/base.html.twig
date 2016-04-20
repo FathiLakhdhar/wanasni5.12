@@ -152,12 +152,11 @@
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
     <script src="{{ asset('js/autoCompleteContacts.js') }}"></script>
+    <script src="{{ asset('js/message.js') }}"></script>
 
     <script language="JavaScript">
 
         $(function () {
-
-
             $('input[class=iCheck]').iCheck({
                 checkboxClass: 'icheckbox_flat-green',
                 radioClass: 'iradio_flat-green',
@@ -172,9 +171,6 @@
             $("#menu-xs").click(function(){
                 $("#control-sidebar").toggleClass('control-sidebar-open');
             });
-
-
-
             var $options_Date=
             {
                 dateFormat: "yy-mm-dd",
@@ -197,8 +193,6 @@
                 min:1,
                 max:9
             });
-
-
 
         });
     </script>

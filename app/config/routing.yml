@@ -6,6 +6,11 @@ wanasni_vehicule:
     resource: "@WanasniVehiculeBundle/Controller"
     type:     annotation
 
+wanasni_message:
+    resource: "@WanasniMessageBundle/Controller"
+    type:     annotation
+    prefix: /messages
+
 homepage:
     path: /
     defaults:

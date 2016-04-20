@@ -1,31 +1,20 @@
 <ul class="list-unstyled list-inline">
     <!-- Messages:-->
     <li class="dropdown menu-message">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" id="envelope_click">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-info">{{ fos_message_nb_unread() }}</span>
+            <span class="label label-info" id="nb_msg_unread">{{ fos_message_nb_unread() }}</span>
         </a>
 
         {# Menu Message #}
-        <ul class="dropdown-menu triangle-up">
+        <ul class="dropdown-menu triangle-up" >
             <li class="header">You have {{ fos_message_nb_unread() }} messages</li>
             <li>
                 {#-- inner menu: contains the actual data --#}
 
-                <ul class="menu">
-                        <li><!-- start message -->
-                            <a href="#">
-                                <div class="pull-left">
-                                    <img src="{{ asset('img/user.jpg') }}" class="img-circle"
-                                         alt="User Image">
-                                </div>
-                                <h4>
-                                    Sender Name
-                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                </h4>
-                                <p>bla bla bla :p hhhh</p>
-                            </a>
-                        </li> <!-- end message -->
+                <ul class="menu" id="menu_messages" data-url-msg="{{ path('api_threads_user') }}">
+
+
 
                         {# 2eme Message #}
 
