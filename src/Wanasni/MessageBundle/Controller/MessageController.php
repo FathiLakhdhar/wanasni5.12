@@ -112,4 +112,21 @@ class MessageController extends BaseControler
     }
 
 
+    /**
+     * @return JsonResponse
+     * @Route(path="/api/messages/nb-unread", name="api_nb_unread_messages")
+     */
+    public function ApiGetThreadUnread(){
+
+        $provider = $this->container->get('fos_message.provider');
+        $NbUnreadMessages = $provider->getNbUnreadMessages();
+        return new JsonResponse(
+            array(
+                'NbUnreadMessages'=>$NbUnreadMessages
+            ),200
+        );
+    }
+
+
+
 }

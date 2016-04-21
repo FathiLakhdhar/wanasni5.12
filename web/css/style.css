@@ -1318,6 +1318,10 @@ span.date-icon{
 }
 
 
+.ui-autocomplete-loading {
+    background: white url("../img/Preloader.gif") right center no-repeat;
+}
+
 
 /*****************************
     Checkbox css

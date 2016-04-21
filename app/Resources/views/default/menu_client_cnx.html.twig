@@ -3,12 +3,22 @@
     <li class="dropdown menu-message">
         <a class="dropdown-toggle" data-toggle="dropdown" id="envelope_click">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-info" id="nb_msg_unread">{{ fos_message_nb_unread() }}</span>
+            <span class="label label-info nb_msg_unread" id="nb_msg_unread" data-nb-unread="{{ fos_message_nb_unread() }}">{{ fos_message_nb_unread() }}</span>
         </a>
+
+        <audio id="chatAudio">
+            <source src="{{ asset('sound/notification.mp3') }}" type="audio/mp3">
+        </audio>
 
         {# Menu Message #}
         <ul class="dropdown-menu triangle-up" >
-            <li class="header">You have {{ fos_message_nb_unread() }} messages</li>
+            <li class="header message_nb_unread" data-messages-nb-unread="{{ path('api_nb_unread_messages') }}">You have <span class="nb_msg_unread">{{ fos_message_nb_unread() }}</span> messages</li>
+            <li>
+                <!-- Ajax Load img.Gif -->
+                <div id="msg_load" class="text-center" style="display: none; position: relative">
+                    <img id="img-loader" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                </div>
+            </li>
             <li>
                 {#-- inner menu: contains the actual data --#}
 
@@ -16,9 +26,8 @@
 
 
 
-                        {# 2eme Message #}
-
-                        <li><!-- start message -->
+                    {#
+                    <li><!-- start message -->
                             <a href="#">
                                 <div class="pull-left">
                                     <img src="{{ asset('img/user.jpg') }}" class="img-circle"
@@ -32,8 +41,7 @@
                             </a>
                         </li> <!-- end message -->
 
-
-                        {# ======================== #}
+                    #}
 
                 </ul>
             </li>
