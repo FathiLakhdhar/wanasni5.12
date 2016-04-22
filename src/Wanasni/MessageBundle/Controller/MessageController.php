@@ -2,6 +2,7 @@
 
 namespace Wanasni\MessageBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\MessageBundle\Controller\MessageController as BaseControler;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +20,7 @@ class MessageController extends BaseControler
      * @param $threadId
      * @param Request $request
      * @return JsonResponse
-     * @Route(path="/api/{threadId}", name="api_thread_msg")
+     * @Route(path="/api/thread-reply/{threadId}", name="api_thread_msg")
      */
     public function ApithreadAction($threadId, Request $request)
     {
@@ -63,13 +64,13 @@ class MessageController extends BaseControler
                         'code' => 200,
                         'message' => 'success send message'
                     ),
-                    'message'=>array(
-                        'id'=>$message->getId(),
-                        'body'=>$message->getBody(),
-                        'createAt'=>$message->getCreatedAt()->format("F jS \\a\\t g:ia")
+                    'message' => array(
+                        'id' => $message->getId(),
+                        'body' => $message->getBody(),
+                        'createAt' => $message->getCreatedAt()->format("F jS \\a\\t g:ia")
                     )
                 ), 200);
-        }else{
+        } else {
             return new JsonResponse(array(
                 'error' => array(
                     'code' => 404,
@@ -87,23 +88,23 @@ class MessageController extends BaseControler
      * @return JsonResponse
      * @Route(path="/api/user/threads", name="api_threads_user")
      */
-    public function ApiGetthreadAction()
+    public function ApiGetthreadsAction()
     {
         $provider = $this->container->get('fos_message.provider');
         $threads = $provider->getInboxThreads();
 
-        $arr=array();
-        foreach($threads as $thread){
-            $arr[]= array(
-                'id'=>$thread->getId(),
-                'link'=>$this->container->get('router')->generate('fos_message_thread_view',array('threadId'=>$thread->getId())),
-                'message'=>array(
-                    'id'=>$thread->getLastMessage()->getId(),
-                    'body'=>$thread->getLastMessage()->getBody(),
-                    'createAt'=>$thread->getLastMessage()->getCreatedAt()->format("F jS \\a\\t g:ia"),
-                    'isRead'=>$thread->getLastMessage()->isReadByParticipant( $this->container->get('security.context')->getToken()->getUser() ),
-                    'sender'=>$thread->getLastMessage()->getSender()->getUsername(),
-                    'icon'=>'http://angola24horas.com/dist/img/avatar5.png'
+        $arr = array();
+        foreach ($threads as $thread) {
+            $arr[] = array(
+                'id' => $thread->getId(),
+                'link' => $this->container->get('router')->generate('fos_message_thread_view', array('threadId' => $thread->getId())),
+                'message' => array(
+                    'id' => $thread->getLastMessage()->getId(),
+                    'body' => $thread->getLastMessage()->getBody(),
+                    'createAt' => $thread->getLastMessage()->getCreatedAt()->format("F jS \\a\\t g:ia"),
+                    'isRead' => $thread->getLastMessage()->isReadByParticipant($this->container->get('security.context')->getToken()->getUser()),
+                    'sender' => $thread->getLastMessage()->getSender()->getUsername(),
+                    'icon' => 'http://angola24horas.com/dist/img/avatar5.png'
                 )
             );
         }
@@ -116,17 +117,65 @@ class MessageController extends BaseControler
      * @return JsonResponse
      * @Route(path="/api/messages/nb-unread", name="api_nb_unread_messages")
      */
-    public function ApiGetThreadUnread(){
+    public function ApiGetThreadUnreadAction()
+    {
 
         $provider = $this->container->get('fos_message.provider');
         $NbUnreadMessages = $provider->getNbUnreadMessages();
         return new JsonResponse(
             array(
-                'NbUnreadMessages'=>$NbUnreadMessages
-            ),200
+                'NbUnreadMessages' => $NbUnreadMessages
+            ), 200
         );
     }
 
+    /**
+     * @param $threadId
+     * @param Request $request
+     * @return JsonResponse
+     * @Route(path="/api/messages-unread/{threadId}", name="api_thread_messages_unread")
+     */
+    public function ApiGetMessagesThreadUnreadAction($threadId, Request $request)
+    {
+        $thread = $this->getProvider()->getThread($threadId);
+        if (!$thread) {
+            return new JsonResponse(
+                array(
+                    'error' => array(
+                        'code' => 404,
+                        'message' => 'thread not found'
+                    )
+                ),404);
+        }
+
+        $messages=$thread->getMessages();
+        $participant= $this->container->get('security.context')->getToken()->getUser();
+        $messagesUnreadByParticipant= array();
+        foreach($messages as $msg){
+            if(!$msg->isReadByParticipant($participant) && $msg->getSender()!=$participant){
+                $messagesUnreadByParticipant[]=
+                     array(
+                    'id' => $msg->getId(),
+                    'body' => $msg->getBody(),
+                    'createAt' => $msg->getCreatedAt()->format("F jS \\a\\t g:ia"),
+                    'isRead' => false,
+                    'sender' => $msg->getSender()->getUsername(),
+                    'icon' => 'http://angola24horas.com/dist/img/avatar5.png'
+                );
+            }
+        }
+
+        return new JsonResponse(
+            array(
+                'error' => array(
+                    'code' => 200,
+                    'message' => 'messages unread'
+                ),
+                'messages'=>$messagesUnreadByParticipant
+            )
+            ,200
+        );
+    }
 
 
 }

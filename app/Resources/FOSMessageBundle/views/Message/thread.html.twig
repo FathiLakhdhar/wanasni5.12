@@ -23,11 +23,11 @@
                 </div>
 
             </div><!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" data-url-thread_messages_unread="{{ path('api_thread_messages_unread',{'threadId': thread.id}) }}">
                 <!-- Conversations are loaded here -->
                 <div class="direct-chat-messages" id="direct-chat-messages">
                     {% for message in thread.messages %}
-                        <div class="messenger_thread_message" id="_add">
+                        <div class="messenger_thread_message">
                             {% if message.sender == app.user %}
                                 <!-- Message to the right -->
                                 <div class="direct-chat-msg right">

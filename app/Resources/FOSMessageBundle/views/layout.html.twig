@@ -86,7 +86,7 @@
 
         (function ( $ ) {
 
-            $.fn.addMsgHtml = function($message){
+            $.fn.addMsgrightHtml = function($message){
 
                 $newmsg = $('<div class="direct-chat-msg right">' +
                         '<div class="direct-chat-info clearfix">' +
@@ -104,16 +104,40 @@
 
             };
 
+            $.fn.addMsgleftHtml = function($messages){
+
+                var $elem=this;
+
+                $.each( $messages, function( key, message ) {
+                    console.log(message);
+                    $('#chatAudio')[0].play();
+                    $newmsg = $('<div class="direct-chat-msg">' +
+                            '<div class="direct-chat-info clearfix">' +
+                            '<span class="direct-chat-name pull-left">'+message.sender+'</span>' +
+                            '<span class="direct-chat-timestamp pull-right">'+message.createAt+'</span>' +
+                            '</div>' +
+                            '<img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"alt="'+message.sender+'">' +
+                            '<div class="direct-chat-text" id="message_'+message.id+'">' +
+                            '<p>' +message.body+'</p>'+
+                            '</div>' +
+                            '</div>' +
+                            '');
+
+                    $elem.append($newmsg);
+                    $('.box-body').animate({"scrollTop": $('.box-body')[0].scrollHeight}, "slow");
+                });
+
+
+
+            };
+
         }( jQuery ));
 
 
 
         function initAjaxForm() {
             $('body').on('submit', '.ajaxForm', function (e) {
-
                         e.preventDefault();
-
-
                         $.ajax({
                                     type: $(this).attr('method'),
                                     url: $(this).attr('action'),
@@ -121,22 +145,33 @@
                                 })
                                 .done(function (data) {
                                     console.log("data:", data.message);
-                                    $('#direct-chat-messages').addMsgHtml(data.message);
+                                    $('#direct-chat-messages').addMsgrightHtml(data.message);
                                     $('.box-body').animate({"scrollTop": $('.box-body')[0].scrollHeight}, "slow");
                                 })
                                 .fail(function (jqXHR, textStatus, errorThrown) {
                                     console.log('ggg :' + jqXHR.responseJSON.error.message);
                                     $('.error-form').html(jqXHR.responseJSON.error.message);
                                 });
-
-
                         $('#message_body').val("");
                     }
             );
 
 
         }
+
+        function initchat(){
+            var $url_inbox=$('.box-body').data('url-thread_messages_unread');
+
+            setInterval(function(){
+                $.getJSON($url_inbox, function( data ) {
+                    $('#direct-chat-messages').addMsgleftHtml(data.messages);
+                });
+            }, 3000);
+        }
+
+
         initAjaxForm();
+        initchat();
         $('.box-body').scrollTop($('.box-body')[0].scrollHeight);
 
     </script>

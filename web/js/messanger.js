@@ -1,5 +1,4 @@
 
-
 ( function ($){
 
     $.fn.AddMsgToMenuMsg=function(data){
@@ -93,20 +92,12 @@ function NotifMessage(){
                     $('#chatAudio')[0].play();
                     $cache=data['NbUnreadMessages'];
                 }
-
-
             });
         });
     }, 3000);
 }
 
 $( document ).ready(function(){
-
-
     UpdateMenuMsg();
-
     NotifMessage();
-
-
-
 });
