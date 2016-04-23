@@ -67,7 +67,9 @@ class MessageController extends BaseControler
                     'message' => array(
                         'id' => $message->getId(),
                         'body' => $message->getBody(),
-                        'createAt' => $message->getCreatedAt()->format("F jS \\a\\t g:ia")
+                        'createAt' => $message->getCreatedAt()->format("F jS \\a\\t g:ia"),
+                        'sender' => $message->getSender()->getUsername(),
+                        'icon' => $this->container->get('templating.helper.assets')->getUrl($message->getSender()->getPhoto()->getwebPath())
                     )
                 ), 200);
         } else {
@@ -104,7 +106,7 @@ class MessageController extends BaseControler
                     'createAt' => $thread->getLastMessage()->getCreatedAt()->format("F jS \\a\\t g:ia"),
                     'isRead' => $thread->getLastMessage()->isReadByParticipant($this->container->get('security.context')->getToken()->getUser()),
                     'sender' => $thread->getLastMessage()->getSender()->getUsername(),
-                    'icon' => 'http://angola24horas.com/dist/img/avatar5.png'
+                    'icon' => $this->container->get('templating.helper.assets')->getUrl($thread->getLastMessage()->getSender()->getPhoto()->getwebPath())
                 )
             );
         }
@@ -160,7 +162,8 @@ class MessageController extends BaseControler
                     'createAt' => $msg->getCreatedAt()->format("F jS \\a\\t g:ia"),
                     'isRead' => false,
                     'sender' => $msg->getSender()->getUsername(),
-                    'icon' => 'http://angola24horas.com/dist/img/avatar5.png'
+                    'icon' =>$this->container->get('templating.helper.assets')->getUrl($msg->getSender()->getPhoto()->getwebPath())
+
                 );
             }
         }

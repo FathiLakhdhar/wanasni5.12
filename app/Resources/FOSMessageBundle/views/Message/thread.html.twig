@@ -35,7 +35,7 @@
                                         <span class="direct-chat-name pull-right">{{ message.sender|e }}</span>
                                         <span class="direct-chat-timestamp pull-left">{{ message.createdAt|date("F jS \\a\\t g:ia") }}</span>
                                     </div><!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
+                                    <img class="direct-chat-img" src="{{ asset(message.sender.photo.webPath) }}"
                                          alt="{{ message.sender|e }}"><!-- /.direct-chat-img -->
                                     <div class="direct-chat-text" id="message_{{ message.id }}">
                                         <p>{{ message.body }}</p>
@@ -48,7 +48,7 @@
                                         <span class="direct-chat-name pull-left">{{ message.sender|e }}</span>
                                         <span class="direct-chat-timestamp pull-right">{{ message.createdAt|date("F jS \\a\\t g:ia") }}</span>
                                     </div><!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"
+                                    <img class="direct-chat-img" src="{{ asset(message.sender.photo.webPath) }}"
                                          alt="{{ message.sender|e }}"><!-- /.direct-chat-img -->
                                     <div class="direct-chat-text" id="message_{{ message.id }}">
                                         <p>

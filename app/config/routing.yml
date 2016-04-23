@@ -1,3 +1,7 @@
+wanasni_photo:
+    resource: "@WanasniPhotoBundle/Controller"
+    type:     annotation
+
 wanasni_api:
     resource: "@WanasniApiBundle/Controller"
     type:     annotation
@@ -17,10 +21,6 @@ homepage:
         _controller: FrameworkBundle:Template:template
         template:    'default/index.html.twig'
 
-
-wanasni_user:
-    resource: "@WanasniUserBundle/Controller"
-    type:     annotation
 
 wanasni_trajet:
     resource: "@WanasniTrajetBundle/Controller"

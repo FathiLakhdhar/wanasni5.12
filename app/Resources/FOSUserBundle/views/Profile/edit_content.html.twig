@@ -2,80 +2,9 @@
 
 
 <div class="container">
-
-    <ul id="nav-pills-h-profil-e" class="nav nav-pills nav-justified">
-        <li class="triangle-down">
-            <a href="{{ path('mes-trajets') }}">
-                <i class="fa fa-car"></i>
-                <p>Covoiturages</p>
-            </a>
-        </li>
-        <li class="triangle-down">
-            <a  href="#Avis">
-                <i class="fa fa-star"></i>
-                <p>Avis</p>
-            </a>
-        </li>
-        <li class="triangle-down">
-            <a  href="{{ path('mes-alertes') }}">
-                <i class="fa fa-bullhorn"></i>
-                <p>Alerts</p>
-            </a>
-        </li>
-        <li class="triangle-down">
-            <a  href="{{ path('fos_message_inbox') }}">
-                <i class="fa fa-envelope-o"></i>
-                <p>Messages</p>
-            </a>
-        </li>
-        <li class="triangle-down">
-            <a  href="#Notifications">
-                <i class="fa fa-bell-o"></i>
-                <p>Notifications</p>
-            </a>
-        </li>
-        <li class="triangle-down active">
-            <a  href="{{ path('fos_user_profile_edit') }}">
-                <i class="flaticon-man flat-2x"></i>
-                <p>Profil</p>
-            </a>
-        </li>
-    </ul>
+    {{ include('@FOSUser/Profile/nav_pills_profile.html.twig') }}
     <div class="tab-content thumbnail">
-
-        <!--  Tab pane Covoiturages -->
-        <div id="Covoiturages" class="tab-pane fade ">
-            <div class="page-header">
-                <h2 class="violet-red">Covoiturages</h2>
-            </div>
-        </div>
-        <!-- end Tab pane Covoiturages -->
-
-        <!--  Tab pane Avis -->
-        <div id="Avis" class="tab-pane fade">
-            <div class="page-header">
-                <h2 class="violet-red">Avis</h2>
-            </div>
-        </div>
-        <!-- end Tab pane Avis -->
-        <!--  Tab pane Alerts -->
-        <div id="Alerts" class="tab-pane fade">
-            <div class="page-header">
-                <h2 class="violet-red">Alerts</h2>
-            </div>
-        </div>
-        <!-- end Tab pane Alerts -->
-
-        <!-- Tab pane Notifications -->
-        <div id="Notifications" class="tab-pane fade">
-            <div class="page-header">
-                <h2 class="violet-red">Notifications</h2>
-            </div>
-        </div>
-        <!-- end Tab pane Notifications -->
-
         <!-- Tab pane Profile -->
-
         <div id="Profil" class="tab-pane fade in active">
             <div class="page-header">
                 <h2 class="violet-red">Profil</h2>
@@ -86,12 +15,12 @@
 
                 <div class="col-md-4">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a data-toggle="pill" href="#info_personnel">Informations personnelles</a>
+                        <li class="active"><a href="{{ path('fos_user_profile_edit') }}">Informations personnelles</a>
                         </li>
-                        <li><a data-toggle="pill" href="#photo">Photo</a></li>
-                        <li><a data-toggle="pill" href="#vehicule">Véhicule</a></li>
-                        <li><a data-toggle="pill" href="#mot-de-passe">Mot de passe</a></li>
-                        <li><a data-toggle="pill" href="#fermeture-de-compte">Fermeture de compte</a></li>
+                        <li><a  href="{{ path('photo_edit') }}">Photo</a></li>
+                        <li><a  href="{{ path('cars-show') }}">Véhicule</a></li>
+                        <li><a  href="{{ path('fos_user_change_password') }}">Mot de passe</a></li>
+                        <li><a  href="#">Fermeture de compte</a></li>
                     </ul>
                 </div>
 

@@ -24,7 +24,7 @@ class ApiController extends Controller
                 'username'=>$Contact->getUsername(),
                 'fistname'=>$Contact->getFirstname(),
                 'lastname'=>$Contact->getLastname(),
-                'icon'=>'imglksjqlkdj.jpeg'
+                'icon'=>$this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
             );
         }
         return new JsonResponse($arr);
@@ -48,7 +48,7 @@ class ApiController extends Controller
                 'username'=>$Contact->getUsername(),
                 'fistname'=>$Contact->getFirstname(),
                 'lastname'=>$Contact->getLastname(),
-                'icon'=>'http://angola24horas.com/dist/img/avatar5.png'
+                'icon'=> $this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
             );
         }
 

@@ -93,7 +93,7 @@
                         '<span class="direct-chat-name pull-right">{{ app.user.username }}</span>' +
                         '<span class="direct-chat-timestamp pull-left">'+$message.createAt+'</span>' +
                         '</div>' +
-                        '<img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"alt="{{ app.user.username }}">' +
+                        '<img class="direct-chat-img" src="{{ asset(app.user.photo.webPath) }}"alt="{{ app.user.username }}">' +
                         '<div class="direct-chat-text" id="message_'+$message.id+'">' +
                         '<p>' +$message.body+'</p>'+
                         '</div>' +
@@ -116,7 +116,7 @@
                             '<span class="direct-chat-name pull-left">'+message.sender+'</span>' +
                             '<span class="direct-chat-timestamp pull-right">'+message.createAt+'</span>' +
                             '</div>' +
-                            '<img class="direct-chat-img" src="{{ asset('img/user.jpg') }}"alt="'+message.sender+'">' +
+                            '<img class="direct-chat-img" src="'+message.icon+'"alt="'+message.sender+'">' +
                             '<div class="direct-chat-text" id="message_'+message.id+'">' +
                             '<p>' +message.body+'</p>'+
                             '</div>' +

@@ -15,6 +15,15 @@ class VehiculeController extends Controller
 
 
     /**
+     * @Route("/vehicule", name="cars-show" )
+     */
+    public function ShowCarAction()
+    {
+        return $this->render(':Vehicule:voir_vehicules.html.twig');
+    }
+
+
+    /**
      * @Route("/vehicule-ajouter", name="car-add" )
      */
     public function AddCarAction()
@@ -81,6 +90,8 @@ class VehiculeController extends Controller
         }
         return new JsonResponse($arr_model);
     }
+
+
 
 
 

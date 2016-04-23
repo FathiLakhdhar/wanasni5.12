@@ -7,6 +7,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Wanasni\PhotoBundle\Entity\Photo;
 
 
 /**
@@ -14,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\UserBundle\Entity\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends BaseUser implements ParticipantInterface
 {
@@ -106,6 +108,13 @@ class User extends BaseUser implements ParticipantInterface
      */
     private $Notifications;
 
+
+
+    /**
+     * @var Photo
+     * @ORM\OneToOne(targetEntity="Wanasni\PhotoBundle\Entity\Photo", cascade={"persist","remove"}, inversedBy="user")
+     */
+    private $photo;
 
     /**
      * @return mixed
@@ -343,5 +352,46 @@ class User extends BaseUser implements ParticipantInterface
     public function getNotifications()
     {
         return $this->Notifications;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \Wanasni\PhotoBundle\Entity\Photo $photo
+     * @return User
+     */
+    public function setPhoto(\Wanasni\PhotoBundle\Entity\Photo $photo = null)
+    {
+        $this->photo = $photo;
+    
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \Wanasni\PhotoBundle\Entity\Photo 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+
+    public function getFullName(){
+        return $this->firstname.' '.$this->lastname;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function PrePersist()
+    {
+        $photo=new Photo();
+        $photo->setAlt($this->getFullName());
+        $photo->setPath('avatar.png');
+        $photo->setValid(true);
+        $this->setPhoto($photo);
     }
 }

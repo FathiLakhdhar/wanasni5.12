@@ -97,7 +97,7 @@
     <li class="dropdown menu-user">
         <div class="client">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                <img id="client-img" src="{{ asset('img/user.jpg') }}"/>
+                <img id="client-img" src="{{ asset(app.user.photo.webPath) }}"/>
                 <span>
                     {{ (app.user.firstname ~' '~ app.user.lastname)|slice(0,20) }}
                 </span>
@@ -106,7 +106,7 @@
             <ul class="dropdown-menu triangle-up">
                 <li>
                     <div class="header-cover text-center">
-                        <img id="client-cover-img" src="{{ asset('img/user.jpg') }}"/>
+                        <img id="client-cover-img" src="{{ asset(app.user.photo.webPath) }}"/>
                         <p> {{ app.user.email }} </p>
                     </div>
                 </li>
