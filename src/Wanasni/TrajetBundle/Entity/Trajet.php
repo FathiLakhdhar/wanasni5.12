@@ -34,21 +34,21 @@ class Trajet
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
      * @Assert\Valid()
      */
     private $Origine;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
      * @Assert\Valid()
      */
     private $Destination;
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="way", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="way", cascade={"all"}, fetch="EAGER")
      * @Assert\Valid
      */
     private $waypoints;
@@ -251,7 +251,6 @@ class Trajet
         $this->datesAller = new ArrayCollection();
         $this->datesRetour = new ArrayCollection();
         $this->reservations = new ArrayCollection();
-        $this->nbPlacesRestants = 0;
         $this->arrPrix=array();
         $this->Date_Allet_unique = date_create();
         $this->Date_Retour_unique = date_create();
@@ -1026,8 +1025,10 @@ class Trajet
         if($this->frequence=='REGULAR'){
 
             $new= date_create();
+            if($this->regularBeginDate->format('Ymd') == $new->format('Ymd')){
             if ($this->heureAller->format('H:i') < $new->format('H:i')) {
                 $context->addViolationAt('heureAller', 'invalid heure aller !!');
+            }
             }
 
             if ($this->roundTrip) {
@@ -1164,6 +1165,7 @@ class Trajet
             $p+=$prix;
         }
         $this->setTotalPrix($p);
+        $this->nbPlacesRestants=$this->nbPlaces;
         $this->setProposerAt(new \DateTime());
     }
 

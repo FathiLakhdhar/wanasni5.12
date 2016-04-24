@@ -8,7 +8,7 @@
 
                 <a class="user-panel text-center slideToggle">
                     <div class="image">
-                        <img src="{{ asset('img/user.jpg') }}" class="img-circle" alt="User Image">
+                        <img src="{{ asset(app.user.photo.webPath) }}" class="img-circle" alt="User Image">
                     </div>
                     <div class="info">
                         <p>{{ app.user.firstname ~' '~app.user.lastname }}</p>

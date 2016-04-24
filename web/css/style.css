@@ -602,6 +602,11 @@ section-video
 
 
 
+.btn-maroon {
+    color: #FFF;
+    background-color: #d81b60 !important;
+}
+
 
 .btn-custom {
     min-height: 40px;
@@ -613,7 +618,6 @@ section-video
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-    
 }
 
 .btn-Contour{
@@ -805,8 +809,9 @@ header .menu-client li a span[class*='label'] {
 }
 
 
-#client-img{
-    max-width: 40px;
+#client-img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -820,8 +825,9 @@ header .menu-client li a span[class*='label'] {
     white-space: nowrap;
 }
 
-#client-cover-img{
+#client-cover-img {
     width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 5px solid #ececec;
 }
@@ -929,8 +935,32 @@ Color
     background-color: #8c2463;
 }
 
+
+.bg-maroon {
+    background-color: #d81b60 !important;
+}
+.maroon{
+    color: #d81b60
+}
+
+
+/******************
+    Panels
+
+********************/
+
+
+.panel{
+    border-radius: 0px;
+    box-shadow: 0px 2px 10px #999;
+}
+.panel:hover{
+    border-radius: 0px;
+    box-shadow: 0px 3px 10px #888888;
+}
+
 .panel-success {
-    border-color: #5cb85c;
+    border-color: #009688;
 }
 
 .panel-title {
@@ -939,6 +969,18 @@ Color
 .panel-heading {
     padding: 20px 15px;
     border-bottom: 1px solid transparent;
+    border-radius: 0px;
+}
+.panel-success>.panel-heading{
+    background: inherit;
+    background-color: #009688 !important;
+    color: #FFFFFF;
+}
+
+
+.list-group-item{
+    border-radius: 0px;
+
 }
 
 /*================================
@@ -1422,12 +1464,13 @@ span.date-icon{
     background-image: url("../img/UpdatePhoto-icon.png");
     background-repeat: no-repeat;
     background-size: 150px;
-    margin-left: 100px;
+    margin: auto;
     border: 2px dashed #5e5e5e;
 }
-.update-photo>img{
-    max-width:146px ;
-    max-height: 146px;
+.update-photo>img {
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
 
@@ -1454,13 +1497,13 @@ span.date-icon{
 .profile-user-img {
     margin: 0 auto;
     width: 100px;
+    height: 100px;
     padding: 3px;
     border: 3px solid #d2d6de;
 }
 .img-responsive{
     display: block;
     max-width: 100%;
-    height: auto;
 }
 
 .profile-username {

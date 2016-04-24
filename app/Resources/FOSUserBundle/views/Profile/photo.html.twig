@@ -37,8 +37,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="text-center">
-                                            <div class="update-photo">
-                                                <img src="{{ asset(app.user.photo.webPath) }}">
+                                            <div class="update-photo text-center">
+                                                <img class="p_img_ph" src="{{ asset(app.user.photo.webPath) }}">
                                             </div>
                                             <p>Ajoutez une photo</p>
                                             {{ form_start(form,{'action': path('photo_edit')}) }}
@@ -52,9 +52,11 @@
                                                 </div>
                                             {{ form_end(form) }}
 
+
                                             <p>
                                                 <small>2Mo maximum, PNG ou JPG.</small>
                                             </p>
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">

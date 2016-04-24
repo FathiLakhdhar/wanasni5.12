@@ -17,7 +17,7 @@ class PhotoType extends AbstractType
         $builder
             ->add('file','file',array(
                 'required'=>false,
-                'attr'=>array('class'=>'btn btn-primary')
+                'attr'=>array('class'=>'btn btn-primary input_p_photo')
             ))
         ;
     }

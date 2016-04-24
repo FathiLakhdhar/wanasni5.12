@@ -1,7 +1,6 @@
 <?php
 namespace Wanasni\TrajetBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +13,7 @@ use Wanasni\TrajetBundle\Form\TrajetType;
 use Wanasni\TrajetBundle\Form\TrajetUniqueType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Wanasni\TrajetBundle\Entity\Search;
+use Symfony\Component\Routing\Annotation\Route;
 class TrajetController extends Controller
 {
 
@@ -21,14 +21,21 @@ class TrajetController extends Controller
      * @Route("/covoiturages-mes-trajets", name="mes-trajets" )
      */
     public function MesTrajetsAction(){
-        return $this->render(':Trajet/Gerer:voir_mes_trajets.html.twig');
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+        $trajets=$this->getUser()->getTrajets();
+
+        return $this->render(':Trajet/Gerer:voir_mes_trajets.html.twig',array(
+            'trajets'=>$trajets
+        ));
     }
 
     /**
      * @Route("/covoiturages-trajets-reserve", name="mes-reservations" )
      */
     public function MesReservationAction(){
-        return $this->render(':Trajet/Gerer:voir_mes_trajets.html.twig');
+        return $this->render(':Trajet/Gerer:voir_mes_reservation.html.twig');
     }
     /**
      * @Route("/mes-alertes", name="mes-alertes")
@@ -276,4 +283,36 @@ class TrajetController extends Controller
             ));
         }
     }
+
+    /**
+     * @Route(path="/trajet/delete/{id}", name="trajet_delete")
+     */
+    public function deleteAction($id, Request $request)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+        $em=$this->getDoctrine()->getManager();
+        $rep=$em->getRepository('WanasniTrajetBundle:Trajet');
+
+        $trajet= $rep->findOneBy(
+          array(
+              'id'=>$id,
+              'conducteur'=>$this->getUser()
+          )
+        );
+
+
+        if($trajet){
+            $em->remove($trajet);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('mes-trajets'));
+        }
+
+
+        return var_dump($trajet);
+    }
+
 }

@@ -28,6 +28,8 @@
         <link rel="stylesheet" type="text/css"  href="{{ asset('css/flaticon.css') }}"/>
         <!-- iCheck -->
         <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/flat/_all.css') }}"/>
+        <link rel="stylesheet" type="text/css"  href="{{ asset('css/bootstrap-timepicker.min.css') }}"/>
+
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
@@ -150,9 +152,11 @@
     <script src="{{ asset('js/jguery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-timepicker.min.js') }}"></script>
     <script src="{{ asset('iCheck/js/icheck.js') }}"></script>
     <script src="{{ asset('js/autoCompleteContacts.js') }}"></script>
     <script src="{{ asset('js/messanger.js') }}"></script>
+    <script src="{{ asset('js/upload_photo.js') }}"></script>
 
     <script language="JavaScript">
 
@@ -193,6 +197,11 @@
             $( ".car-place-spinner" ).spinner({
                 min:1,
                 max:9
+            });
+
+            //Timepicker
+            $(".timepicker").timepicker({
+                showInputs: false
             });
 
         });

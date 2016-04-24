@@ -54,4 +54,19 @@ class TrajetRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+
+    public function DeleteTrajet($id,$user)
+    {
+        $q= $this->createQueryBuilder('t');
+
+        $q->delete('t')
+            ->where('t.id = :id')
+            ->setParameter('id',$id)
+            ->andWhere('t.conducteur = :c')
+            ->setParameter('c',$user);
+    }
+
+
+
+
 }
