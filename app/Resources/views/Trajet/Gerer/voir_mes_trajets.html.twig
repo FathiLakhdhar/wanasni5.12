@@ -8,6 +8,15 @@
 {% block  body %}
     <div class="container" style="margin-top: 20px">
         {{ include(':Trajet/Gerer:nav_pills_trajet.html.twig') }}
+
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         <div class="tab-content thumbnail">
             <div id="Covoiturages" class="tab-pane fade in active">
                 <div class="page-header">
@@ -39,7 +48,11 @@
                                         <div class="panel-heading">
                                             <h3 class="panel-title">
                                                 {{ trajet.origine.lieu }}
-                                                <i class="ion ion-android-arrow-forward"></i>
+                                                {% if trajet.roundTrip %}
+                                                    <i class="ion ion-arrow-swap"></i>
+                                                {% else %}
+                                                    <i class="ion ion-arrow-right-c"></i>
+                                                {% endif %}
                                                 {{ trajet.destination.lieu }}
                                             </h3>
                                         </div>

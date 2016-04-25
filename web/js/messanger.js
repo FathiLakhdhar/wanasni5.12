@@ -1,29 +1,65 @@
+( function ($) {
 
-( function ($){
+    $.fn.AddMsgToMenuMsg = function (data) {
 
-    $.fn.AddMsgToMenuMsg=function(data){
+        var element = this;
 
-        var element=this;
+        $.each(data, function (key, $thread) {
 
-        $.each( data, function( key, $thread ) {
-
-            var $class="";
-            if(!$thread.message.isRead){
-                $class="bg-info";
+            var $class = "";
+            if (!$thread.message.isRead) {
+                $class = "bg-info";
             }
 
-        $new=$('<li class="'+$class+'">' +
-            '<a href="'+$thread.link+'#message_'+$thread.message.id+'">' +
-            '<div class="pull-left">' +
-            '<img src="'+$thread.message.icon+'" class="img-circle" alt="'+$thread.message.sender+'">' +
-            '</div>' +
-            '<h4>' +
-            $thread.message.sender+
-            '<small><i class="fa fa-clock-o"></i>'+$thread.message.createAt+'</small>' +
-            '</h4>' +
-            '<p>'+$thread.message.body+'</p>' +
-            '</a>' +
-            '</li>');
+            $new = $('<li class="' + $class + '">' +
+                '<a href="' + $thread.link + '#message_' + $thread.message.id + '">' +
+                '<div class="pull-left">' +
+                '<img src="' + $thread.message.icon + '" class="img-circle" alt="' + $thread.message.sender + '">' +
+                '</div>' +
+                '<h4>' +
+                $thread.message.sender +
+                '<small><i class="fa fa-clock-o"></i>' + $thread.message.createAt + '</small>' +
+                '</h4>' +
+                '<p>' + $thread.message.body + '</p>' +
+                '</a>' +
+                '</li>');
+
+            element.append($new);
+        });
+    };
+
+
+    $.fn.AddNotifToMenuNotif = function (data) {
+
+        var element = this;
+
+        $.each(data, function (key, $notif) {
+
+            var $class = "";
+            var $icon = "";
+
+            if (!$notif.isRead)$class = "bg-info";
+
+            switch ($notif.type) {
+                case "demande":
+                    $icon = "ion ion-information-circled text-info";
+                    break;
+                case "accepte":
+                    $icon = "ion ion-checkmark-circled text-success";
+                    break;
+                case "refuse":
+                    $icon = "ion ion-close-circled text-danger";
+                    break;
+                default:
+                    $icon = "";
+                    break;
+            }
+
+            $new = $('<li class="' + $class + '">' +
+                '<a href="#">' +
+                '<i class="' + $icon + ' pull-left"></i>' +
+                '<p>' + $notif.contenu + '</p>' +
+                '</li>');
 
             element.append($new);
         });
@@ -33,71 +69,143 @@
 }(jQuery));
 
 
-function isEqual(data,cache){
+function isEqualObjetThread(data, cache) {
 
-    var bool= true;
+    var bool = true;
 
-    if(cache.length==0 || data.length==0 || data.length>cache.length){
-        bool=false;
+    if (cache.length == 0 || data.length == 0 || data.length > cache.length) {
+        bool = false;
         return false;
     }
 
-    $.each( data, function( key, $thread ) {
-        if($thread.id != cache[key].id){bool=false; return false;}
-        if($thread.message.id != cache[key].message.id){bool=false;return false;}
+    $.each(data, function (key, $thread) {
+        if ($thread.id != cache[key].id) {
+            bool = false;
+            return false;
+        }
+        if ($thread.message.id != cache[key].message.id) {
+            bool = false;
+            return false;
+        }
+    });
+    return bool;
+}
+function isEqualObjetNotif(data, cache) {
+
+    var bool = true;
+
+    if (cache.length == 0 || data.length == 0 || data.length > cache.length) {
+        bool = false;
+        return false;
+    }
+
+    $.each(data, function (key, $notif) {
+        if ($notif.id != cache[key].id) {
+            bool = false;
+            return false;
+        }
     });
     return bool;
 }
 
+function UpdateMenuMsg() {
+    var $cache = [];
+    var menu_message = $('#menu_messages');
 
-function UpdateMenuMsg(){
-    var $cache=[];
-    var menu_message=$('#menu_messages');
-
-    $('#envelope_click').click(function(){
-        var $url=menu_message.data("url-msg");
+    $('#envelope_click').click(function () {
+        var $url = menu_message.data("url-msg");
 
         $('#msg_load').show();
         menu_message.children().remove();
         menu_message.AddMsgToMenuMsg($cache);
 
-        $.getJSON( $url, function( data ) {
-            if(isEqual(data,$cache)){
+        $.getJSON($url, function (data) {
+            if (isEqualObjetThread(data, $cache)) {
                 $('#msg_load').hide();
                 return false;
             }
-            else{
+            else {
                 $('#msg_load').hide();
                 menu_message.children().remove();
                 menu_message.AddMsgToMenuMsg(data);
-                $cache=data;
+                $cache = data;
             }
-
 
 
         });
     });
 }
 
-function NotifMessage(){
-    var $cache=$('#nb_msg_unread').data('nb-unread');
-    var menu_message=$('#menu_messages');
-    var htmlelementUnreadMsg=$('li.message_nb_unread');
-    var $url=htmlelementUnreadMsg.data("messages-nb-unread");
-    setInterval(function(){
-        $.getJSON($url, function( data ) {
-            $('.nb_msg_unread').each(function(){
-                if($cache != data['NbUnreadMessages']){
+
+function UpdateMenuNotif() {
+    var $cache = [];
+    var menu_notif = $('#menu_notifications');
+
+    $('#notif_click').click(function () {
+        var $url = menu_notif.data("url-notif");
+
+        $('#notif_load').show();
+        menu_notif.children().remove();
+        menu_notif.AddNotifToMenuNotif($cache);
+
+        $.getJSON($url, function (data) {
+            if (isEqualObjetNotif(data.notifications, $cache)) {
+                $('#notif_load').hide();
+                return false;
+            }
+            else {
+                $('#notif_load').hide();
+                menu_notif.children().remove();
+                menu_notif.AddNotifToMenuNotif(data.notifications);
+                $cache = data.notifications;
+            }
+
+
+        });
+    });
+}
+
+
+function NotifMessage() {
+    var $cache = $('#nb_msg_unread').data('thread-nb-unread');
+    var menu_message = $('#menu_messages');
+    var htmlelementUnreadMsg = $('li.message_nb_unread');
+    var $url = htmlelementUnreadMsg.data("messages-nb-unread");
+    setInterval(function () {
+        $.getJSON($url, function (data) {
+            if ($cache != data['NbUnreadMessages']) {
+                $('.nb_msg_unread').each(function () {
                     $(this).html(data['NbUnreadMessages']);
-                    $('#chatAudio')[0].play();
-                    $cache=data['NbUnreadMessages'];
-                }
-            });
+                });
+                $('#chatAudio')[0].play();
+                $cache = data['NbUnreadMessages'];
+            }
         });
     }, 3000);
 }
 
-$( document ).ready(function(){
+
+function NotifNotification() {
+    var $cache = $('#nb_notif_unread').data('notif-nb-unread');
+    var menu_notif = $('#menu_notifications');
+    var htmlelementUnreadNotif = $('li.notifications_nb_unread');
+    var $url = htmlelementUnreadNotif.data("notifications-nb-unread-url");
+    setInterval(function () {
+        $.getJSON($url, function (data) {
+            if ($cache != data['NbUnreadNotifications']) {
+                $('.nb_notif_unread').each(function () {
+                    $(this).html(data['NbUnreadNotifications']);
+                });
+                $('#chatAudio')[0].play();
+                $cache = data['NbUnreadNotifications'];
+            }
+        });
+    }, 3000);
+}
+
+$(document).ready(function () {
     UpdateMenuMsg();
+    UpdateMenuNotif();
     NotifMessage();
+    NotifNotification();
 });

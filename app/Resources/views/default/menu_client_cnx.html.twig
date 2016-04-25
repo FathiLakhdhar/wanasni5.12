@@ -3,12 +3,10 @@
     <li class="dropdown menu-message">
         <a class="dropdown-toggle" data-toggle="dropdown" id="envelope_click">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-info nb_msg_unread" id="nb_msg_unread" data-nb-unread="{{ fos_message_nb_unread() }}">{{ fos_message_nb_unread() }}</span>
+            <span class="label label-info nb_msg_unread" id="nb_msg_unread" data-thread-nb-unread="{{ fos_message_nb_unread() }}">{{ fos_message_nb_unread() }}</span>
         </a>
 
-        <audio id="chatAudio">
-            <source src="{{ asset('sound/notification.mp3') }}" type="audio/mp3">
-        </audio>
+
 
         {# Menu Message #}
         <ul class="dropdown-menu triangle-up" >
@@ -16,7 +14,7 @@
             <li>
                 <!-- Ajax Load img.Gif -->
                 <div id="msg_load" class="text-center" style="display: none; position: relative">
-                    <img id="img-loader" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                    <img id="img-loader" class="loading" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
                 </div>
             </li>
             <li>
@@ -51,38 +49,26 @@
     </li><!-- Fin Messages:-->
 
     <li class="dropdown menu-Notification">{# Notification #}
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown" id="notif_click">
             <i class="fa fa-bell-o"></i>
-            <span class="label label-warning">4</span>
+            <span id="nb_notif_unread" class="label label-warning nb_notif_unread" data-notif-nb-unread="{{ wanasni_notification_nb_unread() }}">{{ wanasni_notification_nb_unread() }}</span>
         </a>
 
         {# Menu Notification #}
         <ul class="dropdown-menu triangle-up">
-            <li class="header">You have 2 Notifications</li>
+            <li class="header notifications_nb_unread" data-notifications-nb-unread-url="{{ path('api_nb_unread_notifications') }}">You have <span class="nb_notif_unread">{{ wanasni_notification_nb_unread() }}</span> Notifications</li>
+            <li>
+                <!-- Ajax Load img.Gif -->
+                <div id="notif_load" class="text-center" style="display: none; position: relative">
+                    <img id="img-loader" class="loading" src="{{ asset('img/Preloader.gif') }}" alt="Loading"/>
+                </div>
+            </li>
 
             <li><!-- Body -->
 
-                <ul class="menu">
+                <ul class="menu" id="menu_notifications" data-url-notif="{{ path('api_user_notif_all') }}">
                     <!-- Data notif -->
-                        <li>
-                            <a href="#">
-                                <span class="fa fa-warning pull-left text-danger"></span>
-                                <p> 5 new members joined today ffffffffff</p>
-                            </a>
-                        </li>
 
-                        <li>
-                            <a href="#">
-                                <span class="fa fa-warning pull-left text-danger"></span>
-                                <p> 5 new members joined today ffffffffff</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa fa-warning pull-left text-danger"></span>
-                                <p> 5 new members joined today fffffffffffffffffffffffffffffffffffffffffffffffff</p>
-                            </a>
-                        </li>
                 </ul>
 
             </li>

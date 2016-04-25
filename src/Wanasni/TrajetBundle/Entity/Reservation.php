@@ -3,12 +3,15 @@
 namespace Wanasni\TrajetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Wanasni\UserBundle\Entity\User;
 
 /**
  * Reservation
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
@@ -47,6 +50,14 @@ class Reservation
      * @ORM\JoinColumn(nullable=false)
      */
     private $trajet;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User", inversedBy="reservations")
+     */
+    private $passager;
+
+
 
 
     /**
@@ -169,5 +180,42 @@ class Reservation
     public function getTrajet()
     {
         return $this->trajet;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function Prepersist()
+    {
+
+        $this->reserverAt =  new \DateTime();
+        $this->etat= false;
+    }
+    
+    
+    
+
+    /**
+     * Set passager
+     *
+     * @param \Wanasni\UserBundle\Entity\User $passager
+     * @return Reservation
+     */
+    public function setPassager(\Wanasni\UserBundle\Entity\User $passager = null)
+    {
+        $this->passager = $passager;
+    
+        return $this;
+    }
+
+    /**
+     * Get passager
+     *
+     * @return \Wanasni\UserBundle\Entity\User 
+     */
+    public function getPassager()
+    {
+        return $this->passager;
     }
 }

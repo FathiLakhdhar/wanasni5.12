@@ -1,11 +1,15 @@
 <?php
 namespace Wanasni\TrajetBundle\Controller;
+use Doctrine\ORM\EntityNotFoundException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Wanasni\NotificationBundle\Services\TypeNotification;
 use Wanasni\TrajetBundle\Entity\Alert;
+use Wanasni\TrajetBundle\Entity\Reservation;
 use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\AlertType;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
@@ -307,12 +311,62 @@ class TrajetController extends Controller
         if($trajet){
             $em->remove($trajet);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Trajet supprimer');
+        }
 
-            return $this->redirect($this->generateUrl('mes-trajets'));
+        return $this->redirect($this->generateUrl('mes-trajets'));
+    }
+
+
+    /**
+     *
+     * @Route(path="api/reservation/{id}", name="trajet_demande_reservation")
+     */
+    public function DemandeReservationAction($id, Request $request)
+    {
+
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
         }
 
 
-        return var_dump($trajet);
+        $em=$this->getDoctrine()->getManager();
+
+        $trajet= $em->getRepository('WanasniTrajetBundle:Trajet')
+            ->findOneBy(array(
+                'id'=>$id
+            ));
+
+        if (!$trajet) {
+            return  new EntityNotFoundException();
+        }
+
+
+        if( ($trajet->getNbPlacesRestants() > 0) && (!$trajet->isReserverByPassage($this->getUser()) ) ){
+
+            $reservation= new Reservation();
+
+            $reservation->setPassager($this->getUser());
+            $reservation->setTrajet($trajet);
+
+            $serviceNotif=$this->container->get('wanasni_notification.create');
+            $notif=$serviceNotif->CreateNotification($reservation,$trajet->getConducteur(),TypeNotification::Demande);
+
+            $em->persist($reservation);
+            $em->persist($notif);
+            $em->flush();
+
+
+            $serviceNotif->EnvoyeEmail($notif);
+
+        }
+
+
+        return $this->redirect($this->generateUrl('trajet_show',array('id'=>$trajet->getId())));
+
     }
+
+
+
 
 }

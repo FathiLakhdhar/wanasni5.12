@@ -3,12 +3,14 @@
 namespace Wanasni\NotificationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Notification
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\NotificationBundle\Entity\NotificationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Notification
 {
@@ -40,6 +42,14 @@ class Notification
      * @ORM\Column(type="boolean")
      */
     private $lu;
+
+
+    /**
+     * @var string
+     * @ORM\Column(name="type", type="string", length=20)
+     * @Assert\Choice(choices={"demande", "accepte", "refuse"}, message = "Choose a valid type notification.")
+     */
+    private $type;
 
 
     /**
@@ -178,5 +188,42 @@ class Notification
     public function getReservation()
     {
         return $this->reservation;
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->notifAt= new \DateTime();
+        $this->lu=false;
+
+    }
+
+
+
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Notification
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

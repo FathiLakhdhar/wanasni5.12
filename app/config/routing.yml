@@ -15,6 +15,12 @@ wanasni_message:
     type:     annotation
     prefix: /messages
 
+wanasni_notification:
+    resource: "@WanasniNotificationBundle/Controller"
+    type:     annotation
+    prefix: /notifications
+
+
 homepage:
     path: /
     defaults:

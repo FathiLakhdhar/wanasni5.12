@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Wanasni\PhotoBundle\Entity\Photo;
+use Wanasni\TrajetBundle\Entity\Reservation;
 
 
 /**
@@ -117,6 +118,14 @@ class User extends BaseUser implements ParticipantInterface
     private $photo;
 
     /**
+     * @var Reservation
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Reservation", mappedBy="passager", cascade={"remove"})
+     */
+    private $reservations;
+
+
+
+    /**
      * @return mixed
      */
     public function getMinibio()
@@ -192,6 +201,7 @@ class User extends BaseUser implements ParticipantInterface
         $this->vehicules=new \Doctrine\Common\Collections\ArrayCollection();
         $this->trajets=new \Doctrine\Common\Collections\ArrayCollection();
         $this->Notifications=new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations=new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -393,5 +403,38 @@ class User extends BaseUser implements ParticipantInterface
         $photo->setPath('avatar.png');
         $photo->setValid(true);
         $this->setPhoto($photo);
+    }
+
+    /**
+     * Add reservations
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Reservation $reservations
+     * @return User
+     */
+    public function addReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations[] = $reservations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations->removeElement($reservations);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

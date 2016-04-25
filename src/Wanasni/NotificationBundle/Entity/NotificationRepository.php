@@ -3,6 +3,7 @@
 namespace Wanasni\NotificationBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Wanasni\UserBundle\Entity\User;
 
 /**
  * NotificationRepository
@@ -12,4 +13,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class NotificationRepository extends EntityRepository
 {
+
+
+    public function nbUnreadNotification(User $user)
+    {
+        return $this->createQueryBuilder('n')
+            ->select('COUNT(n)')
+            ->where('n.lu = false')
+            ->andWhere('n.user = :u')
+            ->setParameter('u', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
 }

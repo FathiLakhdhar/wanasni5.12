@@ -24,10 +24,10 @@
                                 <h3 class="panel-title">
                                     {{ trajet.origine.lieu }}
 
-                                    {% if trajet.frequence == "UNIQUE" %}
-                                        <i class="ion ion-arrow-right-c"></i>
-                                    {% else %}
+                                    {% if trajet.roundTrip %}
                                         <i class="ion ion-arrow-swap"></i>
+                                    {% else %}
+                                        <i class="ion ion-arrow-right-c"></i>
                                     {% endif %}
                                     {{ trajet.destination.lieu }}
                                 </h3>
@@ -39,15 +39,15 @@
 
                                         <div class="col-md-12">
                                             <p>
-                                                Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                                <strong>Publier :</strong> {{ trajet.proposerAt|date("Y-m-d", false) }}
                                             </p>
 
                                         </div>
 
                                         <div class="col-md-12">
-                                            <div class="row">
+                                            <div class="row bagages">
                                                 <div class="col-md-12">
-                                                    <h4 class="darkviolet">Bagages autorisés :</h4>
+                                                    <h4 class="darkviolet"><strong>Bagages autorisés :</strong></h4>
                                                 </div>
                                                 <div class="col-md-12">
 
@@ -78,11 +78,11 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h4 class="darkviolet">Préférences :</h4>
+                                                    <h4 class="darkviolet"><strong>Préférences :</strong></h4>
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="row">
+                                                    <div class="row preferences">
                                                         <a data-toggle="tooltip" href="javascript:void(0);"
                                                            title="{% if not trajet.preferences.fumeurs %}Non{% endif %} Fumeur">
                                                             <i class="flat flaticon-cigar flat-2x  {% if trajet.preferences.fumeurs %}darkviolet{% endif %}"></i>
@@ -121,12 +121,20 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h4>Véhicule :</h4>
+                                                    <h4 class="darkviolet"><strong>Véhicule :</strong></h4>
                                                     {{ trajet.vehicule.fullNameCar }}
-                                                    <i class="ion ion-model-s" style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
+                                                    <i class="ion ion-model-s"
+                                                       style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
                                                 </div>
                                             </div>
 
+
+                                            <p>
+                                                <strong>{{ trajet.nbPlacesRestants }}</strong> place(s) disponible(s).
+                                            </p>
+                                            <p>
+                                                <strong>{{ trajet.totalPrix }} TND</strong> par passager
+                                            </p>
 
                                         </div>
 
@@ -165,8 +173,25 @@
                             </div>
 
                             <div class="panel-footer">
-                                <a href="{{ path('trajet_edit',{'id':trajet.id}) }}" class="btn btn-primary blue-btn"><i class="ion ion-edit"></i> Modifier</a>
-                                <a href="{{ path('trajet_delete',{'id':trajet.id}) }}" class="btn btn-danger btn-maroon"><i class="ion ion-trash-a"></i> Supprimer</a>
+                                {% if app.user %}
+                                    {% if trajet.conducteur == app.user %}
+                                        <a href="{{ path('trajet_edit',{'id':trajet.id}) }}"
+                                           class="btn btn-primary blue-btn"><i class="ion ion-edit"></i> Modifier</a>
+                                        <a href="{{ path('trajet_delete',{'id':trajet.id}) }}"
+                                           class="btn btn-danger btn-maroon"><i class="ion ion-trash-a"></i>
+                                            Supprimer</a>
+                                    {% else %}
+
+                                        {% if not trajet.reserverByPassage(app.user) %}
+                                            <a id="reservation" href="{{ path('trajet_demande_reservation',{'id':trajet.id}) }}"
+                                               class="btn btn-warning"><i class="ion ion-thumbsup"></i> Choisir ce
+                                                trajet</a>
+
+                                        {% endif %}
+                                    {% endif %}
+
+                                {% endif %}
+
                             </div>
 
                         </div>
@@ -259,6 +284,8 @@
             });
 
 
+
+
         });
     </script>
 
@@ -293,11 +320,11 @@
             $Arraywaypts = $map.data('waypoints').split('|');
             $.each($Arraywaypts, function (i, val) {
                 //console.log(val);
-                if(val){
+                if (val) {
                     waypts.push({location: val});
                 }
 
-        });
+            });
 
             directionsService.route({
                 origin: $map.data('origine'),

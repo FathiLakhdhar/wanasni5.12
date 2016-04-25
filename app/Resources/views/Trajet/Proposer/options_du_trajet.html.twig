@@ -4,7 +4,7 @@
 <p>Choisissez les options disponibles en fonction de votre voiture et vos préférences</p>
 <div class="row">
     <div class="bagages col-md-12">
-        <div class="row">
+        <div class="row" id="bagage">
             <div class="col-md-3">
                 {{ form_label(form.Bagages,'Bagages autorisés :',{'label_attr': {'class': 'darkviolet'}} ) }}
             </div>
@@ -60,7 +60,7 @@
 
     <hr>
 
-    <div class="Preferences col-md-12">
+    <div class="Preferences col-md-12" id="Preferences">
         <div class="row">
             <div class="col-md-3">
                 {{ form_label(form.Preferences,'Préférences :',{'label_attr': {'class': 'darkviolet'}}) }}

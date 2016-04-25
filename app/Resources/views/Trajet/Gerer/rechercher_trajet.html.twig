@@ -101,15 +101,50 @@
                     <div class="text-center">
                         <h3 class="alert alert-success"><span class="">{{ trajets|length }}</span> TRAJETS TROUVÉS</h3>
                     </div>
-                    <ul>
+
                         {% for trajet in trajets %}
-                            <li>
-                                {{ trajet.id }} : {{ trajet.origine.lieu }} ==> {{ trajet.destination.lieu }}
-                                <ul>
-                                    <li> {{ trajet.datesAllerToArray|join('|') }}  </li>
-                                    <li> {{ trajet.datesRetourToArray|join('|') }}  </li>
-                                </ul>
-                            </li>
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        {{ trajet.origine.lieu }}
+                                        {% if trajet.roundTrip %}
+                                            <i class="ion ion-arrow-swap"></i>
+                                        {% else %}
+                                            <i class="ion ion-arrow-right-c"></i>
+                                        {% endif %}
+                                        {{ trajet.destination.lieu }}
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>
+                                                Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                            </p>
+                                            <p>
+                                                {{ trajet.nbPlacesRestants }} place(s) disponible(s).
+                                            </p>
+                                            <p>
+                                                {{ trajet.totalPrix }} TND par passager
+                                            </p>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <a href="{{ path('trajet_show',{'id':trajet.id}) }}"
+                                               class="btn btn-green"><strong><i class="ion ion-edit"></i> + détails</strong></a>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
 
                         {% else %}
                             <div class="alert alert-info">
@@ -118,7 +153,7 @@
                             </div>
 
                         {% endfor %}
-                    </ul>
+
 
 
                 </div>

@@ -1178,5 +1178,28 @@ class Trajet
     }
 
 
+    public function ChangeNbPlacesRestant()
+    {
+        if($this->getNbPlacesRestants() > 0){
+            $this->nbPlacesRestants-=1;
+        }
+
+        return $this;
+    }
+
+
+    public function isReserverByPassage(User $passage)
+    {
+        $bool=false;
+        foreach($this->reservations as $r){
+            if($r->getPassager()->getId() == $passage->getId()){
+                $bool= true;
+                break;
+            }
+        }
+        return $bool;
+    }
+
+
 
 }
