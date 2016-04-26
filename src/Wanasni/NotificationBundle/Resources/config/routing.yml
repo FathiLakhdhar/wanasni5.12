@@ -1,3 +1,1 @@
-wanasni_notification_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: WanasniNotificationBundle:Default:index }
+

@@ -1,5 +1,6 @@
 <?php
 namespace Wanasni\TrajetBundle\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,8 +40,25 @@ class TrajetController extends Controller
      * @Route("/covoiturages-trajets-reserve", name="mes-reservations" )
      */
     public function MesReservationAction(){
-        return $this->render(':Trajet/Gerer:voir_mes_reservation.html.twig');
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+        $reservations=$this->getUser()->getReservations();
+        $trajets= new ArrayCollection();
+        foreach($reservations as $reservation){
+            $trajets->add($reservation->getTrajet());
+        }
+
+        return $this->render(':Trajet/Gerer:voir_mes_reservation.html.twig',array(
+            'reservations'=>$reservations,
+            'trajets'=>$trajets
+        ));
     }
+
+
+
+
     /**
      * @Route("/mes-alertes", name="mes-alertes")
      */

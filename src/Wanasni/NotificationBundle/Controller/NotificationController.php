@@ -2,14 +2,78 @@
 
 namespace Wanasni\NotificationBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Wanasni\NotificationBundle\Entity\Notification;
+use Wanasni\NotificationBundle\Services\TypeNotification;
 
 class NotificationController extends Controller
 {
+
+
+    /**
+     * @Route(path="/", name="vos_notifications")
+     */
+    public function notificationAction()
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $rep=$this->getDoctrine()->getManager()->getRepository('WanasniNotificationBundle:Notification');
+
+        $notifications=$rep->findBy(array('user'=>$this->getUser()),array('notifAt'=>'desc'));
+
+
+        return $this->render(':Notification:list_notification.html.twig',array(
+            'notifications'=>$notifications
+        ));
+
+    }
+
+
+
+    /**
+     * @Route(path="/accepte-reservation/{id}" , name="reservation_accept")
+     * @ParamConverter("notification", class="WanasniNotificationBundle:Notification")
+     */
+    public function AcceptAction(Notification $notification)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $reservation=$notification->getReservation();
+        $trajet=$reservation->getTrajet();
+
+        $reservation->setEtat(true);
+        $trajet->setNbPlacesRestants($trajet->getNbPlacesRestants()-1);
+
+        $serviceNotif=$this->container->get('wanasni_notification.create');
+        $notif_accept=$serviceNotif->CreateNotification($reservation,$reservation->getPassager(),TypeNotification::accepte);
+
+
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($reservation);
+        $em->persist($trajet);
+        $em->persist($notif_accept);
+
+        $em->flush();
+
+
+        $serviceNotif->EnvoyeEmail($notif_accept);
+
+        return $this->redirect($this->generateUrl('trajet_show',array(
+            'id'=>$trajet->getId()
+        )));
+    }
+
 
 
     /**
@@ -24,7 +88,10 @@ class NotificationController extends Controller
         }
 
 
-        $notifications=$this->getUser()->getNotifications();
+        $rep=$this->getDoctrine()->getManager()->getRepository('WanasniNotificationBundle:Notification');
+
+        $notifications=$rep->findBy(array('user'=>$this->getUser()),array('notifAt'=>'desc'));
+
         $arr_notif=array();
         foreach($notifications as $notif){
             $arr_notif[]=array(

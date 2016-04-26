@@ -229,7 +229,7 @@ class Trajet
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Reservation", mappedBy="trajet")
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Reservation", mappedBy="trajet", cascade={"all"}, fetch="EAGER")
      */
     private $reservations;
 
@@ -1165,8 +1165,16 @@ class Trajet
             $p+=$prix;
         }
         $this->setTotalPrix($p);
-        $this->nbPlacesRestants=$this->nbPlaces;
         $this->setProposerAt(new \DateTime());
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->nbPlacesRestants=$this->nbPlaces;
     }
 
 
@@ -1181,7 +1189,7 @@ class Trajet
     public function ChangeNbPlacesRestant()
     {
         if($this->getNbPlacesRestants() > 0){
-            $this->nbPlacesRestants-=1;
+            $this->nbPlacesRestants = $this->nbPlacesRestants-1;
         }
 
         return $this;

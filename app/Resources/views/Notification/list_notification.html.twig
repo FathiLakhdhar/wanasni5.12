@@ -1,0 +1,48 @@
+{% extends ':Notification:notification.html.twig' %}
+
+
+
+{% block notification_contenu %}
+
+    {% for notification in notifications %}
+
+
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" alt="" style="width: 64px; height: 64px;"
+                             src="{{ asset(notification.reservation.passager.photo.webPath) }}" data-holder-rendered="true">
+                    </a>
+                </div>
+                <div class="media-body pos-relative">
+                    <h3 class="media-heading">{{ notification.user.username }}</h3>
+                    <p>{{ notification.contenu }}</p>
+
+                    <small class="pull-right" style="position: absolute;top: 0px;right: 0px;color: #999;">{{ notification.notifAt|date('F jS \\a\\t g:ia') }}</small>
+
+
+                    {% if notification.type=="demande" %}
+                        {% if notification.reservation.etat == false %}
+                            <a href="{{ path('reservation_accept',{'id':notification.id}) }}" class="notifications-icon accepte"><i class="ion ion-checkmark-circled "></i></a>
+                        {% else %}
+                            <a class="notifications-icon refuse"><i class="ion ion-close-circled"></i></a>
+                        {% endif %}
+                    {% else %}
+
+                    {% endif %}
+
+
+
+
+                </div>
+            </div>
+
+
+
+    {% else %}
+        <div class="alert alert-info">
+            <p> pas des notifications </p>
+        </div>
+    {% endfor %}
+
+{% endblock notification_contenu %}
