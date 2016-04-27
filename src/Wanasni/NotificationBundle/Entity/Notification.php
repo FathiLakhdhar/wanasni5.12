@@ -84,7 +84,6 @@ class Notification
     public function setNotifAt($notifAt)
     {
         $this->notifAt = $notifAt;
-    
         return $this;
     }
 

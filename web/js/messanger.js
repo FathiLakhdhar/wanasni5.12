@@ -55,10 +55,12 @@
                     break;
             }
 
-            $new = $('<li class="' + $class + '">' +
+            $new = $('<li class="' + $class + ' pos-relative">' +
                 '<a href="#">' +
                 '<i class="' + $icon + ' pull-left"></i>' +
                 '<p>' + $notif.contenu + '</p>' +
+                '</a>' +
+                '<i class="ion ion-android-radio-button-on marker-lu"></i>' +
                 '</li>');
 
             element.append($new);

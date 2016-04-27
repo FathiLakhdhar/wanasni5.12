@@ -34,14 +34,14 @@ class Trajet
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"}, fetch="EAGER")
      * @Assert\Valid()
      */
     private $Origine;
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="Wanasni\TrajetBundle\Entity\Point", cascade={"persist","remove"}, fetch="EAGER")
      * @Assert\Valid()
      */
     private $Destination;
@@ -203,14 +203,14 @@ class Trajet
 
     /**
      * @var Vehicule
-     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets")
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $vehicule;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User",inversedBy="trajets")
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User",inversedBy="trajets", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $conducteur;
@@ -424,7 +424,10 @@ class Trajet
      */
     public function setNbPlacesRestants($nbPlacesRestants)
     {
-        $this->nbPlacesRestants = $nbPlacesRestants;
+
+        if($nbPlacesRestants <= $this->nbPlaces && $nbPlacesRestants >= 0){
+            $this->nbPlacesRestants = $nbPlacesRestants;
+        }
 
         return $this;
     }

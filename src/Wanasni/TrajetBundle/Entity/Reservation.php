@@ -40,7 +40,7 @@ class Reservation
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Wanasni\NotificationBundle\Entity\Notification", mappedBy="reservation")
+     * @ORM\OneToMany(targetEntity="Wanasni\NotificationBundle\Entity\Notification", mappedBy="reservation" ,cascade={"remove"})
      */
     private $notifications;
 

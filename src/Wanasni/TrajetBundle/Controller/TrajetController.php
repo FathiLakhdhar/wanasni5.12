@@ -63,7 +63,21 @@ class TrajetController extends Controller
      * @Route("/mes-alertes", name="mes-alertes")
      */
     public function MesAlertesAction(){
-        return $this->render(':Trajet/Gerer:voir_mes_alertes.html.twig');
+
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+        $rep= $this->getDoctrine()->getManager()->getRepository('WanasniTrajetBundle:Alert');
+        $alerts= $rep->findBy(
+            array('email'=>$this->getUser()->getEmail()),
+            array('createAt'=>'desc')
+        );
+
+
+        return $this->render(':Trajet/Gerer:voir_mes_alertes.html.twig',array(
+            'alertes'=>$alerts
+        ));
     }
 
 
@@ -142,10 +156,17 @@ class TrajetController extends Controller
     /**
      *
      * @Route("/voir-trajet/{id}", name="trajet_show")
-     * @ParamConverter("trajet", class="WanasniTrajetBundle:Trajet")
+     *
      */
-    public function ShowAction(Trajet $trajet)
+    public function ShowAction($id)
     {
+
+
+        $rep= $this->getDoctrine()->getManager()->getRepository('WanasniTrajetBundle:Trajet');
+
+        $trajet=$rep->getTrajetById($id);
+
+
         return $this->render(':Trajet/Gerer:voir_trajet.html.twig',
             array(
                 'trajet' => $trajet,
@@ -200,7 +221,9 @@ class TrajetController extends Controller
                 $em=$this->getDoctrine()->getManager();
                 $em->persist($alert);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('info','Alert create');
+                $this->get('session')->getFlashBag()
+                    ->add('success','Vous avez créé une alerte. Vous recevrez donc un e-mail :
+• à chaque fois qu\'un conducteur publiera un trajet qui correspond à vos besoins');
                 return $this->redirect($this->generateUrl('trajet_search'));
             }
         }
@@ -224,12 +247,20 @@ class TrajetController extends Controller
 
     /**
      * @Route("/modifier-trajet/{id}", name="trajet_edit")
-     * @ParamConverter("trajet", class="WanasniTrajetBundle:Trajet")
      */
-    public function EditAction(Trajet $trajet, Request $request){
+    public function EditAction($id, Request $request){
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
         }
+
+        $rep= $this->getDoctrine()->getManager()->getRepository('WanasniTrajetBundle:Trajet');
+
+        $trajet=$rep->getTrajetById($id);
+
+        if(!$trajet){
+            throw new EntityNotFoundException();
+        }
+
 
         if($trajet->getConducteur() != $this->getUser()){
             throw new AccessDeniedException();

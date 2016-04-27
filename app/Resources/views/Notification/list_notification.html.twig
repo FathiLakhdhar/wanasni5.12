@@ -7,15 +7,26 @@
     {% for notification in notifications %}
 
 
+
+        {% if notification.type=="demande" %}
+            {% set notif_par = notification.reservation.passager %}
+        {% else %}
+            {% set notif_par = notification.reservation.trajet.conducteur %}
+        {% endif %}
+
+
+
+
+
             <div class="media">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object" alt="" style="width: 64px; height: 64px;"
-                             src="{{ asset(notification.reservation.passager.photo.webPath) }}" data-holder-rendered="true">
+                             src="{{ asset(notif_par.photo.webPath) }}" data-holder-rendered="true">
                     </a>
                 </div>
                 <div class="media-body pos-relative">
-                    <h3 class="media-heading">{{ notification.user.username }}</h3>
+                    <h3 class="media-heading">{{ notif_par.username }}</h3>
                     <p>{{ notification.contenu }}</p>
 
                     <small class="pull-right" style="position: absolute;top: 0px;right: 0px;color: #999;">{{ notification.notifAt|date('F jS \\a\\t g:ia') }}</small>
@@ -24,9 +35,8 @@
                     {% if notification.type=="demande" %}
                         {% if notification.reservation.etat == false %}
                             <a href="{{ path('reservation_accept',{'id':notification.id}) }}" class="notifications-icon accepte"><i class="ion ion-checkmark-circled "></i></a>
-                        {% else %}
-                            <a class="notifications-icon refuse"><i class="ion ion-close-circled"></i></a>
                         {% endif %}
+                        <a href="{{ path('reservation_refuse',{'id':notification.id}) }}" class="notifications-icon refuse" style="right: 57px;"><i class="ion ion-close-circled"></i></a>
                     {% else %}
 
                     {% endif %}

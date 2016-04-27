@@ -92,7 +92,7 @@ class NotificationService
                 $msg = "votre demande a été acceptée";
                 break;
             case "refuse":
-                $msg = "votre demande a été acceptée";
+                $msg = "votre demande a été refuse";
                 break;
         }
         return $msg;

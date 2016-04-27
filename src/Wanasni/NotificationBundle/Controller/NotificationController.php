@@ -52,6 +52,8 @@ class NotificationController extends Controller
         $reservation=$notification->getReservation();
         $trajet=$reservation->getTrajet();
 
+        $notification->setLu(true);
+
         $reservation->setEtat(true);
         $trajet->setNbPlacesRestants($trajet->getNbPlacesRestants()-1);
 
@@ -62,6 +64,7 @@ class NotificationController extends Controller
         $em=$this->getDoctrine()->getManager();
         $em->persist($reservation);
         $em->persist($trajet);
+        $em->persist($notification);
         $em->persist($notif_accept);
 
         $em->flush();
@@ -74,6 +77,52 @@ class NotificationController extends Controller
         )));
     }
 
+
+
+    /**
+     * @Route(path="/refuse-reservation/{id}" , name="reservation_refuse")
+     * @ParamConverter("notification", class="WanasniNotificationBundle:Notification")
+     */
+    public function RefuseAction(Notification $notification)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $reservation=$notification->getReservation();
+        $trajet=$reservation->getTrajet();
+
+
+
+        if($trajet->isReserverByPassage($reservation->getPassager()) && $reservation->getEtat() == true){
+            $trajet->setNbPlacesRestants($trajet->getNbPlacesRestants()+1);
+            $reservation->setEtat(false);
+        }
+
+        $notification->setLu(true);
+
+
+
+        $serviceNotif=$this->container->get('wanasni_notification.create');
+        $notif_refuse=$serviceNotif->CreateNotification($reservation,$reservation->getPassager(),TypeNotification::Refuse);
+
+
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($reservation);
+        $em->persist($notification);
+        $em->persist($trajet);
+        $em->persist($notif_refuse);
+
+        $em->flush();
+
+
+        $serviceNotif->EnvoyeEmail($notif_refuse);
+
+        return $this->redirect($this->generateUrl('trajet_show',array(
+            'id'=>$trajet->getId()
+        )));
+    }
 
 
     /**
@@ -131,6 +180,31 @@ class NotificationController extends Controller
             'NbUnreadNotifications'=>$NbUnreadNotifications
         ));
     }
+
+    /**
+     * @return JsonResponse
+     * @Route(path="/read/{id}", name="read_notification")
+     * @ParamConverter("notif", class="WanasniNotificationBundle:Notification")
+     */
+    public function ApiReadNotification(Notification $notif)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedException();
+        }
+
+        $notif->setLu(true);
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($notif);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'error'=>array(
+                'code'=>200,
+                'message'=>'success'
+            )
+        ),200);
+    }
+
 
 
 }

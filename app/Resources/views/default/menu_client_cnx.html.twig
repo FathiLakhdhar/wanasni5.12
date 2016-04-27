@@ -3,14 +3,16 @@
     <li class="dropdown menu-message">
         <a class="dropdown-toggle" data-toggle="dropdown" id="envelope_click">
             <i class="fa fa-envelope-o"></i>
-            <span class="label label-info nb_msg_unread" id="nb_msg_unread" data-thread-nb-unread="{{ fos_message_nb_unread() }}">{{ fos_message_nb_unread() }}</span>
+            {% set thread_nb_unread = fos_message_nb_unread() %}
+
+            <span class="label label-info nb_msg_unread" id="nb_msg_unread" data-thread-nb-unread="{{ thread_nb_unread }}">{{ thread_nb_unread }}</span>
         </a>
 
 
 
         {# Menu Message #}
         <ul class="dropdown-menu triangle-up" >
-            <li class="header message_nb_unread" data-messages-nb-unread="{{ path('api_nb_unread_messages') }}">You have <span class="nb_msg_unread">{{ fos_message_nb_unread() }}</span> messages</li>
+            <li class="header message_nb_unread" data-messages-nb-unread="{{ path('api_nb_unread_messages') }}">You have <span class="nb_msg_unread">{{ thread_nb_unread }}</span> messages</li>
             <li>
                 <!-- Ajax Load img.Gif -->
                 <div id="msg_load" class="text-center" style="display: none; position: relative">
@@ -33,12 +35,15 @@
     <li class="dropdown menu-Notification">{# Notification #}
         <a href="" class="dropdown-toggle" data-toggle="dropdown" id="notif_click">
             <i class="fa fa-bell-o"></i>
-            <span id="nb_notif_unread" class="label label-warning nb_notif_unread" data-notif-nb-unread="{{ wanasni_notification_nb_unread() }}">{{ wanasni_notification_nb_unread() }}</span>
+
+            {% set notif_nb_unread = wanasni_notification_nb_unread() %}
+
+            <span id="nb_notif_unread" class="label label-warning nb_notif_unread" data-notif-nb-unread="{{ notif_nb_unread }}">{{ notif_nb_unread }}</span>
         </a>
 
         {# Menu Notification #}
         <ul class="dropdown-menu triangle-up">
-            <li class="header notifications_nb_unread" data-notifications-nb-unread-url="{{ path('api_nb_unread_notifications') }}">You have <span class="nb_notif_unread">{{ wanasni_notification_nb_unread() }}</span> Notifications</li>
+            <li class="header notifications_nb_unread" data-notifications-nb-unread-url="{{ path('api_nb_unread_notifications') }}">You have <span class="nb_notif_unread">{{ notif_nb_unread }}</span> Notifications</li>
             <li>
                 <!-- Ajax Load img.Gif -->
                 <div id="notif_load" class="text-center" style="display: none; position: relative">
@@ -82,16 +87,19 @@
                 <li>
                     <ul class="menu">
                         <li>
-                            <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i>Profil</a>
+                            <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i> Profil</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-star"></i>Avis</a>
+                            <a href="{{ path('mes-alertes') }}"><i class="fa fa-bullhorn"></i> Alertes</a>
                         </li>
                         <li>
-                            <a href="{{ path('mes-trajets') }}"><i class="fa fa-car "></i>Covoiturage</a>
+                            <a href="#"><i class="fa fa-star"></i> Avis</a>
                         </li>
                         <li>
-                            <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i>Deconnexion</a>
+                            <a href="{{ path('mes-trajets') }}"><i class="fa fa-car"></i> Covoiturage</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> Deconnexion</a>
                         </li>
                     </ul>
                 </li>

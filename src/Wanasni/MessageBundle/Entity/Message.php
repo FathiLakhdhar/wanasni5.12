@@ -31,7 +31,7 @@ class Message extends BaseMessage
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User", fetch="EAGER")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $sender;
@@ -40,7 +40,8 @@ class Message extends BaseMessage
      * @ORM\OneToMany(
      *   targetEntity="Wanasni\MessageBundle\Entity\MessageMetadata",
      *   mappedBy="message",
-     *   cascade={"all"}
+     *   cascade={"all"},
+     *   fetch="EAGER"
      * )
      * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
      */

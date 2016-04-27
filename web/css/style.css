@@ -63,6 +63,13 @@ label{
     font-weight: 500;
 }
 
+
+ol>li{
+    font-size: 12px;
+}
+
+
+
 a,a:hover,a:active,a:focus{
     text-decoration: none;
 }
@@ -350,6 +357,19 @@ Menu nav
     color: #d43f3a;
 }
 
+
+.marker-lu {
+    font-size: 20px;
+    position: absolute;
+    top: 15px;
+    right: 2px;
+    background-color: transparent;
+    color: #999;
+    cursor: pointer;
+}
+.marker-lu:hover{
+    color: #3a414d;
+}
 /*=========================
         Menu xs
 ==========================*/
@@ -773,9 +793,6 @@ header .links-anonymouse a.btn-Contour{
 }
 
 
-
-
-
 header .links-anonymouse a.btn-vert:hover{
     color: #6d7a8b;
     border-color: #6d7a8b;
@@ -928,6 +945,10 @@ Color
 .red {
     color: #FA6C65 !important;
 }
+.bg-red{
+    background-color: #FA6C65 !important;
+}
+
 .green {
     color: #1ABB9C !important;
 }

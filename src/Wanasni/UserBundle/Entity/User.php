@@ -113,7 +113,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * @var Photo
-     * @ORM\OneToOne(targetEntity="Wanasni\PhotoBundle\Entity\Photo", cascade={"persist","remove"}, inversedBy="user")
+     * @ORM\OneToOne(targetEntity="Wanasni\PhotoBundle\Entity\Photo", cascade={"persist","remove"}, inversedBy="user", fetch="EAGER")
      */
     private $photo;
 

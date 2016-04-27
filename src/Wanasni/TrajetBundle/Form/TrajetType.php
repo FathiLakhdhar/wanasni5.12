@@ -5,6 +5,7 @@ namespace Wanasni\TrajetBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Entity\WayDate;
 use Wanasni\UserBundle\Entity\User;
 
@@ -137,12 +138,7 @@ class TrajetType extends AbstractType
                 'attr' => array('class' => 'totalDuration'),
                 'data' => '0 heurs 0 min',
             ))
-/*
-            ->add('Segments', 'collection', array(
-                'type' => new SegmentType(),
-                'allow_add' => true,
-                'allow_delete' => true,
-            ))*/
+
 
             ->add('arrPrix','collection',array(
                 'type'=>'number',
@@ -161,7 +157,8 @@ class TrajetType extends AbstractType
                 'property' => 'fullNameCar',
                 'choices' => $this->user->getVehicules(),
                 'by_reference'=>false,
-                'attr' => array('class' => 'form-control')
+                'attr' => array('class' => 'form-control'),
+
             ))
             ->add('cgu', 'checkbox', array(
                 'attr' => array('class' => 'iCheck'),

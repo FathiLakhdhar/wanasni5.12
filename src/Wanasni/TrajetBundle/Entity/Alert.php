@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\AlertRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Alert
 {
@@ -57,6 +58,12 @@ class Alert
      * @ORM\Column(name="date", type="date")
      */
     private $date;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createAt;
 
     /**
      * Alert constructor.
@@ -194,4 +201,39 @@ class Alert
     {
         return $this->destination;
     }
+
+    /**
+     * Set createAt
+     *
+     * @param \DateTime $createAt
+     * @return Alert
+     */
+    public function setCreateAt($createAt)
+    {
+        $this->createAt = $createAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreateAt()
+    {
+        return $this->createAt;
+    }
+
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->createAt=new \DateTime();
+    }
+
+
 }
