@@ -5,7 +5,7 @@
     <a  href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}"
        class="thread {% if not fos_message_is_read(thread) %}bg-info{% else %}bg-gray{% endif %}">
         <div class="pull-left">
-            <img src="{{ asset('img/user.jpg') }}" class="img-circle message-user-img"
+            <img src="{{ asset(thread.lastMessage.sender.photo.webPath) }}" class="img-circle message-user-img"
                  alt="User Image">
         </div>
         <h4 style="font-weight: 600">

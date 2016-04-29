@@ -21,10 +21,19 @@
                         <a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i>Profil</a>
                     </li>
                     <li>
+                        <a href="{{ path('fos_message_inbox') }}"><i class="fa fa-envelope-o"></i>Message</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('vos_notifications') }}"><i class="fa fa-bell-o"></i>Notification</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('mes-alertes') }}"><i class="fa fa-bullhorn"></i>Alertes</a>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-star"></i>Avis</a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-car "></i>Covoiturage</a>
+                        <a href="{{ path('mes-trajets') }}"><i class="fa fa-car "></i>Covoiturage</a>
                     </li>
                     <li>
                         <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i>Deconnexion</a>

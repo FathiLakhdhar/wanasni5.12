@@ -206,6 +206,12 @@ function NotifNotification() {
 }
 
 $(document).ready(function () {
+
+    setInterval(function () {
+
+
+    }, 3000);
+
     UpdateMenuMsg();
     UpdateMenuNotif();
     NotifMessage();

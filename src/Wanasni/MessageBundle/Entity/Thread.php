@@ -31,7 +31,7 @@ class Thread extends BaseThread
      * @ORM\OneToMany(
      *   targetEntity="Wanasni\MessageBundle\Entity\Message",
      *   mappedBy="thread",
-     *   fetch="EAGER"
+     *
      * )
      * @var Message[]|\Doctrine\Common\Collections\Collection
      */

@@ -1,3 +1,15 @@
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    'default/index.html.twig'
+
+
+wanasni_admin:
+    resource: "@WanasniAdminBundle/Controller"
+    type: annotation
+    prefix:   /admin
+
 wanasni_photo:
     resource: "@WanasniPhotoBundle/Controller"
     type:     annotation
@@ -13,20 +25,12 @@ wanasni_vehicule:
 wanasni_message:
     resource: "@WanasniMessageBundle/Controller"
     type:     annotation
-    prefix: /messages
+    prefix:   /messages
 
 wanasni_notification:
     resource: "@WanasniNotificationBundle/Controller"
     type:     annotation
-    prefix: /notifications
-
-
-homepage:
-    path: /
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template:    'default/index.html.twig'
-
+    prefix:   /notifications
 
 wanasni_trajet:
     resource: "@WanasniTrajetBundle/Controller"
@@ -40,5 +44,5 @@ fos_user:
 #FosMessageBundle
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
-    prefix: /messages
+    prefix:   /messages
 

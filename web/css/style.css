@@ -1018,7 +1018,7 @@ Color
 }
 
 .panel-title {
-    font-size: 18px;
+    font-size: 20px;
 }
 .panel-heading {
     padding: 20px 15px;
@@ -1030,12 +1030,68 @@ Color
     background-color: #009688 !important;
     color: #FFFFFF;
 }
+.panel-info>.panel-heading {
+    background: inherit;
+    background-color: #5BC0DE !important;
+    color: #FFFFFF;
+}
 
 
 .list-group-item{
     border-radius: 0px;
 
 }
+
+
+.panel-conducteur{
+    background-color: #009688;
+    border-radius: 5px;
+    position: absolute;
+    top: 15px;
+    right: 55px;
+}
+
+
+.info-box {
+    display: block;
+    min-height: 90px;
+    background: #fff;
+    width: 100%;
+    box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+.info-box-icon {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 45px;
+    line-height: 90px;
+    background: rgba(0,0,0,0.2);
+}
+
+.info-box-text{
+    font-size: 24px;
+    font-family: "Calibri Light", 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+.info-box-content {
+    padding: 5px 10px;
+    margin-left: 90px;
+}
+.info-box-number {
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 
 /*================================
     CONATCT SECTION STYLES
@@ -1427,6 +1483,44 @@ span.date-icon{
 .ui-autocomplete-loading {
     background: white url("../img/Preloader.gif") right center no-repeat;
 }
+
+
+
+/********************
+tooltip
+***************/
+.ui-tooltip {
+    background: #FFFFFF;
+    border: 2px solid white;
+}
+.ui-tooltip {
+    padding: 5px 5px;
+    color: #000000;
+    border-radius: 0px;
+    font: bold 14px "Helvetica Neue", Sans-Serif;
+    box-shadow: 0 0 7px black;
+}
+
+
+
+.img-zoom {
+    width: 310px;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+}
+
+.transition {
+    -webkit-transform: scale(2);
+    -moz-transform: scale(2);
+    -o-transform: scale(2);
+    transform: scale(2);
+}
+
+
+
+
 
 
 /*****************************

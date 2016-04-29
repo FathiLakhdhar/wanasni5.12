@@ -186,7 +186,6 @@ class Trajet
     private $datesRetour;
 
 
-
     /**
      * @var \DateTime
      *
@@ -251,7 +250,7 @@ class Trajet
         $this->datesAller = new ArrayCollection();
         $this->datesRetour = new ArrayCollection();
         $this->reservations = new ArrayCollection();
-        $this->arrPrix=array();
+        $this->arrPrix = array();
         $this->Date_Allet_unique = date_create();
         $this->Date_Retour_unique = date_create();
         $this->regularBeginDate = date_create();
@@ -425,7 +424,7 @@ class Trajet
     public function setNbPlacesRestants($nbPlacesRestants)
     {
 
-        if($nbPlacesRestants <= $this->nbPlaces && $nbPlacesRestants >= 0){
+        if ($nbPlacesRestants <= $this->nbPlaces && $nbPlacesRestants >= 0) {
             $this->nbPlacesRestants = $nbPlacesRestants;
         }
 
@@ -819,9 +818,9 @@ class Trajet
     {
         $arr = array();
 
-        if($this->frequence=='UNIQUE'){
+        if ($this->frequence == 'UNIQUE') {
             $arr[] = $this->getDateAlletUnique()->format('Ymd');
-        }else{
+        } else {
             foreach ($this->getDatesAller() as $wayDate) {
                 $arr[] = date_format($wayDate->getDate(), 'Ymd');
             }
@@ -834,9 +833,9 @@ class Trajet
     public function getDatesRetourToArray()
     {
         $arr = array();
-        if($this->frequence=='UNIQUE' && $this->roundTrip){
+        if ($this->frequence == 'UNIQUE' && $this->roundTrip) {
             $arr[] = $this->getDateRetourUnique()->format('Ymd');
-        }else {
+        } else {
             foreach ($this->getDatesRetour() as $wayDate) {
                 $arr[] = date_format($wayDate->getDate(), 'Ymd');
             }
@@ -848,13 +847,13 @@ class Trajet
     {
 
         $arr = array();
-        if($this->frequence=='UNIQUE'){
+        if ($this->frequence == 'UNIQUE') {
             $arr[] = $this->getDateAlletUnique()->format('Y-m-d');
-            if($this->getDateRetourUnique()){
+            if ($this->getDateRetourUnique()) {
                 $arr[] = $this->getDateRetourUnique()->format('Y-m-d');
             }
 
-        }else {
+        } else {
             foreach ($this->getDatesAller() as $wayDate) {
                 $arr[] = $wayDate->getDate()->format('Y-m-d');
             }
@@ -867,13 +866,13 @@ class Trajet
     }
 
 
-
-    public function getAllPoint(){
+    public function getAllPoint()
+    {
         $arrCollection = new ArrayCollection();
 
         $arrCollection->add($this->getOrigine());
 
-        if($this->waypoints){
+        if ($this->waypoints) {
             foreach ($this->getWaypoints() as $waypoint) {
                 $arrCollection->add($waypoint);
             }
@@ -887,14 +886,15 @@ class Trajet
     }
 
 
-    public function getSegments(){
+    public function getSegments()
+    {
 
-        $arr_Collection= new ArrayCollection();
+        $arr_Collection = new ArrayCollection();
 
-        for($i=0;$i< $this->getAllPoint()->count()-1;$i++){
-            $segment= new Segment(
+        for ($i = 0; $i < $this->getAllPoint()->count() - 1; $i++) {
+            $segment = new Segment(
                 $this->getAllPoint()->get($i)->getLieu(),
-                $this->getAllPoint()->get($i+1)->getLieu(),
+                $this->getAllPoint()->get($i + 1)->getLieu(),
                 $this->arrPrix[$i]
             );
             $arr_Collection->add($segment);
@@ -966,7 +966,7 @@ class Trajet
     {
         if ($this->frequence == 'UNIQUE') {
 
-            $new=date_create();
+            $new = date_create();
 
             //Datealler Test
             if ($this->checkDate($this->getDateAlletUnique())) {
@@ -1025,13 +1025,13 @@ class Trajet
 
     public function RegularValid(ExecutionContextInterface $context)
     {
-        if($this->frequence=='REGULAR'){
+        if ($this->frequence == 'REGULAR') {
 
-            $new= date_create();
-            if($this->regularBeginDate->format('Ymd') == $new->format('Ymd')){
-            if ($this->heureAller->format('H:i') < $new->format('H:i')) {
-                $context->addViolationAt('heureAller', 'invalid heure aller !!');
-            }
+            $new = date_create();
+            if ($this->regularBeginDate->format('Ymd') == $new->format('Ymd')) {
+                if ($this->heureAller->format('H:i') < $new->format('H:i')) {
+                    $context->addViolationAt('heureAller', 'invalid heure aller !!');
+                }
             }
 
             if ($this->roundTrip) {
@@ -1044,7 +1044,6 @@ class Trajet
                     $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller + durée estime)');
                 }
             }
-
 
 
         }
@@ -1068,7 +1067,6 @@ class Trajet
     }
 
 
-
     /**
      * Set arrPrix
      *
@@ -1078,14 +1076,14 @@ class Trajet
     public function setArrPrix($arrPrix)
     {
         $this->arrPrix = $arrPrix;
-    
+
         return $this;
     }
 
     /**
      * Get arrPrix
      *
-     * @return array 
+     * @return array
      */
     public function getArrPrix()
     {
@@ -1108,7 +1106,6 @@ class Trajet
     }
 
 
-
     /**
      * Set Origine
      *
@@ -1119,14 +1116,14 @@ class Trajet
     {
         $origine->setWay(null);
         $this->Origine = $origine;
-    
+
         return $this;
     }
 
     /**
      * Get Origine
      *
-     * @return \Wanasni\TrajetBundle\Entity\Point 
+     * @return \Wanasni\TrajetBundle\Entity\Point
      */
     public function getOrigine()
     {
@@ -1143,14 +1140,14 @@ class Trajet
     {
         $destination->setWay(null);
         $this->Destination = $destination;
-    
+
         return $this;
     }
 
     /**
      * Get Destination
      *
-     * @return \Wanasni\TrajetBundle\Entity\Point 
+     * @return \Wanasni\TrajetBundle\Entity\Point
      */
     public function getDestination()
     {
@@ -1162,10 +1159,11 @@ class Trajet
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpload(){
-        $p=0;
-        foreach($this->arrPrix as $prix){
-            $p+=$prix;
+    public function preUpload()
+    {
+        $p = 0;
+        foreach ($this->arrPrix as $prix) {
+            $p += $prix;
         }
         $this->setTotalPrix($p);
         $this->setProposerAt(new \DateTime());
@@ -1177,7 +1175,7 @@ class Trajet
      */
     public function prePersist()
     {
-        $this->nbPlacesRestants=$this->nbPlaces;
+        $this->nbPlacesRestants = $this->nbPlaces;
     }
 
 
@@ -1191,26 +1189,29 @@ class Trajet
 
     public function ChangeNbPlacesRestant()
     {
-        if($this->getNbPlacesRestants() > 0){
-            $this->nbPlacesRestants = $this->nbPlacesRestants-1;
+        if ($this->getNbPlacesRestants() > 0) {
+            $this->nbPlacesRestants = $this->nbPlacesRestants - 1;
         }
 
         return $this;
     }
 
 
-    public function isReserverByPassage(User $passage)
+    public function isReserverByPassage(User $passage = null)
     {
-        $bool=false;
-        foreach($this->reservations as $r){
-            if($r->getPassager()->getId() == $passage->getId()){
-                $bool= true;
-                break;
+        $bool = false;
+
+        if ($passage != null) {
+
+            foreach ($this->reservations as $r) {
+                if ($r->getPassager()->getId() == $passage->getId()) {
+                    $bool = true;
+                    break;
+                }
             }
         }
         return $bool;
     }
-
 
 
 }

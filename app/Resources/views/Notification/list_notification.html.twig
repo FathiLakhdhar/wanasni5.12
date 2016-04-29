@@ -26,10 +26,16 @@
                     </a>
                 </div>
                 <div class="media-body pos-relative">
-                    <h3 class="media-heading">{{ notif_par.username }}</h3>
-                    <p>{{ notification.contenu }}</p>
+                    <h3 class="media-heading "><a class="tooltip_profil" title="" data-placement="top" data-tooltip-profil-url="{{ path('api_tooltip_profile',{'id':notif_par.id}) }}">{{ notif_par.username }}</a></h3>
+                    <p>
+                        {{ notification.contenu }}
+                        <a href="{{ path('trajet_show',{'id':notification.reservation.trajet.id}) }}" data-toggle="tooltip" data-placement="left" title="voir trajet">
+                            <i class="glyphicon glyphicon-road "></i>
+                        </a>
+                    </p>
 
                     <small class="pull-right" style="position: absolute;top: 0px;right: 0px;color: #999;">{{ notification.notifAt|date('F jS \\a\\t g:ia') }}</small>
+
 
 
                     {% if notification.type=="demande" %}

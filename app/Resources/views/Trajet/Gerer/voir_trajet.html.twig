@@ -20,7 +20,7 @@
                     <div class="thumbnail">
 
                         <div class="panel panel-success">
-                            <div class="panel-heading">
+                            <div class="panel-heading pos-relative">
                                 <h3 class="panel-title">
                                     {{ trajet.origine.lieu }}
 
@@ -31,6 +31,14 @@
                                     {% endif %}
                                     {{ trajet.destination.lieu }}
                                 </h3>
+                                <div class="panel-conducteur">
+                                    <div class="text-center" style="padding: 2px">
+                                        <img class="img-circle img-sm"
+                                             src="{{ asset(trajet.conducteur.photo.webPath) }}"
+                                             style="width: 70px;height: 70px;">
+                                        <p style="font-size: 18px">{{ trajet.conducteur.username }}</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="panel-body">
 
@@ -47,7 +55,7 @@
                                         <div class="col-md-12">
                                             <div class="row bagages">
                                                 <div class="col-md-12">
-                                                    <h4 class="darkviolet"><strong>Bagages autorisés :</strong></h4>
+                                                    <h4 class=""><strong>Bagages autorisés :</strong></h4>
                                                 </div>
                                                 <div class="col-md-12">
 
@@ -78,7 +86,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h4 class="darkviolet"><strong>Préférences :</strong></h4>
+                                                    <h4 class=""><strong>Préférences :</strong></h4>
                                                 </div>
 
                                                 <div class="col-md-12">
@@ -121,10 +129,12 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <h4 class="darkviolet"><strong>Véhicule :</strong></h4>
-                                                    {{ trajet.vehicule.fullNameCar }}
-                                                    <i class="ion ion-model-s"
-                                                       style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
+                                                    <h4 class=""><strong>Véhicule :</strong></h4>
+                                                    <p>
+                                                        {{ trajet.vehicule.fullNameCar }}
+                                                        <i class="ion ion-model-s"
+                                                           style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -142,13 +152,17 @@
                                     </div>
 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: 82px;">
 
-                                        {% set strDateAller= trajet.datesAllerToArray|join('|') %}
-                                        {% set strDateRetour= trajet.datesRetourToArray|join('|') %}
-                                        <div id="widgetCalendar" data-date-Aller="{{ strDateAller }}"
-                                             data-date-Retour="{{ strDateRetour }}" data-date-format="yy-mm-dd"
-                                             class="ll-skin-melon">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {% set strDateAller= trajet.datesAllerToArray|join('|') %}
+                                                {% set strDateRetour= trajet.datesRetourToArray|join('|') %}
+                                                <div id="widgetCalendar" data-date-Aller="{{ strDateAller }}"
+                                                     data-date-Retour="{{ strDateRetour }}" data-date-format="yy-mm-dd"
+                                                     class="ll-skin-melon">
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -170,6 +184,7 @@
 
                                 </div>
 
+
                             </div>
 
                             <div class="panel-footer">
@@ -183,7 +198,8 @@
                                     {% else %}
 
                                         {% if not trajet.reserverByPassage(app.user) %}
-                                            <a id="reservation" href="{{ path('trajet_demande_reservation',{'id':trajet.id}) }}"
+                                            <a id="reservation"
+                                               href="{{ path('trajet_demande_reservation',{'id':trajet.id}) }}"
                                                class="btn btn-warning"><i class="ion ion-thumbsup"></i> Choisir ce
                                                 trajet</a>
 
@@ -196,8 +212,48 @@
 
                         </div>
 
-
                     </div>
+
+
+                    {% if (app.user == trajet.conducteur) or (trajet.isReserverByPassage(app.user)) %}
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading white">
+                                        <h3 class="panel-title"><i class="fa fa-group"></i> Passages</h3>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        {% for reservation in trajet.reservations %}
+
+                                            {% if reservation.etat == true %}
+                                                <!-- Passages -->
+                                                <div class="col-md-6">
+                                                    <div class="info-box">
+                                                        <img class="info-box-icon bg-green"
+                                                             src="{{ asset(reservation.passager.photo.webPath) }}">
+                                                        <div class="info-box-content">
+                                                            <span class="info-box-text">{{ reservation.passager.username }}</span>
+                                                            <span class="info-box-number"></span>
+                                                        </div><!-- /.info-box-content -->
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        {% endfor %}
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    {% endif %}
+
+
                 </div>
                 <div class="col-md-4">
                     <div class="thumbnail">
@@ -234,6 +290,9 @@
                     </div>
                 </div>
             </div>
+
+
+
 
         {% else %}
             <div class="alert alert-warning">
@@ -282,8 +341,6 @@
             widgetCalendar.datepicker({
                 beforeShowDay: beforeShowDay
             });
-
-
 
 
         });

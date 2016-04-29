@@ -41,7 +41,6 @@ class Message extends BaseMessage
      *   targetEntity="Wanasni\MessageBundle\Entity\MessageMetadata",
      *   mappedBy="message",
      *   cascade={"all"},
-     *   fetch="EAGER"
      * )
      * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
      */

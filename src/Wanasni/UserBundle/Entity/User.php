@@ -274,6 +274,8 @@ class User extends BaseUser implements ParticipantInterface
     {
         $vehicules->setUser($this);
         $this->vehicules[] = $vehicules;
+
+        $this->addRole('ROLE_CONDUCTEUR');
     
         return $this;
     }

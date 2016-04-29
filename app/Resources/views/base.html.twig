@@ -197,6 +197,19 @@
 
             $("[data-toggle=tooltip]").tooltip();
 
+            $(".tooltip_profil").tooltip({
+                content: function(callback){
+                    var elem=$(this);
+                    var url=elem.data('tooltip-profil-url');
+                    $.ajax( url )
+                            .done(function(data) {
+                                callback(data);
+                            });
+
+                    return 'loading...';
+                }
+            });
+
             $( ".car-place-spinner" ).spinner({
                 min:1,
                 max:9

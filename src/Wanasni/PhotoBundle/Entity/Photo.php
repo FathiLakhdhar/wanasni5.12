@@ -28,7 +28,7 @@ class Photo
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path;
 
@@ -80,9 +80,7 @@ class Photo
     public function setFile(File $file = null)
     {
         $this->file = $file;
-        // check if we have an old image path
         if (isset($this->path)) {
-            // store the old name to delete after the update
             $this->temp = $this->path;
             $this->path = null;
         } else {
@@ -220,7 +218,6 @@ class Photo
 
         if (null !== $this->getFile()) {
             $this->valid=false;
-            // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
             $this->path = $filename.'.'.$this->getFile()->guessExtension();
         }
@@ -236,13 +233,11 @@ class Photo
             return;
         }
 
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
+
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
         // check if we have an old image
-        if (isset($this->temp) && $this->temp!=="avatar.png") {
+        if (isset($this->temp)) {
             // delete the old image
             unlink($this->getUploadRootDir().'/'.$this->temp);
             // clear the temp image path
@@ -267,30 +262,42 @@ class Photo
 
     public function getAbsolutePath()
     {
-        return null === $this->path
+        return (null === $this->path)
             ? null
             : $this->getUploadRootDir().'/'.$this->path;
     }
 
     public function getWebPath()
     {
-        return null === $this->path
+        return (null === $this->path || $this->valid==false)
+            ? $this->getBlankProfilePicture()
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+
+    public function getWebPathAdmin()
+    {
+        return (null === $this->path)
             ? null
             : $this->getUploadDir().'/'.$this->path;
     }
 
+
+
     protected function getUploadRootDir()
     {
-        // the absolute directory path where uploaded
-        // documents should be saved
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
         return 'uploads/photos';
     }
+
+    protected function getBlankProfilePicture()
+    {
+        return 'img/blank-profile-picture.png';
+    }
+
 
 }

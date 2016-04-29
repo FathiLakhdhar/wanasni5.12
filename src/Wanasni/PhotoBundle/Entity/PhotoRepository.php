@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class PhotoRepository extends EntityRepository
 {
+
+
+    public function getPhotosNotValid()
+    {
+        $q= $this->createQueryBuilder('p');
+        $q
+            ->where('p.valid = false')
+            ->andWhere('p.path IS NOT NULL')
+
+        ;
+
+
+        return $q->getQuery()->getResult();
+        
+    }
+    
+    
 }
