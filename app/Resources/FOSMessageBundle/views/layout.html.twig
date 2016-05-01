@@ -147,12 +147,13 @@
                                     console.log("data:", data.message);
                                     $('#direct-chat-messages').addMsgrightHtml(data.message);
                                     $('.box-body').animate({"scrollTop": $('.box-body')[0].scrollHeight}, "slow");
+                                    $('#message_body').val("");
                                 })
                                 .fail(function (jqXHR, textStatus, errorThrown) {
                                     console.log('ggg :' + jqXHR.responseJSON.error.message);
                                     $('.error-form').html(jqXHR.responseJSON.error.message);
                                 });
-                        $('#message_body').val("");
+
                     }
             );
 

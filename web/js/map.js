@@ -248,7 +248,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 
             } else {
-                //window.alert('Directions request failed due to ' + status);
                 console.log('Directions request failed due to ' + status);
             }
         });

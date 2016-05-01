@@ -50,7 +50,6 @@ function AutoComplete($id) {
         } else {
             //window.alert("Autocomplete's returned place contains no geometry");
             console.log("Autocomplete's returned place contains no geometry");
-            return;
         }
 
     });

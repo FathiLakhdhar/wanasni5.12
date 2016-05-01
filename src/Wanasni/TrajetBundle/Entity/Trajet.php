@@ -1000,11 +1000,11 @@ class Trajet
                     if (intval(date_diff($this->getDateRetourUnique(), $this->getDateAlletUnique())->format('%R%a')) == 0) {
                         //Heure Retour test
 
-                        if (intval($this->heureRetour->format('HI')) <= intval($this->heureAller->format('HI'))) {
+                        if (intval($this->heureRetour->format('Hi')) <= intval($this->heureAller->format('Hi'))) {
                             $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller)');
                         }
 
-                        if (intval(date_diff($this->heureAller, $this->heureRetour)->format('%H%I')) < intval(date_create($this->getTotalDuration())->format('HI'))) {
+                        if (intval(date_diff($this->heureAller, $this->heureRetour)->format('%H%I')) < intval(date_create($this->getTotalDuration())->format('Hi'))) {
                             $context->addViolationAt('heureRetour', 'invalid heure retour (heure retour doit etre superieur à heure aller + durée estime)');
                         }
 

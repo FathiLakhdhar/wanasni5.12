@@ -100,7 +100,6 @@ var regularTrip = function () {
         } else {
             self.dateStartPrevious = new Date(dateStart.getTime())
         }
-        //self.updateDays();
         self.widgetCalendar.datepicker("refresh")
     };
 
@@ -108,7 +107,6 @@ var regularTrip = function () {
         var dateStop = self.widgetDateStop.datepicker("getDate");
         self.widgetCalendar.datepicker("option", "maxDate", dateStop);
         self.widgetDateStart.datepicker("option", "maxDate", dateStop);
-        //self.widgetCalendarAll.datepicker("option", "maxDate", dateStop);
         if (self.dateStopPrevious > dateStop) {
             while (self.dateStopPrevious > dateStop) {
                 self.addRemoveDate("remove", "simple", self.dateStopPrevious);

@@ -2,10 +2,12 @@
 
 namespace Wanasni\ApiBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Wanasni\AdminBundle\Entity\Contact;
 use Wanasni\UserBundle\Entity\User;
 
 class ApiController extends Controller
@@ -82,6 +84,66 @@ class ApiController extends Controller
                 'user'=>$user
             ))
         );
+
+    }
+
+
+
+
+
+
+    /**
+     * @Route(path="/api/contactez-nous", name="api_contactez_nous")
+     * @Method(methods={"POST"})
+     */
+    public function ContactezNousAction(Request $request)
+    {
+
+
+
+        $contact= new Contact();
+
+        $contact->setNom($request->request->get('name'));
+        $contact->setEmail($request->request->get('email'));
+        $contact->setMessage($request->request->get('message'));
+
+        $validator= $this->get('validator');
+
+        $liste_erreurs = $validator->validate($contact);
+
+        $arr_error=array();
+        if(count($liste_erreurs) > 0) {
+            foreach($liste_erreurs as $error){
+                $arr_error[]=$error->getMessage();
+            }
+            return new JsonResponse(
+                array(
+                    'error'=>array(
+                        'code'=>400,
+                        'message'=>'erreur de saisir form contact',
+                        'liste_erreurs'=>$arr_error
+                    )
+                ),400
+            );
+        }else{
+
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($contact);
+            $em->flush();
+
+
+            return new JsonResponse(
+                array(
+                    'error'=>array(
+                        'code'=>200,
+                        'message'=>'success'
+                    )
+                ),200
+            );
+        }
+
+
 
     }
 

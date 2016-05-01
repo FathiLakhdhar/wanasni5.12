@@ -237,7 +237,7 @@ class Photo
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
         // check if we have an old image
-        if (isset($this->temp)) {
+        if (isset($this->temp) && is_file($this->getUploadRootDir().'/'.$this->temp)) {
             // delete the old image
             unlink($this->getUploadRootDir().'/'.$this->temp);
             // clear the temp image path

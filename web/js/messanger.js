@@ -29,11 +29,11 @@
     };
 
 
-    $.fn.AddNotifToMenuNotif = function (data) {
+    $.fn.AddNotifToMenuNotif = function (notifications) {
 
         var element = this;
-
-        $.each(data, function (key, $notif) {
+        var $url = $('#notification-url').data('notification-url');
+        $.each(notifications, function (key, $notif) {
 
             var $class = "";
             var $icon = "";
@@ -55,9 +55,12 @@
                     break;
             }
 
+            var $marker_lu='<i class="' + $icon + ' pull-left"></i>';
+
+
             $new = $('<li class="' + $class + ' pos-relative">' +
-                '<a href="#">' +
-                '<i class="' + $icon + ' pull-left"></i>' +
+                '<a href="'+$url+'#notif_'+$notif.id+'">' +
+                $marker_lu+
                 '<p>' + $notif.contenu + '</p>' +
                 '</a>' +
                 '<i class="ion ion-android-radio-button-on marker-lu"></i>' +

@@ -2,6 +2,7 @@
 
 namespace Wanasni\AdminBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Wanasni\AdminBundle\Entity\Contact;
 use Wanasni\PhotoBundle\Entity\Photo;
 
 class AdminController extends Controller
@@ -93,9 +95,6 @@ class AdminController extends Controller
 
 
 
-
-
-
     /**
      * @param Photo $photo
      * @param Request $request
@@ -145,6 +144,61 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @Route(path="/contactez-nous" , name="admin_list_contactez_nous")
+     */
+    public function contactezNousAction()
+    {
+
+        $contacts= $this->getDoctrine()->getManager()->getRepository('WanasniAdminBundle:Contact')->findAll();
+
+        return $this->render(':Admin:contactez_nous.html.twig', array(
+            'contacts'=>$contacts
+        ));
+
+    }
+
+
+    /**
+     * @return JsonResponse
+     * @Route(path="/api-repondre", name="admin_api_repondre")
+     * @Method(methods={"POST"})
+     */
+    public function ApiRepondreAction(Request $request)
+    {
+
+        if(!$request->isXmlHttpRequest()){
+            return new JsonResponse(array(
+                'error'=>array(
+                    'code'=>400,
+                    'message'=>'request Ajax !!'
+                ),400
+            ));
+        }
+
+
+        $message= \Swift_Message::newInstance();
+        $message->setSubject($request->request->get('objet'));
+        $message->setFrom('app.wanasni@gmail.com','AdminWanasni');
+        $message->setTo($request->request->get('email'));
+        $message->setBody(
+            $request->request->get('editor1'),
+            'text/html'
+        );
+
+        $mail= $this->get('mailer');
+
+        $mail->send($message);
+
+        return new JsonResponse(array(
+            'error'=>array(
+                'code'=>200,
+                'message'=>'success'
+            )
+        ));
+    }
+
+    
 
 
 
