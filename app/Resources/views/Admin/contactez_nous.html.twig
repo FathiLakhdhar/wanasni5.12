@@ -10,15 +10,16 @@
         <div class="col-md-12">
             <div class="thumbnail">
 
-                <table class="table table-bordered table-condensed  table-striped table-hover">
+                <table id="table-data" class="table-data table table-bordered   table-striped table-hover">
+                    <thead>
                     <tr class="success">
                         <td>nom</td>
                         <td>email</td>
                         <td>message</td>
                         <td>action</td>
                     </tr>
-
-
+                    </thead>
+                    <tbody>
                     {% for contact in contacts %}
                         <tr>
                             <td>{{ contact.nom }}</td>
@@ -34,6 +35,7 @@
                         </tr>
                     {% endfor %}
 
+                    </tbody>
                 </table>
 
 
@@ -89,4 +91,51 @@
 
 
 {% endblock admin_contenu %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+    <script>
+
+
+
+        function AjaxRepondre(){
+            $('body').on('submit','.form_contact_repondre',function(e){
+                e.preventDefault();
+                $('#model_load').show();
+                $.ajax({
+                            type: $(this).attr('method'),
+                            url: $(this).attr('action'),
+                            data: $(this).serialize()
+                        })
+                        .done(function (data) {
+                            console.log(data.error.message);
+                            $('#model_load').hide();
+                            $('#modal_editor').modal('hide')
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log('error :' + jqXHR.responseJSON.error.message);
+                            $('#model_load').hide();
+                            $('.error-form').html(jqXHR.responseJSON.error.message);
+                        });
+            });
+        }
+
+
+        $(document).ready(function () {
+
+            $('.table-data').DataTable();
+
+            AjaxRepondre();
+
+            $('.btn-repondre').click(function(){
+                $('input#email').val($(this).data('email'));
+                $('#modal_editor').modal('show')
+            });
+            CKEDITOR.replace('editor1');
+        });
+    </script>
+{% endblock javascripts %}
 

@@ -11,7 +11,7 @@ function handleFileSelect(evt) {
     for (var i = 0, f; f = files[i]; i++) {
 
         // Only process image files.
-        if (!f.type.match('image.jpeg')) {
+        if ( !f.type.match('image.jpeg') && !f.type.match('image.png')) {
             continue;
         }
 

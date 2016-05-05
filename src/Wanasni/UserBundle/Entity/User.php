@@ -7,6 +7,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Wanasni\AvisBundle\Entity\Avis;
 use Wanasni\PhotoBundle\Entity\Photo;
 use Wanasni\TrajetBundle\Entity\Reservation;
 
@@ -32,7 +33,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * @ORM\Column(type="string",length=30)
-     *  @Assert\NotBlank(message="Please enter your firstname.", groups={"Registration", "Profile"})
+     * @Assert\NotBlank(message="Please enter your firstname.", groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min=3,
      *     max=30,
@@ -69,7 +70,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * @ORM\Column(type="string", length=10)
-     *  @Assert\Choice(choices = {"homme", "femme"}, message = "Choose a valid gender.")
+     * @Assert\Choice(choices = {"homme", "femme"}, message = "Choose a valid gender.")
      */
     protected $gender;
 
@@ -88,7 +89,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
-     *  @Assert\Date()
+     * @Assert\Date()
      */
     protected $date_naissance;
 
@@ -110,7 +111,6 @@ class User extends BaseUser implements ParticipantInterface
     private $Notifications;
 
 
-
     /**
      * @var Photo
      * @ORM\OneToOne(targetEntity="Wanasni\PhotoBundle\Entity\Photo", cascade={"persist","remove"}, inversedBy="user", fetch="EAGER")
@@ -123,6 +123,18 @@ class User extends BaseUser implements ParticipantInterface
      */
     private $reservations;
 
+
+    /**
+     * @var Avis
+     * @ORM\OneToMany(targetEntity="Wanasni\AvisBundle\Entity\Avis", mappedBy="emetteur")
+     */
+    private $avis_given;
+
+    /**
+     * @var Avis
+     * @ORM\OneToMany(targetEntity="Wanasni\AvisBundle\Entity\Avis", mappedBy="recepteur")
+     */
+    private $avis_received;
 
 
     /**
@@ -198,18 +210,19 @@ class User extends BaseUser implements ParticipantInterface
     {
         parent::__construct();
         $this->addRole('ROLE_PASSAGER');
-        $this->vehicules=new \Doctrine\Common\Collections\ArrayCollection();
-        $this->trajets=new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Notifications=new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reservations=new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vehicules = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->trajets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Notifications = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avis_given = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avis_received = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -225,14 +238,14 @@ class User extends BaseUser implements ParticipantInterface
     public function setPhone($phone)
     {
         $this->phone = $phone;
-    
+
         return $this;
     }
 
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -248,20 +261,19 @@ class User extends BaseUser implements ParticipantInterface
     public function setDateNaissance($dateNaissance)
     {
         $this->date_naissance = $dateNaissance;
-    
+
         return $this;
     }
 
     /**
      * Get date_naissance
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateNaissance()
     {
         return $this->date_naissance;
     }
-
 
 
     /**
@@ -276,7 +288,7 @@ class User extends BaseUser implements ParticipantInterface
         $this->vehicules[] = $vehicules;
 
         $this->addRole('ROLE_CONDUCTEUR');
-    
+
         return $this;
     }
 
@@ -293,7 +305,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * Get vehicules
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getVehicules()
     {
@@ -309,7 +321,7 @@ class User extends BaseUser implements ParticipantInterface
     public function addTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajets)
     {
         $this->trajets[] = $trajets;
-    
+
         return $this;
     }
 
@@ -326,7 +338,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * Get trajets
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTrajets()
     {
@@ -342,7 +354,7 @@ class User extends BaseUser implements ParticipantInterface
     public function addNotification(\Wanasni\NotificationBundle\Entity\Notification $notifications)
     {
         $this->Notifications[] = $notifications;
-    
+
         return $this;
     }
 
@@ -359,7 +371,7 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * Get Notifications
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getNotifications()
     {
@@ -375,14 +387,14 @@ class User extends BaseUser implements ParticipantInterface
     public function setPhoto(\Wanasni\PhotoBundle\Entity\Photo $photo = null)
     {
         $this->photo = $photo;
-    
+
         return $this;
     }
 
     /**
      * Get photo
      *
-     * @return \Wanasni\PhotoBundle\Entity\Photo 
+     * @return \Wanasni\PhotoBundle\Entity\Photo
      */
     public function getPhoto()
     {
@@ -390,8 +402,9 @@ class User extends BaseUser implements ParticipantInterface
     }
 
 
-    public function getFullName(){
-        return $this->firstname.' '.$this->lastname;
+    public function getFullName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
 
@@ -400,7 +413,7 @@ class User extends BaseUser implements ParticipantInterface
      */
     public function PrePersist()
     {
-        $photo=new Photo();
+        $photo = new Photo();
         $photo->setAlt($this->getFullName());
         $photo->setPath('avatar.png');
         $photo->setValid(true);
@@ -416,7 +429,7 @@ class User extends BaseUser implements ParticipantInterface
     public function addReservation(\Wanasni\TrajetBundle\Entity\Reservation $reservations)
     {
         $this->reservations[] = $reservations;
-    
+
         return $this;
     }
 
@@ -433,10 +446,76 @@ class User extends BaseUser implements ParticipantInterface
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    /**
+     * Add avis_given
+     *
+     * @param \Wanasni\AvisBundle\Entity\Avis $avisGiven
+     * @return User
+     */
+    public function addAvisGiven(\Wanasni\AvisBundle\Entity\Avis $avisGiven)
+    {
+        $this->avis_given[] = $avisGiven;
+    
+        return $this;
+    }
+
+    /**
+     * Remove avis_given
+     *
+     * @param \Wanasni\AvisBundle\Entity\Avis $avisGiven
+     */
+    public function removeAvisGiven(\Wanasni\AvisBundle\Entity\Avis $avisGiven)
+    {
+        $this->avis_given->removeElement($avisGiven);
+    }
+
+    /**
+     * Get avis_given
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAvisGiven()
+    {
+        return $this->avis_given;
+    }
+
+    /**
+     * Add avis_received
+     *
+     * @param \Wanasni\AvisBundle\Entity\Avis $avisReceived
+     * @return User
+     */
+    public function addAvisReceived(\Wanasni\AvisBundle\Entity\Avis $avisReceived)
+    {
+        $this->avis_received[] = $avisReceived;
+    
+        return $this;
+    }
+
+    /**
+     * Remove avis_received
+     *
+     * @param \Wanasni\AvisBundle\Entity\Avis $avisReceived
+     */
+    public function removeAvisReceived(\Wanasni\AvisBundle\Entity\Avis $avisReceived)
+    {
+        $this->avis_received->removeElement($avisReceived);
+    }
+
+    /**
+     * Get avis_received
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAvisReceived()
+    {
+        return $this->avis_received;
     }
 }

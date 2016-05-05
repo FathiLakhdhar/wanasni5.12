@@ -2,7 +2,7 @@
 
 
 {% block title %}
-    Vos notifications
+    Avis
 {% endblock title %}
 
 
@@ -20,8 +20,8 @@
                     <p>Covoiturages</p>
                 </a>
             </li>
-            <li class="triangle-down">
-                <a href="{{ path('avis_laisser') }}">
+            <li class="triangle-down active">
+                <a href="#Avis">
                     <i class="fa fa-star"></i>
                     <p>Avis</p>
                 </a>
@@ -38,7 +38,7 @@
                     <p>Messages</p>
                 </a>
             </li>
-            <li class="triangle-down active">
+            <li class="triangle-down">
                 <a href="{{ path('vos_notifications') }}">
                     <i class="fa fa-bell-o"></i>
                     <p>Notifications</p>
@@ -56,15 +56,15 @@
             <!-- Tab pane Profile -->
             <div id="notification" class="tab-pane fade in active">
                 <div class="page-header">
-                    <h2 class="violet-red">Notifications</h2>
+                    <h2 class="violet-red">Avis</h2>
                 </div>
             </div>
+
+
+        {% block avis_contenu %}
+
+
+        {% endblock avis_contenu %}
         </div>
-
-                {% block notification_contenu %}
-
-
-                {% endblock notification_contenu %}
-
     </div>
 {% endblock body %}

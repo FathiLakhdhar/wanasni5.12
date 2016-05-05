@@ -24,9 +24,9 @@ $(function () {
                     response(cache[term]);
                     return;
                 }
-                var $url = $input.data("url").replace('__USERNAME__', extractLast(request.term));
-                $.getJSON($url, request,function (data, status, xhr) {
-                    response(data);
+                var $url = $input.data("url");
+                $.getJSON($url, {q : term} ,function (data, status, xhr) {
+                    response(data.items);
                     }
                 );
 

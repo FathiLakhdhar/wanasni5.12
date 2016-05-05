@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Wanasni\ApiBundle\WanasniApiBundle(),
             new Wanasni\PhotoBundle\WanasniPhotoBundle(),
             new Wanasni\AdminBundle\WanasniAdminBundle(),
+            new Wanasni\AvisBundle\WanasniAvisBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

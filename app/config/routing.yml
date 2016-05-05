@@ -5,6 +5,11 @@ homepage:
         template:    'default/index.html.twig'
 
 
+wanasni_avis:
+    resource: "@WanasniAvisBundle/Controller"
+    prefix:   /avis
+    type:     annotation
+
 wanasni_admin:
     resource: "@WanasniAdminBundle/Controller"
     type: annotation

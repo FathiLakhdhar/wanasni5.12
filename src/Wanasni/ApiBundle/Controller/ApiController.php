@@ -15,7 +15,7 @@ class ApiController extends Controller
     /**
      *
      * @return JsonResponse
-     * @Route(path="/api/contacts", name="api_contacts")
+     * @Route(path="/api/all-contacts", name="api_all_contacts")
      */
     public function ApiGetContactsAction()
     {
@@ -37,26 +37,43 @@ class ApiController extends Controller
     /**
      * @param $username
      * @return JsonResponse
-     * @Route(path="/api/contacts/{username}", name="api_contacts_by_username")
+     * @Route(path="/api/search/contacts", name="api_search_username")
      */
-    public function ApiGetContactsByUsernameAction($username)
+    public function ApiGetContactsByUsernameAction(Request $request)
     {
+
+        $username= $request->query->get('q');
+
         $em=$this->getDoctrine()->getManager();
         $rep=$em->getRepository('WanasniUserBundle:User');
-        $Contacts=$rep->getUsersByUsername($username);
+        $Contacts=$rep->getUsersByUsername($username, $this->getUser());
 
         $arr=array();
+        $total_count=0;
         foreach($Contacts as $Contact){
+
+
+            $total_count++;
             $arr[]=array(
+                'id'=>$Contact->getId(),
                 'username'=>$Contact->getUsername(),
+                'full_name'=>$Contact->getFullName(),
                 'fistname'=>$Contact->getFirstname(),
                 'lastname'=>$Contact->getLastname(),
+                'minibio'=>($Contact->getMinibio()==null)? "":$Contact->getMinibio(),
                 'icon'=> $this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
             );
+
         }
 
-        return new JsonResponse($arr);
+        return new JsonResponse(array(
+            'total_count'=> $total_count,
+            'items'=>$arr
+        ));
     }
+
+
+
 
     /**
      * @param $id

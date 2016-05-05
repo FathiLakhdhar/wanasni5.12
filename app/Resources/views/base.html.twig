@@ -29,6 +29,14 @@
         <!-- iCheck -->
         <link rel="stylesheet" type="text/css"  href="{{ asset('iCheck/skins/flat/_all.css') }}"/>
 
+        <!-- Select 2 -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+
+        <link href="{{ asset('css/s2_app.css') }}" rel="stylesheet" />
+
+        <!-- data Table -->
+        <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
@@ -158,6 +166,11 @@
     <script src="{{ asset('js/autoCompleteContacts.js') }}"></script>
     <script src="{{ asset('js/messanger.js') }}"></script>
     <script src="{{ asset('js/upload_photo.js') }}"></script>
+    <!-- Select2 js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+    <!-- data Table -->
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
     <script language="JavaScript">
 
@@ -212,6 +225,8 @@
                 min:1,
                 max:9
             });
+
+            $('.table-data').DataTable();
 
 
         });
