@@ -19,15 +19,15 @@ class ApiController extends Controller
      */
     public function ApiGetContactsAction()
     {
-        $em=$this->getDoctrine()->getManager();
-        $Contacts=$em->getRepository('WanasniUserBundle:User')->findAll();
-        $arr=array();
-        foreach($Contacts as $Contact){
-            $arr[]=array(
-                'username'=>$Contact->getUsername(),
-                'fistname'=>$Contact->getFirstname(),
-                'lastname'=>$Contact->getLastname(),
-                'icon'=>$this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
+        $em = $this->getDoctrine()->getManager();
+        $Contacts = $em->getRepository('WanasniUserBundle:User')->findAll();
+        $arr = array();
+        foreach ($Contacts as $Contact) {
+            $arr[] = array(
+                'username' => $Contact->getUsername(),
+                'fistname' => $Contact->getFirstname(),
+                'lastname' => $Contact->getLastname(),
+                'icon' => $this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
             );
         }
         return new JsonResponse($arr);
@@ -42,37 +42,35 @@ class ApiController extends Controller
     public function ApiGetContactsByUsernameAction(Request $request)
     {
 
-        $username= $request->query->get('q');
+        $username = $request->query->get('q');
 
-        $em=$this->getDoctrine()->getManager();
-        $rep=$em->getRepository('WanasniUserBundle:User');
-        $Contacts=$rep->getUsersByUsername($username, $this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository('WanasniUserBundle:User');
+        $Contacts = $rep->getUsersByUsername($username, $this->getUser());
 
-        $arr=array();
-        $total_count=0;
-        foreach($Contacts as $Contact){
+        $arr = array();
+        $total_count = 0;
+        foreach ($Contacts as $Contact) {
 
 
             $total_count++;
-            $arr[]=array(
-                'id'=>$Contact->getId(),
-                'username'=>$Contact->getUsername(),
-                'full_name'=>$Contact->getFullName(),
-                'fistname'=>$Contact->getFirstname(),
-                'lastname'=>$Contact->getLastname(),
-                'minibio'=>($Contact->getMinibio()==null)? "":$Contact->getMinibio(),
-                'icon'=> $this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
+            $arr[] = array(
+                'id' => $Contact->getId(),
+                'username' => $Contact->getUsername(),
+                'full_name' => $Contact->getFullName(),
+                'fistname' => $Contact->getFirstname(),
+                'lastname' => $Contact->getLastname(),
+                'minibio' => ($Contact->getMinibio() == null) ? "" : $Contact->getMinibio(),
+                'icon' => $this->container->get('templating.helper.assets')->getUrl($Contact->getPhoto()->getwebPath())
             );
 
         }
 
         return new JsonResponse(array(
-            'total_count'=> $total_count,
-            'items'=>$arr
+            'total_count' => $total_count,
+            'items' => $arr
         ));
     }
-
-
 
 
     /**
@@ -94,19 +92,40 @@ class ApiController extends Controller
         }
 
 
-        $user=$this->getDoctrine()->getManager()->find('WanasniUserBundle:User',$id);
+        $user = $this->getDoctrine()->getManager()->find('WanasniUserBundle:User', $id);
+        $rep = $this->getDoctrine()->getManager()->getRepository('WanasniAvisBundle:Avis');
 
-        return new JsonResponse(
-            $this->renderView('@FOSUser/Profile/tooltip_profil.html.twig',array(
-                'user'=>$user
-            ))
-        );
+        $countall = $rep->CountAllAvis($user);
+        if ($countall > 0) {
+            $countParfait = $rep->CountAvisBy($this->getUser(), "Parfait");
+            $countTresBien = $rep->CountAvisBy($this->getUser(), "Très bien");
+            $countBien = $rep->CountAvisBy($this->getUser(), "Bien");
+            $countDecevant = $rep->CountAvisBy($this->getUser(), "Décevant");
+            $countEviter = $rep->CountAvisBy($this->getUser(), "À éviter");
+
+            return new JsonResponse(
+                $this->renderView('@FOSUser/Profile/tooltip_profil.html.twig', array(
+                    'user' => $user,
+                    'parfait' => number_format(($countParfait / $countall) * 100),
+                    'tresBien' => number_format(($countTresBien / $countall) * 100),
+                    'bien' => number_format(($countBien / $countall) * 100),
+                    'decevant' => number_format(($countDecevant / $countall) * 100),
+                    'eviter' => number_format(($countEviter / $countall) * 100),
+                )), 200);
+        } else {
+            return new JsonResponse(
+                $this->renderView('@FOSUser/Profile/tooltip_profil.html.twig', array(
+                    'user' => $user,
+                    'parfait' => 0,
+                    'tresBien' => 0,
+                    'bien' => 0,
+                    'decevant' => 0,
+                    'eviter' => 0,
+                )), 200);
+        }
+
 
     }
-
-
-
-
 
 
     /**
@@ -117,53 +136,50 @@ class ApiController extends Controller
     {
 
 
-
-        $contact= new Contact();
+        $contact = new Contact();
 
         $contact->setNom($request->request->get('name'));
         $contact->setEmail($request->request->get('email'));
         $contact->setMessage($request->request->get('message'));
 
-        $validator= $this->get('validator');
+        $validator = $this->get('validator');
 
         $liste_erreurs = $validator->validate($contact);
 
-        $arr_error=array();
-        if(count($liste_erreurs) > 0) {
-            foreach($liste_erreurs as $error){
-                $arr_error[]=$error->getMessage();
+        $arr_error = array();
+        if (count($liste_erreurs) > 0) {
+            foreach ($liste_erreurs as $error) {
+                $arr_error[] = $error->getMessage();
             }
             return new JsonResponse(
                 array(
-                    'error'=>array(
-                        'code'=>400,
-                        'message'=>'erreur de saisir form contact',
-                        'liste_erreurs'=>$arr_error
+                    'error' => array(
+                        'code' => 400,
+                        'message' => 'erreur de saisir form contact',
+                        'liste_erreurs' => $arr_error
                     )
-                ),400
+                ), 400
             );
-        }else{
+        } else {
 
 
-            $em=$this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
             $em->flush();
 
 
             return new JsonResponse(
                 array(
-                    'error'=>array(
-                        'code'=>200,
-                        'message'=>'success'
+                    'error' => array(
+                        'code' => 200,
+                        'message' => 'success'
                     )
-                ),200
+                ), 200
             );
         }
-
 
 
     }
 
 
-    
 }

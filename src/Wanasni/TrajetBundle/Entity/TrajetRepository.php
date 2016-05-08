@@ -43,6 +43,38 @@ class TrajetRepository extends EntityRepository
 
 
 
+    public function getTrajetByIdAndConducteur($id,$conducteur){
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->join('t.Origine', 'o')
+            ->addSelect('o')
+            ->join('t.Destination', 'd')
+            ->addSelect('d')
+            ->leftJoin('t.waypoints', 'ways')
+            ->addSelect('ways')
+            ->join('t.conducteur', 'c')
+            ->addSelect('c')
+            ->leftJoin('t.Preferences','p')
+            ->addSelect('p')
+            ->leftJoin('t.reservations','r')
+            ->addSelect('r')
+            ->leftJoin('t.vehicule','v')
+            ->addSelect('v')
+            ->leftJoin('t.datesAller', 'da')
+            ->addSelect('da')
+            ->leftJoin('t.datesRetour', 'dr')
+            ->addSelect('dr')
+            ->where('t.id = :id')
+            ->setParameter('id',$id)
+            ->andWhere('t.conducteur = :cond')
+            ->setParameter('cond',$conducteur);
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
+
     public function SearchByOrigineAndDestination($depart,$arrive,$date){
         $qb = $this->createQueryBuilder('t');
 

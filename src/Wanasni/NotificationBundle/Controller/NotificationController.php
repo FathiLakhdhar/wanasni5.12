@@ -192,18 +192,30 @@ class NotificationController extends Controller
             throw new AccessDeniedException();
         }
 
-        $notif->setLu(true);
-        $em=$this->getDoctrine()->getManager();
-        $em->persist($notif);
-        $em->flush();
 
-        return new JsonResponse(array(
-            'error'=>array(
-                'code'=>200,
-                'message'=>'success'
-            )
-        ),200);
+        if($notif->getUser() == $this->getUser()){
+            $notif->setLu(true);
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($notif);
+            $em->flush();
+
+            return new JsonResponse(array(
+                'error'=>array(
+                    'code'=>200,
+                    'message'=>'success'
+                )
+            ),200);
+        }else{
+            return new JsonResponse(array(
+                'error'=>array(
+                    'code'=>400,
+                    'message'=>'error user failed'
+                )
+            ),400);
+        }
+
     }
+
 
 
 

@@ -347,13 +347,18 @@ Menu nav
     top: 25px;
     right: 21px;
     font-size: 30px;
+
+}
+
+.notifications-icon a{
     color: #9E9E9E;
 }
 
-.notifications-icon.accepte:hover{
+
+.notifications-icon .accepte:hover{
     color: #1ABB9C;
 }
-.notifications-icon.refuse:hover{
+.notifications-icon .refuse:hover{
     color: #d43f3a;
 }
 

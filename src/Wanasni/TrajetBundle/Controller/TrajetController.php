@@ -349,12 +349,7 @@ class TrajetController extends Controller
         $em=$this->getDoctrine()->getManager();
         $rep=$em->getRepository('WanasniTrajetBundle:Trajet');
 
-        $trajet= $rep->findOneBy(
-          array(
-              'id'=>$id,
-              'conducteur'=>$this->getUser()
-          )
-        );
+        $trajet= $rep->getTrajetByIdAndConducteur($id,$this->getUser());
 
 
         if($trajet){

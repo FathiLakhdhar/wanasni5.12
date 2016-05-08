@@ -2,9 +2,13 @@
 
 namespace Wanasni\VehiculeBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanasni\VehiculeBundle\Entity\Marque;
 use Wanasni\VehiculeBundle\Entity\Vehicule;
 use Wanasni\VehiculeBundle\Form\VehiculeType;
@@ -19,7 +23,15 @@ class VehiculeController extends Controller
      */
     public function ShowCarAction()
     {
-        return $this->render(':Vehicule:voir_vehicules.html.twig');
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+        $vehicules= $this->getUser()->getVehicules();
+
+        return $this->render(':Vehicule:voir_vehicules.html.twig',array(
+            'vehicules'=>$vehicules
+        ));
     }
 
 
@@ -29,16 +41,12 @@ class VehiculeController extends Controller
     public function AddCarAction()
     {
 
-        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
-        {
-            return $this->redirect($this->generateUrl('homepage'));
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
         }
 
         $car=new Vehicule();
-        $m=new Marque();
-        $em = $this->getDoctrine()->getManager();
-
-        $form=$this->createForm(new VehiculeType($em,$m),$car);
+        $form=$this->createForm(new VehiculeType(),$car);
         // On récupère la requête
         $request = $this->getRequest();
 
@@ -49,7 +57,7 @@ class VehiculeController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-
+                $em = $this->getDoctrine()->getManager();
                 $car->setUser($this->getUser());
                 $em->persist($car);
                 $em->flush();
@@ -69,6 +77,79 @@ class VehiculeController extends Controller
 
     }
 
+
+    /**
+     * @Route(path="/vehicule-supprimer/{id}", name="car_remove")
+     */
+    public function RemoveCarAction($id)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $em=$this->getDoctrine()->getManager();
+        $rep= $em->getRepository('WanasniVehiculeBundle:Vehicule');
+
+        $car=$rep->findOneBy(array('id'=>$id,'user'=>$this->getUser()));
+
+        if(!$car){
+            throw new EntityNotFoundException();
+        }
+
+        $em->remove($car);
+        $em->flush();
+
+
+        $this->get('session')->getFlashBag()->set('success','Véhicule bien supprimer');
+        return $this->redirect($this->generateUrl('cars-show'));
+
+
+    }
+
+
+
+
+
+    /**
+     * @Route(path="/vehicule-modifier/{id}", name="car_edit")
+     */
+    public function EditCarAction($id,  Request $request)
+    {
+        if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            throw new AccessDeniedException();
+        }
+
+
+        $em=$this->getDoctrine()->getManager();
+        $rep= $em->getRepository('WanasniVehiculeBundle:Vehicule');
+
+        $car=$rep->findOneBy(array('id'=>$id,'user'=>$this->getUser()));
+
+        if(!$car){
+            throw new EntityNotFoundException();
+        }
+
+
+        $form= $this->createForm(new VehiculeType() , $car);
+
+
+        if($request->getMethod()=="POST"){
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+                $em->persist($car);
+                $em->flush();
+                $this->get('session')->getFlashBag()->set('success','Véhicule bien Modifier');
+                return $this->redirect($this->generateUrl('cars-show'));
+            }
+        }
+
+
+        return $this->render(':Vehicule:car_edit.html.twig',array(
+            'form'=>$form->createView(),
+            'id'=>$id
+        ));
+    }
 
     /**
      * @Route("/car-models/{brand}", name="car-models" )

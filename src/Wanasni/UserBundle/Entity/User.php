@@ -415,8 +415,7 @@ class User extends BaseUser implements ParticipantInterface
     {
         $photo = new Photo();
         $photo->setAlt($this->getFullName());
-        $photo->setPath('avatar.png');
-        $photo->setValid(true);
+        $photo->setValid(false);
         $this->setPhoto($photo);
     }
 

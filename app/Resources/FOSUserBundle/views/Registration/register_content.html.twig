@@ -9,7 +9,7 @@
             <div class="form-top">
                 <div class="form-top-left">
                     <h3>S'inscrire</h3>
-                    <p>Fill in the form below to get instant access:</p>
+                    <p>Remplissez le formulaire ci-dessous pour obtenir un accès instantané :</p>
                 </div>
                 <div class="form-top-right">
                     <i class="fa fa-pencil"></i>
@@ -23,19 +23,19 @@
                 <div class="form-group">
                     {{ form_errors(form.firstname) }}
                     {{ form_label(form.firstname, 'First name', {'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_widget(form.firstname, {'attr': {'class': 'form-first-name form-control', 'placeholder':'First name...'} } ) }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-first-name form-control', 'placeholder':'Prenom...'} } ) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_errors(form.lastname) }}
                     {{ form_label(form.lastname, 'Last name', {'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_widget(form.lastname, {'attr': {'class': 'form-last-name form-control', 'placeholder':'Last name...'} } ) }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-last-name form-control', 'placeholder':'Nom...'} } ) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_errors(form.username) }}
                     {{ form_label(form.username, 'Username', {'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_widget(form.username, {'attr': {'class': 'form-username form-control', 'placeholder':'Username...'} } ) }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-username form-control', 'placeholder':'Nom d\'utilisateur...'} } ) }}
                 </div>
 
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 <div class="form-group">
                     {{ form_errors(form.minibio) }}
                     {{ form_label(form.minibio, 'About yourself', {'label_attr': {'class': 'sr-only'}}) }}
-                    {{ form_widget(form.minibio, {'attr': {'class': 'form-minibio form-control', 'placeholder':'About yourself...'} } ) }}
+                    {{ form_widget(form.minibio, {'attr': {'class': 'form-minibio form-control', 'placeholder':'À propos de vous...'} } ) }}
                 </div>
 
                 <div class="form-group">

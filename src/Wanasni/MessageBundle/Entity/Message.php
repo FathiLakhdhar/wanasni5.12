@@ -31,7 +31,7 @@ class Message extends BaseMessage
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Wanasni\UserBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $sender;

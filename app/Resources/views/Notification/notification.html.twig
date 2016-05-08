@@ -68,3 +68,22 @@
 
     </div>
 {% endblock body %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.notif_marquer_lu').bind('click', function(e){
+            e.preventDefault();
+            var $elem=$(this);
+            var $url= $elem.attr('href');
+            $elem.remove();
+            $.post($url,function(data){
+                if(data.error.code==200){
+
+                }
+            });
+        });
+    </script>
+{% endblock javascripts %}

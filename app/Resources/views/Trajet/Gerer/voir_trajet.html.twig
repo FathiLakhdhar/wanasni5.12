@@ -33,10 +33,14 @@
                                 </h3>
                                 <div class="panel-conducteur">
                                     <div class="text-center" style="padding: 2px">
-                                        <img class="img-circle img-sm"
-                                             src="{{ asset(trajet.conducteur.photo.webPath) }}"
-                                             style="width: 70px;height: 70px;">
-                                        <p style="font-size: 18px">{{ trajet.conducteur.username }}</p>
+                                        <a class="tooltip_profil" title="" style="color: #FFFFFF;cursor: pointer;"
+                                           data-placement="top"
+                                           data-tooltip-profil-url="{{ path('api_tooltip_profile',{'id':trajet.conducteur.id}) }}">
+                                            <img class="img-circle img-sm"
+                                                 src="{{ asset(trajet.conducteur.photo.webPath) }}"
+                                                 style="width: 70px;height: 70px;">
+                                            <p style="font-size: 18px">{{ trajet.conducteur.username }}</p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -127,16 +131,49 @@
 
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4 class=""><strong>Véhicule :</strong></h4>
-                                                    <p>
-                                                        {{ trajet.vehicule.fullNameCar }}
-                                                        <i class="ion ion-model-s"
-                                                           style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
-                                                    </p>
+                                            {% if trajet.vehicule %}
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h4 class=""><strong>Véhicule :</strong></h4>
+
+                                                        <div class="info-box">
+                                                <span class="info-box-icon">
+                                                    <i class="ion ion-model-s"
+                                                       style="color: {{ '#'~ trajet.vehicule.couleur.id }}"></i>
+                                                </span>
+                                                            <div class="info-box-content">
+                                                                <span class="info-box-text">{{ trajet.vehicule.fullNameCar }}</span>
+                                                    <span class="info-box-number">
+                                                        {{ trajet.vehicule.nbrPlaces }}
+                                                        <small> Places</small>
+                                                        {% if trajet.vehicule.confort == 'BASIC' %}
+                                                            <a data-toggle="tooltip" title="Basique">
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% elseif trajet.vehicule.confort == 'NORMAL' %}
+                                                            <a data-toggle="tooltip" title="Normal">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% elseif trajet.vehicule.confort == 'COMFORT' %}
+                                                            <a data-toggle="tooltip" title="Confort">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a data-toggle="tooltip" title="Luxe">
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                                <i class="ion ion-star blue"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </span>
+                                                            </div><!-- /.info-box-content -->
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            {% endif %}
 
 
                                             <p>
@@ -235,7 +272,11 @@
                                                         <img class="info-box-icon bg-green"
                                                              src="{{ asset(reservation.passager.photo.webPath) }}">
                                                         <div class="info-box-content">
-                                                            <span class="info-box-text">{{ reservation.passager.username }}</span>
+                                                            <span class="info-box-text">
+                                                              <a class="tooltip_profil" title="" style="color: #000000;cursor: pointer;" data-placement="top" data-tooltip-profil-url="{{ path('api_tooltip_profile',{'id':reservation.passager.id}) }}">
+                                                                  {{ reservation.passager.username }}
+                                                              </a>
+                                                            </span>
                                                             <span class="info-box-number"></span>
                                                         </div><!-- /.info-box-content -->
                                                     </div>

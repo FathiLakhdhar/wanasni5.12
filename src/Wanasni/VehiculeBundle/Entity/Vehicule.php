@@ -13,6 +13,7 @@ use Wanasni\VehiculeBundle\Entity\Modele;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\VehiculeBundle\Entity\VehiculeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Vehicule
 {
@@ -311,4 +312,28 @@ class Vehicule
     {
         return $this->trajets;
     }
+
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->getUser()->addRole('ROLE_CONDUCTEUR');
+    }
+
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function PreRemove()
+    {
+        foreach($this->trajets as $car){
+
+            $car->setVehicule(null);
+        }
+    }
+
+
 }

@@ -16,8 +16,8 @@ use Wanasni\VehiculeBundle\Entity\Vehicule;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Wanasni\TrajetBundle\Entity\TrajetRepository")
- * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"UniqueValid", "RegularValid", "vehiculeValid"})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Trajet
 {
@@ -48,7 +48,7 @@ class Trajet
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="way", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="way", cascade={"persist","remove"} , fetch="EXTRA_LAZY")
      * @Assert\Valid
      */
     private $waypoints;
@@ -203,7 +203,7 @@ class Trajet
     /**
      * @var Vehicule
      * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Vehicule", inversedBy="trajets", fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $vehicule;
 
@@ -599,7 +599,6 @@ class Trajet
      */
     public function setVehicule(\Wanasni\VehiculeBundle\Entity\Vehicule $vehicule = null)
     {
-        $vehicule->addTrajet($this);
         $this->vehicule = $vehicule;
 
         return $this;
@@ -1155,37 +1154,6 @@ class Trajet
     }
 
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        $p = 0;
-        foreach ($this->arrPrix as $prix) {
-            $p += $prix;
-        }
-        $this->setTotalPrix($p);
-        $this->setProposerAt(new \DateTime());
-    }
-
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function prePersist()
-    {
-        $this->nbPlacesRestants = $this->nbPlaces;
-    }
-
-
-    /**
-     * @ORM\PostLoad()
-     */
-    public function PostLoad()
-    {
-    }
-
 
     public function ChangeNbPlacesRestant()
     {
@@ -1214,4 +1182,44 @@ class Trajet
     }
 
 
+
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        $p = 0;
+        foreach ($this->arrPrix as $prix) {
+            $p += $prix;
+        }
+        $this->setTotalPrix($p);
+        $this->setProposerAt(new \DateTime());
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->nbPlacesRestants = $this->nbPlaces;
+    }
+
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preremove()
+    {
+        foreach($this->waypoints as $waypoint){
+            $waypoint->setWay(null);
+        }
+    }
+
+
+
 }
+
+
