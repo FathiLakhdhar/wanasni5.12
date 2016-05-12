@@ -46,10 +46,9 @@ class Trajet
      */
     private $Destination;
 
+
     /**
-     * @var Collection
-     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="way", cascade={"persist","remove"} , fetch="EXTRA_LAZY")
-     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Wanasni\TrajetBundle\Entity\Point", mappedBy="trajet", cascade={"all"}, fetch="EAGER")
      */
     private $waypoints;
 
@@ -245,8 +244,7 @@ class Trajet
      */
     public function __construct()
     {
-
-        $this->waypoints = new ArrayCollection();
+        $this->waypoints= new ArrayCollection();
         $this->datesAller = new ArrayCollection();
         $this->datesRetour = new ArrayCollection();
         $this->reservations = new ArrayCollection();
@@ -255,7 +253,6 @@ class Trajet
         $this->Date_Retour_unique = date_create();
         $this->regularBeginDate = date_create();
         $this->regularEndDate = date_create();
-
     }
 
 
@@ -511,39 +508,6 @@ class Trajet
         return $this->Preferences;
     }
 
-    /**
-     * Add waypoints
-     *
-     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
-     * @return Trajet
-     */
-    public function addWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
-    {
-        $waypoints->setWay($this);
-        $this->waypoints->add($waypoints);
-        return $this;
-    }
-
-    /**
-     * Remove waypoints
-     *
-     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
-     */
-    public function removeWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
-    {
-        $waypoints->setWay(null);
-        $this->waypoints->removeElement($waypoints);
-    }
-
-    /**
-     * Get waypoints
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWaypoints()
-    {
-        return $this->waypoints;
-    }
 
     /**
      * Set totalDuration
@@ -961,6 +925,160 @@ class Trajet
     }
 
 
+
+    /**
+     * Set arrPrix
+     *
+     * @param array $arrPrix
+     * @return Trajet
+     */
+    public function setArrPrix($arrPrix)
+    {
+        $this->arrPrix = $arrPrix;
+
+        return $this;
+    }
+
+    /**
+     * Get arrPrix
+     *
+     * @return array
+     */
+    public function getArrPrix()
+    {
+        return $this->arrPrix;
+    }
+
+    public function addArrPrix($prix)
+    {
+        $this->arrPrix[] = $prix;
+    }
+
+    public function removeArrPrix($prix)
+    {
+        if (false !== $key = array_search(strtoupper($prix), $this->arrPrix, true)) {
+            unset($this->arrPrix[$key]);
+            $this->arrPrix = array_values($this->arrPrix);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Set Origine
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $origine
+     * @return Trajet
+     */
+    public function setOrigine(\Wanasni\TrajetBundle\Entity\Point $origine)
+    {
+        $origine->setTrajet(null);
+        $this->Origine = $origine;
+
+        return $this;
+    }
+
+    /**
+     * Get Origine
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Point
+     */
+    public function getOrigine()
+    {
+        return $this->Origine;
+    }
+
+    /**
+     * Set Destination
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $destination
+     * @return Trajet
+     */
+    public function setDestination(\Wanasni\TrajetBundle\Entity\Point $destination)
+    {
+        $destination->setTrajet(null);
+        $this->Destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Get Destination
+     *
+     * @return \Wanasni\TrajetBundle\Entity\Point
+     */
+    public function getDestination()
+    {
+        return $this->Destination;
+    }
+
+
+
+    /**
+     * Add waypoints
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
+     * @return Trajet
+     */
+    public function addWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
+    {
+        $waypoints->setTrajet($this);
+        $this->waypoints[] = $waypoints;
+
+        return $this;
+    }
+
+    /**
+     * Remove waypoints
+     *
+     * @param \Wanasni\TrajetBundle\Entity\Point $waypoints
+     */
+    public function removeWaypoint(\Wanasni\TrajetBundle\Entity\Point $waypoints)
+    {
+        $this->waypoints->removeElement($waypoints);
+    }
+
+    /**
+     * Get waypoints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWaypoints()
+    {
+        return $this->waypoints;
+    }
+
+
+    public function ChangeNbPlacesRestant()
+    {
+        if ($this->getNbPlacesRestants() > 0) {
+            $this->nbPlacesRestants = $this->nbPlacesRestants - 1;
+        }
+
+        return $this;
+    }
+
+
+    public function isReserverByPassage(User $passage = null)
+    {
+        $bool = false;
+
+        if ($passage != null) {
+
+            foreach ($this->reservations as $r) {
+                if ($r->getPassager()->getId() == $passage->getId()) {
+                    $bool = true;
+                    break;
+                }
+            }
+        }
+        return $bool;
+    }
+
+
+
+
     public function UniqueValid(ExecutionContextInterface $context)
     {
         if ($this->frequence == 'UNIQUE') {
@@ -1056,7 +1174,6 @@ class Trajet
         }
     }
 
-
     function checkDate(\DateTime $date)
     {
         $month = intval($date->format('m'));
@@ -1064,124 +1181,6 @@ class Trajet
         $year = intval($date->format('y'));
         return checkdate($month, $day, $year);
     }
-
-
-    /**
-     * Set arrPrix
-     *
-     * @param array $arrPrix
-     * @return Trajet
-     */
-    public function setArrPrix($arrPrix)
-    {
-        $this->arrPrix = $arrPrix;
-
-        return $this;
-    }
-
-    /**
-     * Get arrPrix
-     *
-     * @return array
-     */
-    public function getArrPrix()
-    {
-        return $this->arrPrix;
-    }
-
-    public function addArrPrix($prix)
-    {
-        $this->arrPrix[] = $prix;
-    }
-
-    public function removeArrPrix($prix)
-    {
-        if (false !== $key = array_search(strtoupper($prix), $this->arrPrix, true)) {
-            unset($this->arrPrix[$key]);
-            $this->arrPrix = array_values($this->arrPrix);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Set Origine
-     *
-     * @param \Wanasni\TrajetBundle\Entity\Point $origine
-     * @return Trajet
-     */
-    public function setOrigine(\Wanasni\TrajetBundle\Entity\Point $origine)
-    {
-        $origine->setWay(null);
-        $this->Origine = $origine;
-
-        return $this;
-    }
-
-    /**
-     * Get Origine
-     *
-     * @return \Wanasni\TrajetBundle\Entity\Point
-     */
-    public function getOrigine()
-    {
-        return $this->Origine;
-    }
-
-    /**
-     * Set Destination
-     *
-     * @param \Wanasni\TrajetBundle\Entity\Point $destination
-     * @return Trajet
-     */
-    public function setDestination(\Wanasni\TrajetBundle\Entity\Point $destination)
-    {
-        $destination->setWay(null);
-        $this->Destination = $destination;
-
-        return $this;
-    }
-
-    /**
-     * Get Destination
-     *
-     * @return \Wanasni\TrajetBundle\Entity\Point
-     */
-    public function getDestination()
-    {
-        return $this->Destination;
-    }
-
-
-
-    public function ChangeNbPlacesRestant()
-    {
-        if ($this->getNbPlacesRestants() > 0) {
-            $this->nbPlacesRestants = $this->nbPlacesRestants - 1;
-        }
-
-        return $this;
-    }
-
-
-    public function isReserverByPassage(User $passage = null)
-    {
-        $bool = false;
-
-        if ($passage != null) {
-
-            foreach ($this->reservations as $r) {
-                if ($r->getPassager()->getId() == $passage->getId()) {
-                    $bool = true;
-                    break;
-                }
-            }
-        }
-        return $bool;
-    }
-
-
 
 
     /**
@@ -1211,15 +1210,12 @@ class Trajet
     /**
      * @ORM\PreRemove()
      */
-    public function preremove()
+    public function PreRemove()
     {
-        foreach($this->waypoints as $waypoint){
-            $waypoint->setWay(null);
+        foreach($this->waypoints as $point){
+            $point->setTrajet(null);
+            $this->removeWaypoint($point);
         }
     }
 
-
-
 }
-
-

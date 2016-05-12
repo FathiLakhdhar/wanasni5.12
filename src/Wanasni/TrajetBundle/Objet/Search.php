@@ -1,5 +1,5 @@
 <?php
-namespace Wanasni\TrajetBundle\Entity;
+namespace Wanasni\TrajetBundle\Objet;
 
 
 use Symfony\Component\Validator\Constraints\Date;

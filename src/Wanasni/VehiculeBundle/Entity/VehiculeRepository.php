@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class VehiculeRepository extends EntityRepository
 {
+
+
+    public function getCar($id)
+    {
+        return $this->createQueryBuilder('v')
+            ->addSelect('v.trajets','t')
+            ->where('v.id = :id')
+            ->setParameter('id',$id);
+    }
+
+
 }

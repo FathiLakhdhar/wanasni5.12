@@ -60,13 +60,13 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <p>
-                                                        Publier : {{ trajet.proposerAt|date("Y-m-d", false) }}
+                                                        Publier : {{ trajet.proposerAt|date("d-m-Y") }}
                                                     </p>
                                                     <p>
-                                                        {{ trajet.nbPlacesRestants }} place(s) disponible(s).
+                                                        <strong>{{ trajet.nbPlacesRestants }}</strong> place(s) disponible(s).
                                                     </p>
                                                     <p>
-                                                        {{ trajet.totalPrix }} TND par passager
+                                                        <strong>{{ trajet.totalPrix }} TND</strong> par passager
                                                     </p>
 
 
@@ -78,7 +78,7 @@
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <a href="{{ path('trajet_show',{'id':trajet.id}) }}"
-                                                       class="btn btn-green"><strong><i class="ion ion-edit"></i> + détails</strong></a>
+                                                       class="btn btn-green"><strong>+ détails</strong></a>
                                                 </div>
                                             </div>
 

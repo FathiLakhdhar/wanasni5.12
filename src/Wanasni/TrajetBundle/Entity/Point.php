@@ -52,7 +52,7 @@ class Point
     /**
      * @ORM\ManyToOne(targetEntity="Wanasni\TrajetBundle\Entity\Trajet", inversedBy="waypoints")
      */
-    private $way;
+    private $trajet;
 
 
     /**
@@ -136,27 +136,26 @@ class Point
     }
 
 
-
     /**
-     * Set way
+     * Set trajet
      *
-     * @param \Wanasni\TrajetBundle\Entity\Trajet $way
+     * @param \Wanasni\TrajetBundle\Entity\Trajet $trajet
      * @return Point
      */
-    public function setWay(\Wanasni\TrajetBundle\Entity\Trajet $way = null)
+    public function setTrajet(\Wanasni\TrajetBundle\Entity\Trajet $trajet = null)
     {
-        $this->way = $way;
+        $this->trajet = $trajet;
     
         return $this;
     }
 
     /**
-     * Get way
+     * Get trajet
      *
      * @return \Wanasni\TrajetBundle\Entity\Trajet 
      */
-    public function getWay()
+    public function getTrajet()
     {
-        return $this->way;
+        return $this->trajet;
     }
 }

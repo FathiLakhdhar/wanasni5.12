@@ -2,7 +2,6 @@
 namespace Wanasni\TrajetBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +13,7 @@ use Wanasni\TrajetBundle\Entity\Reservation;
 use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\AlertType;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
-use Wanasni\TrajetBundle\Form\TrajetType;
 use Wanasni\TrajetBundle\Form\TrajetUniqueType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Wanasni\TrajetBundle\Entity\Search;
 use Symfony\Component\Routing\Annotation\Route;
 class TrajetController extends Controller
@@ -89,6 +86,7 @@ class TrajetController extends Controller
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             throw new AccessDeniedException();
         }
+
         $trajet = new Trajet();
         // On crée le formulaire grâce à la TrajetUniqueType
         $form = $this->createForm(new TrajetUniqueType($this->getUser()), $trajet);
@@ -117,6 +115,8 @@ class TrajetController extends Controller
                 'form' => $form->createView(),
             ));
     }
+
+
     /**
      * @Route("/proposer-trajet-regulier", name="trajet_proposer_regulier" )
      */
@@ -153,6 +153,9 @@ class TrajetController extends Controller
                 'form' => $form->createView(),
             ));
     }
+
+
+
     /**
      *
      * @Route("/voir-trajet/{id}", name="trajet_show")
@@ -166,12 +169,14 @@ class TrajetController extends Controller
 
         $trajet=$rep->getTrajetById($id);
 
-
         return $this->render(':Trajet/Gerer:voir_trajet.html.twig',
             array(
                 'trajet' => $trajet,
             ));
     }
+
+
+
     /**
      * @Route("/rechercher-trajet", name="trajet_search")
      */
@@ -209,6 +214,9 @@ class TrajetController extends Controller
             'form'=>null
         ));
     }
+
+
+
     /**
      * @Route("/add-alert", name="trajet_create_alert")
      */
@@ -229,6 +237,8 @@ class TrajetController extends Controller
         }
         return new Response();
     }
+
+
     /**
      * @Route("/prix-optimal/{metre}", name="prix_optimal")
      */
@@ -243,6 +253,8 @@ class TrajetController extends Controller
         }
         return new JsonResponse(array('PrixOptimal' => ceil($prix), 'Unite' => 'TND'));
     }
+
+
 
 
     /**
@@ -337,10 +349,13 @@ class TrajetController extends Controller
         }
     }
 
+
+
+
     /**
-     * @Route(path="/trajet/delete/{id}", name="trajet_delete")
+     * @Route(path="/trajet-delete/{id}", name="trajet_delete")
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction($id)
     {
         if (!$this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw new AccessDeniedException();
@@ -349,12 +364,18 @@ class TrajetController extends Controller
         $em=$this->getDoctrine()->getManager();
         $rep=$em->getRepository('WanasniTrajetBundle:Trajet');
 
-        $trajet= $rep->getTrajetByIdAndConducteur($id,$this->getUser());
-
+        $trajet= $rep->findOneBy(
+            array(
+                'id'=>$id,
+                'conducteur'=>$this->getUser()
+            )
+        );
 
         if($trajet){
+            $trajet->PreRemove();
             $em->remove($trajet);
             $em->flush();
+
             $this->get('session')->getFlashBag()->add('success', 'Trajet supprimer');
         }
 

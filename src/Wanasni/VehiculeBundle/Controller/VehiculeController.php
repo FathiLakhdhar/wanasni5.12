@@ -97,11 +97,15 @@ class VehiculeController extends Controller
             throw new EntityNotFoundException();
         }
 
-        $em->remove($car);
-        $em->flush();
+        if($car->getTrajets()->count()==0){
+            $em->remove($car);
+            $em->flush();
+            $this->get('session')->getFlashBag()->set('success','Véhicule bien supprimer');
+        }else{
 
+            $this->get('session')->getFlashBag()->set('info','Véhicule n\'est pas supprimer : cette véhicule utilisé dans un trajet');
+        }
 
-        $this->get('session')->getFlashBag()->set('success','Véhicule bien supprimer');
         return $this->redirect($this->generateUrl('cars-show'));
 
 

@@ -50,7 +50,7 @@ class Vehicule
     /**
      * @var Couleur
      *
-     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Couleur",inversedBy="vehicules" )
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Couleur", inversedBy="vehicules", fetch="EAGER" )
      */
     private $couleur;
 
@@ -65,14 +65,14 @@ class Vehicule
     /**
      * @var Marque
      *
-     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Marque", inversedBy="vehicules")
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Marque", inversedBy="vehicules", fetch="EAGER")
      */
     private $marque;
 
     /**
      * @var Modele
      *
-     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Modele", inversedBy="vehicules")
+     * @ORM\ManyToOne(targetEntity="Wanasni\VehiculeBundle\Entity\Modele", inversedBy="vehicules", fetch="EAGER")
      */
     private $modele;
 
