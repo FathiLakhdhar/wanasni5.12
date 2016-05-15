@@ -102,7 +102,7 @@ class AdminController extends Controller
      * @Route(path="/api-valid-photo/{id}", name="api_admin_valid_photo")
      * @ParamConverter("photo", class="WanasniPhotoBundle:Photo")
      */
-    public function ApivalidPhoto(Photo $photo, Request$request)
+    public function ApivalidPhoto(Photo $photo)
     {
 
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -156,6 +156,43 @@ class AdminController extends Controller
             'contacts'=>$contacts
         ));
 
+    }
+
+
+    /**
+     *
+     * @Route(path="/List-users", name="admin_list_users")
+     */
+    public function ListUsersAction()
+    {
+        $rep = $this->getDoctrine()->getManager()->getRepository('WanasniUserBundle:User');
+        $list= $rep->findAll();
+
+       return $this->render(':Admin/gerer_users:list_users.html.twig',array(
+           'users'=>$list
+       )) ;
+    }
+
+
+    /**
+     * @Route(path="/list-avis-received/{id}", name="admin_list_avis_received_user")
+     */
+    public function UserListAvisReceivedAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $user= $em->find('WanasniUserBundle:User', $id);
+        $rep= $em->getRepository('WanasniAvisBundle:Avis');
+        $list_avis= $rep->findBy(
+            array('recepteur'=> $user),
+            array('createAt'=>'desc')
+        );
+
+
+
+        return $this->render(':Admin/gerer_users:list_avis_received_user.html.twig',array(
+            'list_avis'=>$list_avis,
+            'user'=>$user
+        ));
     }
 
 

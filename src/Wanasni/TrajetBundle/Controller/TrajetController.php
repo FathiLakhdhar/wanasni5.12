@@ -14,7 +14,7 @@ use Wanasni\TrajetBundle\Entity\Trajet;
 use Wanasni\TrajetBundle\Form\AlertType;
 use Wanasni\TrajetBundle\Form\TrajetRegulierType;
 use Wanasni\TrajetBundle\Form\TrajetUniqueType;
-use Wanasni\TrajetBundle\Entity\Search;
+use Wanasni\TrajetBundle\Objet\Search;
 use Symfony\Component\Routing\Annotation\Route;
 class TrajetController extends Controller
 {

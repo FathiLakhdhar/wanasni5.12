@@ -132,7 +132,7 @@ class User extends BaseUser implements ParticipantInterface
 
     /**
      * @var Avis
-     * @ORM\OneToMany(targetEntity="Wanasni\AvisBundle\Entity\Avis", mappedBy="recepteur")
+     * @ORM\OneToMany(targetEntity="Wanasni\AvisBundle\Entity\Avis", mappedBy="recepteur", fetch="EAGER")
      */
     private $avis_received;
 
