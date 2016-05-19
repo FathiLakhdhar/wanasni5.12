@@ -28,9 +28,16 @@
                             <a href="{{ path('admin_list_avis_received_user',{'id':user.id}) }}" class="btn btn-primary">
                                 Avis reçus ({{ user.avisReceived|length }})
                             </a>
-                            <button class="btn btn-danger" data-email="">
-                                Bloque
-                            </button>
+                            {% if user.locked %}
+                                <a href="{{ path('admin_unlocked_user',{'id':user.id}) }}" class="btn btn-success" data-email="">
+                                    Déverrouillée
+                                </a>
+                            {% else %}
+                                <a href="{{ path('admin_locked_user',{'id':user.id}) }}" class="btn btn-danger" data-email="">
+                                    Bloque
+                                </a>
+                            {% endif %}
+
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,9 +1,10 @@
+
 parameters:
     wanasni_admin.example.class: Wanasni\AdminBundle\Listener\kernelListener
 
 services:
     wanasni_admin.Listener:
         class: %wanasni_admin.example.class%
-        arguments: []
+        arguments: [@templating]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

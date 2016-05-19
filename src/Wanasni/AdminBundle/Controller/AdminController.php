@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Wanasni\AdminBundle\Entity\Contact;
 use Wanasni\PhotoBundle\Entity\Photo;
+use Wanasni\UserBundle\Entity\User;
 
 class AdminController extends Controller
 {
@@ -235,7 +236,38 @@ class AdminController extends Controller
         ));
     }
 
-    
+
+    /**
+     * @Route(path="/locked-user/{id}", name="admin_locked_user")
+     * @ParamConverter("user", class="WanasniUserBundle:User")
+     */
+    public function lockedUserAction(User $user)
+    {
+
+        $user->setLocked(true);
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_list_users'));
+
+    }
+
+    /**
+     * @Route(path="/unlocked-user/{id}", name="admin_unlocked_user")
+     * @ParamConverter("user", class="WanasniUserBundle:User")
+     */
+    public function unlockedUserAction(User $user)
+    {
+
+        $user->setLocked(false);
+        $em=$this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_list_users'));
+
+    }
 
 
 

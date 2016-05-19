@@ -19,8 +19,7 @@ function updateWaypointsIndices() {
 }
 
 $(document).ready(function() {
-    // On récupère la balise <div> en question qui contient
-    // l'attribut « data-prototype » qui nous intéresse.
+
 
     var $container = $('#waypoints');
 

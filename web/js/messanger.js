@@ -105,7 +105,7 @@ function isEqualObjetNotif(data, cache) {
     }
 
     $.each(data, function (key, $notif) {
-        if ($notif.id != cache[key].id) {
+        if ($notif.id != cache[key].id || ( ($notif.id == cache[key].id)&&($notif.isRead != cache[key].isRead) ) ) {
             bool = false;
             return false;
         }
@@ -209,11 +209,6 @@ function NotifNotification() {
 }
 
 $(document).ready(function () {
-
-    setInterval(function () {
-
-
-    }, 3000);
 
     UpdateMenuMsg();
     UpdateMenuNotif();

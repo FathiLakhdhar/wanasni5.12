@@ -12,10 +12,20 @@ namespace Wanasni\AdminBundle\Listener;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class kernelListener
 {
 
+    protected $templating;
+
+    /**
+     * kernelListener constructor.
+     */
+    public function __construct(EngineInterface $templating)
+    {
+        $this->templating=$templating;
+    }
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -23,8 +33,7 @@ class kernelListener
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
-        $response = new Response('Notre site passe en maintenance un court moment.
-        Notre équipe est mobilisée pour que ce moment soit le plus court possible.', 400);
-        $event->setResponse($response);
+
+        //$event->setResponse(new Response($this->templating->render(':Admin:maintenance.html.twig')));
     }
 }
