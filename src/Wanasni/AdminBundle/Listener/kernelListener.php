@@ -34,6 +34,6 @@ class kernelListener
             return;
         }
 
-        //$event->setResponse(new Response($this->templating->render(':Admin:maintenance.html.twig')));
+        $event->setResponse(new Response($this->templating->render(':Admin:maintenance.html.twig')));
     }
 }
