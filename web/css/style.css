@@ -1963,6 +1963,7 @@ Media home
     #home h1 {
         font-size: 20px;
         padding: 5px 10px;
+        line-height: 20px;
     }
 
 
