@@ -164,7 +164,7 @@ img.loading{
 }
 
 header {
-    background-color: rgba(45, 56, 71, 1);
+    background-color: #152235;
     color: #fff;
     padding-top: 20px;
     padding-bottom: 12px;
@@ -1141,7 +1141,7 @@ footer {
 
 footer .footer-body{
     height: 400px;
-    background-color: #2D3847;
+    background-color: #152235;
     color: #fff;
 }
 
